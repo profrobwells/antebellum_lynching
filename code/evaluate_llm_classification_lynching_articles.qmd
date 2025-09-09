@@ -1,0 +1,365 @@
+---
+title: "Historical Newspaper Article Classification Identification Using Zero-Shot LLMs for Content Analysis; a Proof-of-Concept Experiment"
+author: "Sean Mussenden"
+date: "`r Sys.Date()`"
+format: 
+ html:
+   df-print: "paged"
+   code-fold: true
+   code-summary: "Show R code"
+   code-tools: true
+   embed-resources: true
+   self-contained: true
+   toc: true
+   toc-location: left
+   toc-float: true
+   toc-depth: 3
+execute:
+ error: false
+ warning: false
+ message: false
+ eval: true
+---
+
+```{r}
+#| label: loading_scripts
+#| message: false
+#| echo: false
+#| warning: false
+
+###
+# Step 01 
+# Load libraries + set up environment
+# Edit .Renviron file to add API Keys. 
+# Run this: usethis::edit_r_environ() 
+# Restart R after editing .Renviron files
+
+###
+source("scripts/r_scripts/01_r_environment_setup.R")
+
+###
+# Step 02 
+# Define LLM model list
+# Edit the list to change models
+###
+source("scripts/r_scripts/02_r_provider_model_list.R")
+
+###
+# Step 03 Define system prompt to send with each article
+# Edit the system prompt to change the prompt
+###
+
+source("scripts/r_scripts/03_r_system_prompt.R")
+
+###
+# Step 04 Load function to classify articles
+###
+source("scripts/r_scripts/04_r_classify_articles.R")
+
+###
+# Step 05 Load function to combine and evaluate responses
+###
+
+source("scripts/r_scripts/05_r_evaluate_responses.R")
+
+###
+# Step 06 Load function to correct malformed json with llm
+###
+
+source("scripts/r_scripts/06_r_check_and_correct_json.R")
+
+###
+# Step 07 Load function to evaluate model performance
+###
+
+source("scripts/r_scripts/07_r_evaluate_model_accuracy.R")
+
+
+###
+# Load test data of lynching stories
+###
+lynching_articles_test_data <- read_rds("data/input_data/lynching_article_test_data.rds")
+
+###
+# Classify lynching articles with LLMs
+###
+
+# Run classification in parallel
+# This function is commented out to prevent running it in the notebook.
+# This is because it requires having API keys set in .Renviron file
+# And because running it costs money
+# Output artifacts of this prompt are in the data/output_data/llm_responses folder
+# To cache results and save money on having to rerun, we save each output inference as a single row rds df
+# This will error if you do not have API keys set
+
+# Set up parallel processing environment
+
+# workers <- parallel::detectCores() - 1
+# future::plan(future::multisession, workers = workers)
+
+# Execute classification function
+# 
+# future_map(
+#   provider_model_type_list,
+#   classify_articles,
+#   system_prompt = system_prompt_value,
+#   test_set_articles_df = lynching_articles_test_data,
+#   sample_size = nrow(lynching_articles_test_data),
+#   overwrite = FALSE,
+#   .progress = TRUE
+# )
+
+ 
+###
+# Parse model responses
+###
+
+# Combine all the individual responses into a single tibble, and check for valid json
+lynching_article_llm_responses <- combine_responses_validate_json("data/output_data/llm_responses")
+
+###
+# Check for completeness
+###
+# Function creates completeness check objects below
+provider_model_type_status_check <- get_model_completeness_status(lynching_article_llm_responses, lynching_articles_test_data) 
+provider_model_type_status_check <- provider_model_type_status_check$provider_model_type_status_df 
+
+###
+# Check and correct malformed json
+###
+
+# This function passes bad json to another llm to clean up
+results_with_corrected_json <- correct_malformed_json_with_llm(lynching_article_llm_responses, n_workers = 10)
+
+###
+# Combine results and compute accuracy
+###
+llm_classification_accuracy_stats <- create_model_accuracy_stats(output_dir = results_with_corrected_json,test_data = lynching_articles_test_data)
+
+###
+# Binary classification results
+###
+
+specific_lynching_event_predicted_v_actual <- llm_classification_accuracy_stats$specific_lynching_event_predicted_v_actual %>%
+  select(model_provider_type, pct_correct, total_correct, total_incorrect, everything()) 
+
+###
+# Multi-class classification results
+###
+
+specific_class_predicted_v_actual <-  llm_classification_accuracy_stats$specific_class_predicted_v_actual %>%
+  select(model_provider_type, pct_correct, true, false, total) %>%
+  arrange(desc(pct_correct))
+
+```
+
+
+## Abstract
+
+This experiment tested the ability of advanced large language models (LLMs) to accurately classify the text of newspaper articles for research on historical patterns of coverage of racial terror lynchings.  Using a sample of historical newspaper articles from the late 1800s and early 1900s, the experiment found that several widely available free and open source models, with no additional training, were capable of classifying stories about specific racial terror lynching events with perfect or near perfect accuracy. The cost to access some of the highest performing models may limit use of these tools at scale for some researchers. 
+
+## Background
+
+To produce “The Ida B. Wells Effect: A Novel Computational Analysis of US Newspaper Lynching Coverage, 1805-1963,” a journal article currently undergoing peer review, Wells, et al., developed a human-in-the-loop, computational process to identify and extract news stories about individual lynchings from [Chronicling America](https://chroniclingamerica.loc.gov/)[^1], the Library of Congress archive of more than 20 million, digitally-scanned American newspaper pages and text extracted from those pages using optical character recognition (OCR) software. The data source and novel research method allowed Wells’ research term to analyze coverage of racial terror lynching at a larger scale than previous efforts.  
+
+Still, the data extraction and analysis pipeline supporting the research was necessarily limited by the technological tools available at the time, and suffered from several key limitations.  Extracting potentially-relevant newspaper pages that might have contained lynching coverage from the Chronicling America archive required complex keyword searching against an OCR text layer rife with scanning errors, spelling mistakes and word order faults. Further, the native Chronicling America page text layer was available via API only at the level of a scanned page – not at the level of the article, the research team’s preferred level of analysis. At the time, the accuracy of computer vision tools to automate the extraction of article-level text from complex newspaper page layouts was limited, as were tools to automatically classify individual articles as describing a specific lynching event, a key piece of the data engineering pipeline.  These shortcomings were overcome with a lot of human labor, which increased the time it took to complete the project and, to some degree, limited its scope. 
+
+The experiment described here examined the feasibility of fully automating key parts of the research pipeline by taking advantage of machine learning and artificial intelligence advancements that became widely accessible only after the team’s core research period ended. These advancements included the development of neural networks that could fully-automate the process of article text extraction to produce a far more accurate OCR text layer than the native version available through Chronicling America. It also included the emergence of commercially-available, low-cost, general purpose large language models (LLMs) that excel at classifying text, a key research task for this project.  
+
+## Research Questions
+
+This project started with three core research questions, designed to test the feasibility of replacing core elements of the human-computational lynching research data pipeline with a purely automated process. 
+
+1. Could an advanced, multimodal language model accurately identify article units on scanned historical newspaper page images, and extract the text of individual articles with a high degree of accuracy, despite complex historical layouts?  
+
+2. Could an advanced, text-processing large language model accurately classify a sample of article texts into one of several common categories (multi-class classification) found in a corpus of articles covering the topic of racial terror lynching? These categories included: a story describing a specific past lynching event, a story suggesting a specific lynching event may happen in the future, a story about general laws governing lynchings, an article unrelated to racial terror lynching that nonetheless contained keywords commonly found in lynching coverage (a story about a man named John Lynch or story about a lunch being served. but the OCR translator erroneously substituted “lynch” for “lunch”), or an unrelated story.   
+
+3. Could an advanced, text-processing large language model accurately classify (binary classification) a sample of article texts into one of two categories related to racial terror lynching – either a story about a specific racial terror lynching event or not?
+
+## Experiment Design and Methodology
+
+### Data source
+The original goal for this experiment was to develop a method to answer research question one, by far the most complex part of the research team’s data engineering pipeline. Then I discovered the American Stories project.  After Wells’ research teams’s principal research period ended, a research team led by Melissa Dell[^2], a Harvard economist, released a peer-reviewed paper \-- “American Stories: A Large-Scale Structured Text Dataset of Historical U.S. Newspapers”[^3] \-- describing a deep learning assembly model that parses complex layouts with a high degree of accuracy, classifies components of each page as an article, headline, byline or other content type, and extracts text with a high degree of accuracy using a novel OCR[^4] architecture[^5]. The team applied this model to the entire Chronicling America archive, and released a structured dataset that contains 1.2 billion distinct content units, including the text of 438 million distinct articles and the text of 417 million distinct headlines. The “American Stories” dataset[^6] and the model pipeline[^7] are both available for public use. Instead of reinventing the wheel, I made use of this resource to answer research questions 2 and 3\. Building on a Python library Dell’s team developed, I wrote a set of custom python scripts to download and parse the data, and extracted a sample of articles for testing the performance of LLMs for this experiment.  
+
+### Training and test data
+I compiled a dataset of 200 articles, through a mix of random sampling, keyword targeting and manual augmentation across several years represented in the American Stories dataset.  I used this method, instead of truly random sampling method, to ensure a diverse training and test dataset with sufficient examples in each of the lynching story categories described earlier. I manually classified each story in the dataset using the category rubric described earlier.  I then split the dataset, with a one-third sample for a “training” set (67 articles) and two-thirds for a testing set (133 articles). I did not use the training set as one would when training a traditional machine learning classifier. Rather, I used examples from the training dataset to manually iterate a high-quality classification prompt to feed the LLMs. I thought it important to split out a training set for prompt engineering to avoid developing a prompt “overfitted” to my specific dataset. 
+
+```{r}
+lynching_articles_test_data
+```
+
+### Prompt engineering
+
+My full prompt provided explicit instructions for the models to follow. It included clearly worded, non-overlapping classification categories; clear instructions on how to process the text and detailed guidance on what information to output and how to structure it. In iterating on the prompt, I found that the following tweaks significantly improved performance:
+
+* Asking the model to spell check the article and return the spell checked article text, even though I had need for the spell checked text.  
+* Asking it to provide an explanation for why it chose a specific category helped some of the smaller, less powerful models improve accuracy rates.  
+* Feeding it a long list of specific json formatting requirements, which made it less likely it would give me non-parsable json. 
+
+This is the full prompt:
+
+> You are an expert in classifying historical newspaper articles about lynchings in the United States between 1865 and 1922. You always follow instructions.
+
+> I will give you the text of a newspaper article and an associated article_id. The text can classified into one of six distinct categories:
+
+> 1. An article that describes a specific lynching event that has already happened.
+> 2. An article that does not describe a specific lynching event that has already happened, but does suggest a lynching event may happen in the future. 
+> 3. An article that does not describe a specific lynching event that has already happened, does not suggest a lynching event may happen in the future, but is about federal, state or local policies or laws governing lynching or describes debate over proposed laws.
+> 4. An article that contains strings or partial strings typically found in stories associated with lynching -- like the word 'lynching' or 'lynch' -- but does not describe past or possible lynching events or lynching laws and policies. This could include an article that mentions someone whose last name is Lynch, or a reference toa city that includes 'lynch' as part of its name, like Lynchburg, Va.
+> 5. An article that contains no strings or partial strings typically found in stories associated with lynching and not describe past or possible lynching events or lynching laws and policies.
+> 6. An article that does not fit into any of the first five categories.
+
+> Please do the following:
+> - The article text provided here was extracted from newspaperpage images through an imperfect OCR process. Do your best to correct any flaws introduced in this process, without changing meaning of the article. You should spellcheck the text and correct spelling errors, standardize capitalization, fix extraneous spaces, remove newline characters and random slashes, separate words that have obviously been concatenated in error, remove non alphabetic or standard punctuation characters. Of special importance is to correct any errors that will prevent the json from being parsed correctly later. 
+> - Select the category that best describes the article text. Choose only one. 
+> - Develop a brief explanation of why you chose a specific category, including keywords or terms that support the decision.
+
+> Format your response as a JSON object with these exact fields:
+> {
+>     \"article_id\": \"string, unchanged from input\",
+>     \"spellchecked_text\": \"string, corrected spelling of article\",
+>     \"category_id\": \"string, single digit 1-6\",
+>     \"category_description\": \"string, exact category description from above\",
+>     \"explanation\": \"string, brief reason for classification\"
+> }
+
+> Important formatting rules:
+> - Use double quotes for all strings
+> - No line breaks in text fields
+> - No trailing commas
+> - No comments or additional text
+> - No markdown formatting
+> - Escape all quotes within text using single quotes
+> - Remove any \\r or \\n characters from text
+> - End the JSON object with a single closing curly brace }
+
+### Models tested
+I selected 6 model versions produced by Meta, OpenAI, Anthropic, Amazon, Google, Cohere and A21. The list included models released up to two years ago, and it included a mix of small models designed for fast inference and larger models with more inherent reasoning capabilities. The final list of models were all accessed through paid, free or partially free APIs.  Though I tested several locally-run open source models – some of which were also available via the APIs I used, I did not rely on local models for the final tests. This is the list of tested models:
+
+```{r}
+provider_model_type_status_check %>% select(model_provider,model_type)
+```
+
+I sent each article in the test set, along with my prompt, to each of the models, and recorded their predictions.  I then compared their predictions to the actual classifications I assigned to each article, and produced accuracy measurements for binary and multi-class tasks. 
+
+## Results and discussion
+
+Based on past experience with these models, I expected some would perform well on binary classification and multi-class classification tasks. Still, I was surprised by the results.  
+
+On binary classification, three models – Google Gemini 1.5-pro, OpenAI GPT-4-Turbo-Preview and OpenAI GPT-4o achieved 100 percent accuracy.  A third of all tested models (12 of 37\) achieved 95 percent accuracy, and two-thirds (25 of 37\) achieved 95 percent accuracy.  
+
+```{r fig.height=12, fig.width=8}
+
+specific_lynching_event_predicted_v_actual
+specific_lynching_event_predicted_v_actual %>% 
+  ungroup() %>%
+  separate(model_provider_type, into = c("provider", "model"), sep = "_") %>%
+  arrange(desc(pct_correct)) %>%
+  mutate(model = factor(model, levels = unique(model))) %>%
+  ggplot(aes(y = pct_correct, x = model, fill = provider)) +
+  geom_col() +
+  coord_flip() +
+  scale_y_continuous(
+    limits = c(0, 100),
+    breaks = seq(0, 100, 25),
+    expand = expansion(mult = c(0, 0.05))
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    legend.position = "top",
+    legend.title = element_text(size = 12),
+    legend.text = element_text(size = 10),
+    #axis.title.x = element_blank(),
+    plot.title = element_text(face = "bold", size = 14, hjust = 0.5),
+    plot.subtitle = element_text(size = 11, color = "gray40", hjust = 0.5),
+    aspect.ratio = 2,
+    axis.text.y = element_text(size = 9),
+    axis.text.x = element_text(size = 10),
+    plot.margin = margin(t = 20, r = 20, b = 20, l = 20)
+  ) +
+  labs(
+    title = "Model Prediction Accuracy | Binary Classification",
+    subtitle = "Percentage of correct predictions for specific lynching event stories",
+    y = "Percentage Correct",
+    x = "Model Type",
+    fill = "Model API Provider"
+  )
+```
+
+On multi-class classification, a more challenging task, no model scored perfectly.  Three models achieved 97 percent accuracy, a third achieved 90 percent accuracy.  
+
+```{r fig.height=12, fig.width=8}
+
+specific_class_predicted_v_actual
+specific_class_predicted_v_actual %>% 
+  ungroup() %>%
+  separate(model_provider_type, into = c("provider", "model"), sep = "_") %>%
+  arrange(desc(pct_correct)) %>%
+  mutate(model = factor(model, levels = unique(model))) %>%
+  ggplot(aes(y = pct_correct, x = model, fill = provider)) +
+  geom_col() +
+  coord_flip() +
+  scale_y_continuous(
+    limits = c(0, 100),
+    breaks = seq(0, 100, 25),
+    expand = expansion(mult = c(0, 0.05))
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    legend.position = "top",
+    legend.title = element_text(size = 12),
+    legend.text = element_text(size = 10),
+    #axis.title.x = element_blank(),
+    plot.title = element_text(face = "bold", size = 14, hjust = 0.5),
+    plot.subtitle = element_text(size = 11, color = "gray40", hjust = 0.5),
+    aspect.ratio = 2,
+    axis.text.y = element_text(size = 9),
+    axis.text.x = element_text(size = 10),
+    plot.margin = margin(t = 20, r = 20, b = 20, l = 20)
+  ) +
+  labs(
+    title = "Model Prediction Accuracy | Multi-Class Classification",
+    subtitle = "Percentage of correct predictions for specific lynching story classes",
+    y = "Percentage Correct",
+    x = "Model Type",
+    fill = "Model API Provider"
+  )
+```
+
+### Discussion of results
+It is notable that the highest performing models in this test also tended to come from the newest generation of closed models from OpenAI’s gpt-4 and o1 series, Google Gemini models, and Anthropic’s Claude 3 models.  API users must pay to use OpenAI and Anthropic for any amount of inference. Google Gemini has a free tier, with daily rate limits that would require payment for work done at scale.  
+
+The highest performance truly open source model was Meta Llama 3.1 70B token model, which had a 95 percent accurate rate on binary classification tests and 87 percent accuracy on multi-class classification tests. 
+
+This model can be run for free on a local machine with sufficient computational capacity, though it tends to produce output more slowly than API services, where inference is performed on powerful servers and sent to the user. There are many lower-cost-per-token models that run more quickly than the most advanced paid and open source versions.  But in my tests, these models, purpose built for speed (or hailing from an older generation of models) were far less performative than their more advanced cousins.
+
+## Future work
+
+There are several additional research questions I would have liked to have explored for this experiment, which are ripe for future research.  They include:
+
+* Can an off-the-shelf large language model, with no additional training, determine whether a story about a specific lynching event was describing a lynching event that occurred in the newspaper’s local coverage area? Or did it describe a story of a specific lynching event that happened elsewhere, perhaps a reproduced wire story? In addition to drawing on context clues in the article text, I hypothesize that including the name of the newspaper, its location and a page image showing length and position could help the LLM make accurate predictions.   
+* Can an off-the-shelf large language model, with no additional training OR custom tuning with a small example set, accurately identify narrative themes in a corpus of lynching stories,  including language that normalized or excused extra-judicial lynchings?  
+* Can an off-the-shelf large language model, with no additional training, classify stories on topics other than lynching with the same degree of accuracy? Or are stories about lynching particularly suited to these tasks?
+
+## Conclusion
+
+This experiment found that advanced large language models (LLMs) were well-suited to accurate classification of stories about racial terror lynching in a corpus of historical newspaper articles. Several state-of-the-art commercial models with advanced reasoning capabilities performed the task with perfect accuracy on binary classification tasks and near perfect accuracy on multi-class classification tasks. The experiment results suggest that key tasks in the human-computational pipeline required to prepare data for content analysis can be fully automated, with careful prompt design and model selection.  However, the fact that the highest performing models in this experiment are closed source and cost money to access may limit opportunities for underfunded researchers to use these tools at the scale of a corpus the size of Chronicling America. If LLM cost-reduction patterns hold, however, one would expect that the cost to access these models will drop substantially in coming years, as newer, costlier and higher performing models are released.   
+
+
+[^1]:  https://chroniclingamerica.loc.gov/
+
+[^2]:  https://dell-research-harvard.github.io/
+
+[^3]:  [https://arxiv.org/pdf/2308.12477](https://arxiv.org/pdf/2308.12477) [https://huggingface.co/datasets/dell-research-harvard/AmericanStories](https://huggingface.co/datasets/dell-research-harvard/AmericanStories)	
+
+[^4]:  https://github.com/dell-research-harvard/efficient\_ocr
+
+[^5]:  https://arxiv.org/pdf/2308.12477
+
+[^6]:  https://huggingface.co/datasets/dell-research-harvard/AmericanStories
+
+[^7]:  https://github.com/dell-research-harvard/AmericanStories

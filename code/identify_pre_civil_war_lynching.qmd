@@ -1,0 +1,731 @@
+---
+title: "Untitled"
+
+---
+
+This is the output of a search for pre-civil war articles in scripts that Sean wrote
+
+The search patterns were:
+search_patterns = [
+    "lynch",
+    "(mob|crowd).{0,30}(hung|strungup|swing)",
+    "(roughjustice|vigilancecommittee|popularjustice|frontierjustice|extrajudicialpunishment|roughmusic|summaryexecution)"
+  
+
+
+Setup instructions for running VS code and getting python in a virtual environment
+https://umd.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=cae580d5-1f00-4f8a-b16f-b2960110c407
+
+The repo with the code
+ "/Users/gizmofo/Code/american_stories_lynching_article_classification_with_llm"
+
+
+```{r}
+#library(ollamar)
+library(httr2)
+library(dplyr)
+library(curl)
+library(tidyr)
+library(arrow)
+pre_civil <- read_feather("data/output_data/pre_civil_lynch_match_all/pre_civil_lynch_match_all.feather")
+
+pre_civil_head <- pre_civil %>%
+  head(8)
+
+pre_civil_head
+```
+
+#Write file to .csv
+```{r}
+write.csv(pre_civil, "pre_civil_lynch_match_all_march_4_2025.csv")
+
+```
+
+
+
+```{r}
+process_articles_parallel <- function(model_name, 
+                                    articles_df,
+                                    system_prompt = NULL,
+                                    max_concurrent = 8,
+                                    output_dir = "data/output_data/llm_responses",
+                                    on_error = c("stop", "return", "continue")) {
+  # Validate and process on_error argument
+  on_error <- match.arg(on_error)
+  
+  # Create output directory
+  model_dir <- file.path(output_dir, model_name)
+  dir.create(model_dir, recursive = TRUE, showWarnings = FALSE)
+  
+  # Create log file
+  log_file <- file.path(model_dir, "error_log.csv")
+  write.csv(data.frame(
+    timestamp = character(),
+    article_id = character(),
+    error = character(),
+    stringsAsFactors = FALSE
+  ), log_file, row.names = FALSE)
+  
+  # Create request objects for each article
+  reqs <- lapply(1:nrow(articles_df), function(i) {
+    prompt <- sprintf(
+      "Article ID: %s\nNewspaper: %s\nDate: %s\nHeadline: %s\nArticle: %s",
+      articles_df$article_id[i],
+      articles_df$newspaper_name[i],
+      articles_df$date[i],
+      articles_df$headline[i],
+      articles_df$article[i]
+    )
+    
+    if (!is.null(system_prompt)) {
+      generate(model_name, prompt, system = system_prompt, output = "req")
+    } else {
+      generate(model_name, prompt, output = "req")
+    }
+  })
+  
+  # Perform requests in parallel
+  responses <- req_perform_parallel(
+    reqs,
+    pool = curl::new_pool(total_con = max_concurrent),
+    on_error = on_error,
+    progress = TRUE
+  )
+  
+  # Process responses and save individually
+  for (i in seq_along(responses)) {
+    resp <- responses[[i]]
+    article_id <- articles_df$article_id[i]
+    file_path <- file.path(model_dir, paste0(article_id, ".rds"))
+    
+    tryCatch({
+      if (inherits(resp, "error")) {
+        # Log error
+        write.table(
+          data.frame(
+            timestamp = format(Sys.time(), "%Y-%m-%d %H:%M:%S"),
+            article_id = article_id,
+            error = conditionMessage(resp),
+            stringsAsFactors = FALSE
+          ),
+          log_file,
+          sep = ",",
+          row.names = FALSE,
+          col.names = !file.exists(log_file),
+          append = TRUE
+        )
+        
+        warning(sprintf("Failed to process article %s: %s", 
+                       article_id, conditionMessage(resp)))
+      } else {
+        # Save successful response
+        response_data <- list(
+          model = model_name,
+          article_id = article_id,
+          response = resp_process(resp, "text"),
+          timestamp = Sys.time()
+        )
+        saveRDS(response_data, file = file_path)
+      }
+    }, error = function(e) {
+      write.table(
+        data.frame(
+          timestamp = format(Sys.time(), "%Y-%m-%d %H:%M:%S"),
+          article_id = article_id,
+          error = as.character(e),
+          stringsAsFactors = FALSE
+        ),
+        log_file,
+        sep = ",",
+        row.names = FALSE,
+        col.names = !file.exists(log_file),
+        append = TRUE
+      )
+    })
+  }
+  
+  # Return directory where files were saved
+  return(model_dir)
+}
+
+system_prompt_value <- "You are an expert in classifying historical newspaper articles about lynchings in the United States before the Civil War. You always follow instructions.
+
+I will give you the text of a newspaper article and an associated article_id. The text can classified into one of two categories:
+1. An article text that describes a specific lynching event of an individual person or persons. 
+2. An article text that does not describe a specific lynching event, but does discuss lynching as a topic, such as a debate over a proposed lynching law or policy.  
+3. An article that does not describe a specific lynching event and does not discuss the topic of lynching. 
+Please do the following:
+-- The article text provided here was extracted from newspaperpage images through an imperfect OCR process. Do your best to correct any flaws introduced in this process, without changing meaning of the article. You should spellcheck the text and correct spelling errors, standardize capitalization, fix extraneous spaces, remove newline characters and random slashes, separate words that have obviously been concatenated in error, remove non alphabetic or standard punctuation characters. Of special importance is to correct any errors that will prevent the json from being parsed correctly later. 
+-- Select the category that best describes the article text. Choose only one. 
+-- Develop a brief explanation of why you chose a specific category, including keywords or terms that support the decision.
+
+Format your response as a JSON object with these exact fields:
+{
+    \"article_id\": \"string, unchanged from input\",
+    \"spellchecked_text\": \"string, corrected spelling of article\",
+    \"category_id\": \"string, single digit 1-6\",
+    \"category_description\": \"string, exact category description from above\",
+    \"explanation\": \"string, brief reason for classification\"
+}
+
+Important formatting rules:
+- Use double quotes for all strings
+- No line breaks in text fields
+- No trailing commas
+- No comments or additional text
+- No markdown formatting
+- Escape all quotes within text using single quotes
+- Remove any \\r or \\n characters from text
+- End the JSON object with a single closing curly brace }"
+
+
+# provider_model_type_list <- c(
+#                 "ollama_llama3.3:latest", 
+#                 "ollama_llama3.2:1b",
+#                 "ollama_llama3.1:8b",
+#                 "ollama_llama3.2:3b",
+#                 "ollama_llama3.1:70b",
+#                 "ollama_llama3.1:405b",
+#                 "ollama_gemma2:27b",
+#                 "ollama_gemma2:9b",
+#                 "ollama_gemma2:2b",
+#                 "ollama_mistral:7b",
+#                 "ollama_qwen2:7b",
+#                 "ollama_mixtral:8x7b"
+# )
+
+
+
+# # Example usage:
+# results <- process_articles_parallel(
+#   "llama3.3:latest",
+#   pre_civil_head,
+#   system_prompt = system_prompt_value,
+#   max_concurrent = 8,
+#   on_error = "continue"
+# )
+
+output_dir <- process_articles_parallel(
+  "llama3.2:1b",
+  pre_civil_head,
+  system_prompt = system_prompt_value,
+  max_concurrent = 8,
+  output_dir = "data/output_data/llm_responses_pre_civil_war",
+  on_error = "continue"
+)
+
+```
+
+```{r}
+
+```
+
+```{r}
+library(ollamar)
+library(httr2)
+library(dplyr)
+library(curl)
+
+process_prompts_parallel <- function(model_name, prompts, system_prompt = NULL, 
+                                   max_concurrent = 8, 
+                                   on_error = c("stop", "return", "continue")) {
+  # Validate and process on_error argument
+  on_error <- match.arg(on_error)
+  
+  # Test connection to Ollama server
+  connection_test <- try(test_connection(), silent = TRUE)
+  if (inherits(connection_test, "try-error") || 
+      !inherits(connection_test, "httr2_response") || 
+      connection_test$status_code != 200) {
+    stop("Ollama server is not running. Please start the Ollama application.")
+  }
+  
+  # Create custom connection pool with correct parameter names
+  pool <- curl::new_pool(
+    total_con = max_concurrent,  # Total number of concurrent connections
+    host_con = max_concurrent    # Max connections per host
+  )
+  
+  # Create request objects based on whether we have a system prompt
+  reqs <- if (!is.null(system_prompt)) {
+    # Create initial chat history with system prompt
+    chat_history <- create_message(system_prompt, "system")
+    
+    # Create request for each prompt
+    lapply(prompts, function(prompt) {
+      messages <- append_message(prompt, "user", chat_history)
+      chat(model_name, messages, output = "req")
+    })
+  } else {
+    # Simple generate requests without system prompt
+    lapply(prompts, function(prompt) {
+      generate(model_name, prompt, output = "req")
+    })
+  }
+  
+  # Perform requests in parallel with custom pool
+  responses <- req_perform_parallel(
+    reqs,
+    pool = pool,
+    on_error = on_error,
+    progress = TRUE
+  )
+  
+  # Process all responses into a data frame
+  results <- bind_rows(lapply(responses, function(resp) {
+    if (inherits(resp, "error")) {
+      # Handle error case
+      data.frame(
+        model = model_name,
+        role = "error",
+        content = conditionMessage(resp),
+        created_at = as.character(Sys.time())
+      )
+    } else {
+      # Process successful response
+      resp_process(resp, "df")
+    }
+  }))
+  
+  # Add the original prompts as a column
+  results$prompt <- prompts
+  
+  return(results)
+}
+
+# Example usage
+prompts <- c(
+  "What is the capital of France?",
+  "What is the capital of Japan?",
+  "What is the capital of Brazil?",
+  "What is the capital of Australia?"
+)
+
+# Basic usage with custom concurrent connections
+results <- process_prompts_parallel(
+  "llama3.2:3b", 
+  prompts, 
+  max_concurrent = 8,
+  on_error = "continue"
+)
+
+# Print results
+print(results)
+
+```
+
+```{r}
+library(tidyverse)
+library(arrow)
+
+###
+# Step 01 
+# Load libraries + set up environment
+# Edit .Renviron file to add API Keys. 
+# Run this: usethis::edit_r_environ() 
+# Restart R after editing .Renviron files
+
+###
+source("scripts/r_scripts/01_r_environment_setup.R")
+
+###
+# Step 02 
+# Define LLM model list
+# Edit the list to change models
+###
+#source("scripts/r_scripts/02_r_provider_model_list.R")
+
+###
+# Step 03 Define system prompt to send with each article
+# Edit the system prompt to change the prompt
+###
+
+# source("scripts/r_scripts/03_r_system_prompt.R")
+
+###
+# Step 04 Load function to classify articles
+###
+#source("scripts/r_scripts/04_r_classify_articles.R")
+
+
+###
+# Step 05 Load function to combine and evaluate responses
+###
+
+source("scripts/r_scripts/05_r_evaluate_responses.R")
+
+###
+# Step 06 Load function to correct malformed json with llm
+###
+
+source("scripts/r_scripts/06_r_check_and_correct_json.R")
+
+###
+# Step 07 Load function to evaluate model performance
+###
+
+source("scripts/r_scripts/07_r_evaluate_model_accuracy.R")
+
+
+pre_civil <- read_feather("data/output_data/all_years_data/combined_data.feather")
+
+pre_civil_head <- pre_civil %>%
+  head(1)
+
+
+classify_articles <- function(model_provider_type="ollama_llama3.3",
+                              system_prompt=pre_civil_prompt,
+                              test_set_articles_df = pre_civil_head_head,
+                              output_folder = "data/output_data/llm_responses",
+                              sample_size=1, 
+                              overwrite=TRUE) {
+  
+  
+  ###
+  # Parse model input string
+  ###
+  
+  # Check validity of model_provider_type
+  # Must be in format of provider_type, i.e. gemini_gemini-1.5-pro
+  
+  if (!is.character(model_provider_type) || length(model_provider_type) != 1) {
+    stop("model_provider_type must be a single character string")
+  }
+  
+  # Split into list of provider, type and check validity 
+  
+  parts <- str_split(model_provider_type, "_")[[1]]
+  
+  if (length(parts) != 2) stop("model_provider_type must be in format 'provider_model'")
+  
+  # Store component parts to pass to build 
+  model_provider <- parts[1]
+  model_type <- parts[2]
+  
+  ###
+  # Create save directory
+  ###
+  
+  save_dir <- file.path(output_folder, model_provider, model_type)
+  dir.create(save_dir, recursive = TRUE, showWarnings = FALSE)
+  
+  ###
+  # Create log file
+  ### 
+  log_file <- file.path(save_dir, "error_log.csv")
+  #if (overwrite || !file.exists(log_file)) {
+    write.csv(data.frame(
+      timestamp = character(),
+      article_id = character(),
+      error = character(),
+      stringsAsFactors = FALSE
+    ), log_file, row.names = FALSE)
+  #}
+  
+  ###
+  # Set number of articles to pass through models
+  ###
+  
+  result_df <- test_set_articles_df %>% 
+    slice(1:sample_size)
+  
+  ###
+  # Extract articles and article IDs into lists
+  ###
+  
+  articles <- result_df %>% 
+    pull(article)
+  
+  article_ids <- result_df %>% 
+    pull(article_id)
+  
+  ###
+  # Loop through articles and apply process_article function
+  ###
+  
+  walk(seq_along(articles), 
+       ~process_article(i = .x, 
+                        article_ids = article_ids, 
+                        articles = articles, 
+                        save_dir = save_dir, 
+                        model_provider = model_provider, 
+                        model_type = model_type, 
+                        overwrite=overwrite,
+                        model_provider_type=model_provider_type,
+                        log_file=log_file))
+  print(paste0("finished processing ", model_provider_type))
+}
+
+###
+# process article function
+###
+
+process_article <- function(i, article_ids, articles, save_dir, model_provider, model_type, overwrite, model_provider_type,log_file) {
+  #print(overwrite)
+  #return(overwrite)
+  ###
+  # Define filepath
+  ###
+  print(model_provider_type)
+  file_path <- file.path(save_dir, paste0(article_ids[i], ".rds"))
+  
+  ###
+  # Check if file exists and if overwrite argument is set to FALSE
+  # If it is, don't reprocess the article because $$$
+  ###
+  if (!overwrite && file.exists(file_path)) {
+    print(paste("Article", article_ids[i], "already processed"))
+    return(NULL)
+  }
+  
+  ###
+  # If the file doesn't exist yet or overwrite is TRUE, process the article
+  ###
+  
+  print(paste("Article", article_ids[i], "not yet processed, starting..."))
+  
+  ###
+  # Determine which elmer function to use based on model_provider
+  # Store a chat object to use in the chat function later
+  ###
+  
+  chat <- if (model_provider == "ollama") {
+    chat_ollama(model = model_type, system_prompt = system_prompt_value, echo = FALSE)
+  } else if (model_provider == "groq") {
+    chat_groq(model = model_type, system_prompt = system_prompt_value, echo = FALSE)
+  } else if (model_provider_type %in% c("openai_o1-preview","openai_o1-mini")) {
+    chat_openai(model = model_type, echo = FALSE)
+  } else if (model_provider == "openai") {
+    chat_openai(model = model_type, system_prompt = system_prompt_value, echo = FALSE)
+  } else if (model_provider == "gemini") {
+    chat_gemini(model = model_type, system_prompt = system_prompt_value, echo = FALSE)
+  } else if (model_provider == "bedrock") {
+    chat_bedrock(model = model_type, echo = FALSE)
+  } else {
+    stop("model_provider not recognized")
+  }
+  
+  ###
+  # Account for different system prompt formats
+  # Build the prompt to send to the model
+  ###
+  
+  if (model_provider == "bedrock" | model_provider_type %in% c("openai_o1-preview","openai_o1-mini")) {
+    text <- paste0("Instructions: ", system_prompt_value, "\nArticle ID: ", article_ids[i], "\nArticle to process: ", articles[i])
+  } else {
+    text <- paste0("Article ID: ", article_ids[i], "\n\nArticle: ", articles[i])
+  }
+  
+  ###
+  # Attempt to get response from model! 
+  # Save the response as an RDS file
+  # If it fails, log the error
+  ###
+  
+  tryCatch({
+    response <- chat$chat(text)
+    saveRDS(response, file = file_path)
+  }, error = function(e) {
+    error_msg <- as.character(e)
+    write.table(
+      data.frame(
+        timestamp = format(Sys.time(), "%Y-%m-%d %H:%M:%S"),
+        article_id = article_ids[i],
+        error = error_msg,
+        stringsAsFactors = FALSE
+      ),
+      log_file,
+      sep = ",",
+      row.names = FALSE,
+      col.names = !file.exists(log_file),
+      append = TRUE
+    )
+    warning(sprintf("Row %d: Failed to get response for %s model %s.\nError: %s",
+                    i, model_provider, model_type, error_msg))
+  })
+}
+
+system_prompt_value <- "You are an expert in classifying historical newspaper articles about lynchings in the United States before the Civil War. You always follow instructions.
+
+I will give you the text of a newspaper article and an associated article_id. The text can classified into one of two categories:
+1. An article text that describes a specific lynching event of an individual person or persons. 
+2. An article text that does not describe a specific lynching event, but does discuss lynching as a topic, such as a debate over a proposed lynching law or policy.  
+3. An article that does not describe a specific lynching event and does not discuss the topic of lynching. 
+Please do the following:
+-- The article text provided here was extracted from newspaperpage images through an imperfect OCR process. Do your best to correct any flaws introduced in this process, without changing meaning of the article. You should spellcheck the text and correct spelling errors, standardize capitalization, fix extraneous spaces, remove newline characters and random slashes, separate words that have obviously been concatenated in error, remove non alphabetic or standard punctuation characters. Of special importance is to correct any errors that will prevent the json from being parsed correctly later. 
+-- Select the category that best describes the article text. Choose only one. 
+-- Develop a brief explanation of why you chose a specific category, including keywords or terms that support the decision.
+
+Format your response as a JSON object with these exact fields:
+{
+    \"article_id\": \"string, unchanged from input\",
+    \"spellchecked_text\": \"string, corrected spelling of article\",
+    \"category_id\": \"string, single digit 1-6\",
+    \"category_description\": \"string, exact category description from above\",
+    \"explanation\": \"string, brief reason for classification\"
+}
+
+Important formatting rules:
+- Use double quotes for all strings
+- No line breaks in text fields
+- No trailing commas
+- No comments or additional text
+- No markdown formatting
+- Escape all quotes within text using single quotes
+- Remove any \\r or \\n characters from text
+- End the JSON object with a single closing curly brace }"
+
+
+provider_model_type_list <- c(
+                "ollama_llama3.3:latest", 
+                "ollama_llama3.2:1b",
+                "ollama_llama3.1:8b",
+                "ollama_llama3.2:3b",
+                "ollama_llama3.1:70b",
+                "ollama_llama3.1:405b",
+                "ollama_gemma2:27b",
+                "ollama_gemma2:9b",
+                "ollama_gemma2:2b",
+                "ollama_mistral:7b",
+                "ollama_qwen2:7b",
+                "ollama_mixtral:8x7b"
+)
+
+
+future_map(
+  provider_model_type_list,
+  classify_articles,
+  system_prompt = system_prompt_value,
+  test_set_articles_df = pre_civil_head,
+  output_folder = "data/output_data/llm_responses_pre_civil_war",
+  sample_size = nrow(pre_civil_head),
+  overwrite = FALSE,
+  .progress = TRUE
+)
+
+
+# classify_articles(
+#   model_provider_type = "ollama_llama3.1:70b",
+#   system_prompt = system_prompt_value,
+#   test_set_articles_df = pre_civil_head,
+#   output_folder = "data/output_data/llm_responses_pre_civil_war",
+#   sample_size = nrow(pre_civil_head),
+#   overwrite = FALSE
+# )
+
+
+# Combine all the individual responses into a single tibble, and check for valid json
+lynching_article_llm_responses <- combine_responses_validate_json("data/output_data/llm_responses_pre_civil_war")
+
+###
+# Check for completeness
+###
+# Function creates completeness check objects below
+provider_model_type_status_check <- get_model_completeness_status(lynching_article_llm_responses, pre_civil_head) 
+provider_model_type_status_check <- provider_model_type_status_check$provider_model_type_status_df 
+# This function passes bad json to another llm to clean up
+#results_with_corrected_json <- correct_malformed_json_with_llm(lynching_article_llm_responses, n_workers = 10)
+
+```
+
+```{r}
+# Individual patterns converted to R syntax
+lynching_patterns <- c(
+  # Pattern 1: Lynching of colored
+  "lynchings?\\W+of\\W+(the\\W+)?(([[:alnum:]]+\\W+){1,2})?colored",
+  
+  # Pattern 2: Derogatory terms + lynch
+  "(murderer|fiend|desperado|brute)\\W+(([[:alnum:]]+\\W+){1,2})?lynch(ed|es|ing)?(\\W+|$)",
+  
+  # Pattern 3: Colored + lynch
+  "coloreds?\\W+(([[:alnum:]]+\\W+){1,2})?((was|were)\\W+)?lynch(ed|es|ing)?(\\W+|$)",
+  
+  # Pattern 4: Lynching of negro
+  "lynchings?\\W+of\\W+(the\\W+)?(([[:alnum:]]+\\W+){1,2})?negro",
+  
+  # Pattern 5: Mob + hung/lynch
+  "mob\\W+(([[:alnum:]]+\\W+){1,2})?(hung|hang(ed|ings?|s)|lynch(ed|es|ing)?)",
+  
+  # Pattern 6: Negro + lynch
+  "negro(e?s)?\\W+(([[:alnum:]]+\\W+){1,2})?((was|were)\\W+)?lynch(ed|es|ing)?(\\W+|$)"
+)
+
+# Combined pattern that matches ANY of the above patterns
+combined_pattern <- paste(lynching_patterns, collapse = "|")
+
+pre_civil_x <- pre_civil_head %>%
+  mutate(x_article = str_to_lower(article)) %>%
+  mutate(x_article = str_replace_all(x_article,"[[:punct:]]"," ")) %>%
+  mutate(x_article = str_replace_all(x_article,"[[:digit:]]", " ")) %>%
+  mutate(x_article = str_replace_all(x_article,"[^[:alpha:][:space:]]", " ")) %>%
+  mutate(x_article = str_replace_all(x_article,"\\b[a-z]\\b", " ")) %>%  # removes single letter words
+  mutate(x_article = str_squish(x_article)) %>%
+  filter(str_detect(x_article,"lynch")) %>%
+  mutate(contains_lynching = str_detect(article, 
+                                      regex(combined_pattern, 
+                                           ignore_case = TRUE)))
+
+# Example usage with stringr
+#library(stringr)
+
+# Function to detect matches
+#detect_patterns <- function(text) {
+#  str_detect(text, regex(combined_pattern, ignore_case = TRUE))
+#}
+
+# Function to extract matches
+#extract_patterns <- function(text) {
+#  str_extract_all(text, regex(combined_pattern, ignore_case = TRUE))
+#}
+
+```
+
+```{r}
+
+lynch <- pre_civil %>% 
+  mutate(article = str_to_lower(article)) %>%
+  filter(str_detect(article,"lynch")) 
+  
+
+
+
+lynch_index <- lynch %>%
+  #filter(!str_detect(article,"lynchburg")) %>%
+  mutate(article_id = row_number(),
+         lynch_word = str_extract_all(article, "\\b\\w*lynch\\w*\\b")) %>%
+  unnest(lynch_word) 
+
+lynch_words <- x %>%
+  group_by(lynch_word) %>%
+  count() %>%
+  filter(!str_detect(lynch_word,"bur|brrg|bnrg|barg|urg|bug|bu|bufg|bsrg|bprg|bafg|bgg|bgrgh|bhrg|birg|biug|blrg|lynchpin|btrg|bmgh")) %>%
+  filter(n > 1)
+
+lynch_articles <- lynch_index %>%
+  inner_join(lynch_words) %>%
+  select(article_id:article) %>%
+  distinct()
+  
+
+z <- x %>%
+  anti_join(lynch_words)
+
+
+6
+lynchbafg
+7
+lynchbgg
+8
+lynchbgrgh
+9
+lynchbhrg
+10
+lynchbhrgh
+11
+lynchbirg
+12
+lynchbiug
+13
+lynchblrg
+
+```
