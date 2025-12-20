@@ -6,9 +6,11 @@ output: html_document
 ---
 This notebook will analyze data gathered in the Pre-Civil War lynching analysis.
 
+Reviewed 12-19-2025
+
 ```{r}
 #install.packages("here")
-here::here()
+#here::here()
 library(tidyverse)
 library(tidyr)
 #install.packages("ggmap")
@@ -44,7 +46,7 @@ precivil$id <- as.numeric(precivil$id)
 # mainindex <- read_csv("/Users/robwells/Code/hcij_lynching_phase_two/Storage_Older_Versions/webapp_db_2023-09-24.csv")
 
 
-mainindex1 <- read_csv("/Users/robwells/Code/hcij_lynching_phase_two/Storage_Older_Versions/webapp_db_2023-09-24__ORIGINALS_ONLY.csv")
+mainindex1 <- read_csv("../data/webapp_db_2023-09-24__ORIGINALS_ONLY.csv")
 
 
 mainindex1 <- separate(data = mainindex1, col = newspaper_name, into = c("newspaper_name1","city"), sep = "[(]", extra ="merge", fill = "right") 

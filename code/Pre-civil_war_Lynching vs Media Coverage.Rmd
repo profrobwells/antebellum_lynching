@@ -42,7 +42,7 @@ precivil <- read_csv("/Users/gizmofo/Code/american_stories_lynching_article_llm/
 
 #9182 articles from 1810 to 1865
 
-glimpse(precivil)
+# glimpse(precivil)
 
 ```
 
@@ -62,7 +62,7 @@ count(year) %>%
   theme(legend.position = "none") +
   labs(title = "Pre-Civil War Lynching Coverage By Year", 
        subtitle = "Count of News Pages with Lynching Stories",
-       caption = "n=9,182 results. Peak page count: 1856: 1,139 articles. Graphic by Rob Wells, 9/5/2025",
+       caption = "n=9,182 results. Peak page count: 1856: 1,139 articles. Graphic by Rob Wells, 12/19/2025",
        y="Count of Pages",
        x="Year")
 
@@ -70,7 +70,7 @@ count(year) %>%
 # count(year) %>% 
 #    group_by(year)
 
-ggsave("../antebellum_output/coverage_year_9_5_2025.png", device = "png",width=9,height=6, dpi=800)
+ggsave("../output/coverage_year_12_19_2025.png", device = "png",width=9,height=6, dpi=800)
 
 # ggsave("../output_images_tables/coverage_year_12_27_2023.png",device = "png",width=9,height=6, dpi=800)
 count_year
@@ -87,31 +87,33 @@ count(year) %>%
 ```
 
 
-
+#-------------------------------------------------------------------------------
+#.  Notes
+#-------------------------------------------------------------------------------
 1% sample
 
 ```{r}
 
 #https://docs.google.com/document/d/1XIVFAVP7IztqXRn1lbgGz0Pu0cszu1A3WuGroYPhViQ/edit#
 
-y %>% 
-count(year) %>% 
-   group_by(year) %>% 
-#Sandwich it onto a simple ggplot
-  ggplot(aes(x = year, y = n, fill = n)) +
-  geom_col(position = "dodge") + 
-  theme(legend.position = "none") +
-  labs(title = "10 pct Sample Lynching Coverage By Year, 1789-1963", 
-       subtitle = "Count of News Pages with Lynching Stories",
-       caption = "n=5998, a 10% stratified sample.Graphic by Rob Wells, 12/27/2023",
-       y="Count of Pages",
-       x="Year")
+# y %>% 
+# count(year) %>% 
+#    group_by(year) %>% 
+# #Sandwich it onto a simple ggplot
+#   ggplot(aes(x = year, y = n, fill = n)) +
+#   geom_col(position = "dodge") + 
+#   theme(legend.position = "none") +
+#   labs(title = "10 pct Sample Lynching Coverage By Year, 1789-1963", 
+#        subtitle = "Count of News Pages with Lynching Stories",
+#        caption = "n=5998, a 10% stratified sample.Graphic by Rob Wells, 12/27/2023",
+#        y="Count of Pages",
+#        x="Year")
+# 
+# pagecount <- index %>% 
+# count(year) %>% 
+#    group_by(year)
 
-pagecount <- index %>% 
-count(year) %>% 
-   group_by(year)
-
-ggsave("..output/10pct_dec_27_2023.png",device = "png",width=9,height=6, dpi=800)
+#ggsave("..output/10pct_dec_27_2023.png",device = "png",width=9,height=6, dpi=800)
 
 
 ```
