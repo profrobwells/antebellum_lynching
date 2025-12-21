@@ -297,19 +297,122 @@ close(file_conn)
 # validating entries
 
 ```{r}
-valid <- c(325, 327, 1015, 1016, 1511, 1512, 1513,1514, 3067,3068,3069)
+# valid <- c(325, 327, 1015, 1016, 1511, 1512, 1513,1514, 3067,3068,3069)
 
-# notlynch <-c(1014,)
+valid <- c(325, 327, 1015, 1016, 1511, 1512, 1513,1514, 3067,3068,3069,3070, 3071, 3072, 3073, 4685, 4686, 4687, 4688, 4689, 5973, 5974, 5975, 5976, 6880, 6881, 6882, 6883, 6885, 6887, 6889, 7519, 7520, 7521, 7522, 7523, 7524, 9645)
+notlynch <-c(1014, 5972, 6884,6886, 6888, 6890,7525, 9646)
 
 precivil_narrow <- precivil_narrow |> 
-  mutate(validate = if_else(index %in% valid, "Y", ""))
+  mutate(validate = if_else(index %in% valid, "Y", "N"))
 
-# write.csv(precivil_narrow, "../output/precivil_narrow_dec_19.csv")
+write.csv(precivil_narrow, "../output/precivil_narrow_dec_20.csv")
+
+```
+
+
+```{r}
+precivil_narrow |> 
+  count(validate) |> 
+  mutate(pct = n/sum(n))
+
+#81 percent of the articles involved lynching or attempted lynchings, 19 percent did not.
+```
+
+
+```{r}
+
+precivil_narrow2 <- precivil_narrow |> 
+  filter(validate == "Y") 
+precivil_narrow |> 
+  filter(validate == "Y") |> 
+  count(year) |> 
+  arrange(year)
+
+
+```
+
+## Read Google Sheet With Student Entries
+```{r}
+#imports 618 entries
+precivil_students_entries <- rio::import("https://docs.google.com/spreadsheets/d/17nL8YBMIys7iJI1eeufiCpI1Plpmid2FSd6zuti5iSk/edit#gid=1208290507", skip=0) |> 
+  janitor::clean_names() |> 
+  rename(lynching = 'y_n_describes_a_lynching') |> 
+  mutate(id =  as.numeric(id)) |> 
+  mutate(sn = str_extract(url, "sn[^/]+"))
+  
+precivil_students_entries <- precivil_students_entries |> 
+  slice(-c(619,620)) 
+
+#46 lynching cases
+students <- precivil_students_entries |> 
+  filter(lynching == "Yes") |> 
+  mutate(source = "students")
+
+```
+
+
+#join
+
+```{r}
+students_clean <- students |> mutate(article_id = as.character(article_id),
+                                     date = as.Date(date))
+precivil_clean <- precivil_narrow2 |> mutate(article_id = as.character(article_id),
+                                             date = as.Date(date))
+
+x <- bind_rows(students_clean, precivil_clean)
+
+x <- x |>
+  mutate(year = if_else(is.na(year), year(date), year))
+
+```
+
+
+#join with the feather file to get the text
+```{r}
+# df_cleaned <- df_cleaned |> mutate(date = as.Date(date))
+
+extracted <- read_csv("/Users/gizmofo/Code/lynching_press_2024/data/extracted_text_oct_16_2024.csv")
+
+extracted_text_oct_16_2024 <- read_csv("https://osf.io/download/gw5dk/?view_only=6c106acd6cb54f6f849e8c6f9098809f")
+
+
+articles_df <- articles_df |> 
+  mutate(fileid3 = str_remove(filename, ".txt"))
+students_clean |> mutate(file_id2 = str_trim(file_id2))
+articles_df |> mutate(fileid3 = str_trim(fileid3))
+
+
+hailmary <- students_clean |> 
+  inner_join(extracted_text_oct_16_2024, by=c("file_id2"="file_id"))
+
+#378 obs
+#this captures text from 8 eight articles the students examined
+hailmary |> count(file_id2)
+  file_id2  n
+1  16747_0 68
+2  16774_0 39
+3  16791_0 65
+4  16792_0 31
+5  16793_0 70
+6  16794_0 30
+7  16808_0 62
+8  16812_0 13
+
+
+match the clean students to articles in this directory
+/Users/gizmofo/Code/hcij_lynching_phase_two/Storage_Older_Versions/latest_articles_aug23/16808_0.txt
+
+rename clean students to add .txt to filename and then extract
 
 ```
 
 
 
+```{r}
+
+articles_df <- read_csv("/Users/gizmofo/Code/hcij_lynching_phase_two/Storage_Older_Versions/articles_df.csv")
+
+```
 
 
 

@@ -1,3 +1,13 @@
+Notes on dataframe_entries.txt, the output of precvil_narrow, antebellum lynching, 47 articles dec 19 2025
+
+construct code to search for word count greater than the median article and for just 1 result and set aside for a kwic trim to 20 words per side of the result
+
+reprocess the ocr results through gemini, fix them as best you can
+
+____________________
+
+
+
 327:
 (risks of abolitionists getting lynched in south)
 There is a reign of terror in New Or
@@ -85,3 +95,257 @@ A vigilance
 committee was about organizing to lynch
 a butcher, but it was promptly nipped In
 the bud.
+
+__________________________
+3070:
+(murder and lynch law in  mississippi. murdered slave master)
+
+
+__________________________
+3071: (lynching in texas)
+
+
+__________________________
+
+3072:
+(monterey lynching)
+
+__________________________
+
+3073:
+slave burned to death (reprint new york herald - ARTICLE CLAIMS IT WAS A FRAUD FRM THE NATCHEZ FREE TRADER. )
+
+(4000 slaves from nearby plantation collected to witness)
+
+"Nearly four thou
+sand slaves were collected from the plantations
+in the neighborhood to witness this scene. Nu-
+merous speeches were made by the magistrates
+and ministers Of religion, to the large concourse
+of slaves, warning them, and telling them that
+the same fate awaited them if they should prove
+rebellious to their owners""
+__________________________
+
+4685
+(letter describes lynching in leavenworth)
+
+__________________________
+4686
+
+(lynching in alemeda county)
+(horse thief... mob hung wrong person)
+__________________________
+4687
+(same lynching account in alameda county)
+
+__________________________
+4688
+mob lynched another man for a shooting
+
+
+
+__________________________
+4689
+mob hung man who stabbed another
+
+
+__________________________
+4690
+"War of the Races"
+editorial against mob violence against Mexicans
+
+
+__________________________
+5972
+letter to editor about lynching
+not relevant
+__________________________
+5973
+lynching in missouri- related to an assault
+__________________________
+5974
+lynching related to a feud in Kentucky
+__________________________
+5975
+mob hung a man, lyncher arrested
+__________________________
+5976
+escaped convict ands horse thief lynched
+__________________________
+6880
+reference to hanging negro and lynch law
+__________________________
+6881
+reward for info on lynching in los angeles
+__________________________
+6882
+condeming los angeles lynching
+__________________________
+6883
+reference to lynching attempt in KY
+__________________________
+6884
+not relevant - article incoherent
+__________________________
+6885
+negro assaulted a miner, jail break and hanging.
+
+suggests justification with supreme court "archy" case "We cannot justify or excuse the mob that
+hung Bracy, except on the ground of the late
+decision of the Supreme Court in the " Archy
+| case" "
+
+Archy Lee (1840–1873), was an African American man born into enslavement; and was later part of a series of notable 19th-century court cases that defined civil rights in the state of California.[1] In 1857, he was brought from Mississippi (a slave state) to Sacramento, California (a free state) and continued to work as if he was enslaved. He escaped while in California, but was later arrested and brought to a number of court trials. By April 14, 1858, he was legally declared a free man by the state of California. It was one of the most celebrated court cases related to slavery in the country, and was widely published.[2]
+
+
+
+__________________________
+6886
+possible lynchimng
+--not relevant
+__________________________
+6887
+another version of placer story oand negro and lynch law
+__________________________
+6888
+weird bacon story
+--not relevant
+__________________________
+6889
+missour lynching for a shooting
+__________________________
+6890
+--not relevant
+
+__________________________
+
+7519
+commentary about prevalence of lynching in california
+
+"The criminal may be a murderer,
+n horse thief, burglar, an ircend diary, a common
+shoplfter, or petty rogue, if the Vigilance Com
+mittee catch him, and convict him, be Il instantly
+carried out and hung up at the nearest convenient
+tree, or beam, or rope and ta,kle."
+__________________________
+
+7520
+round up of lynching in calif
+"''In Sacramento, Marysvile, Stockton, and else
+where, the citizens have felt themselves compelled
+to act in their behalf, the laws having proved
+so utterly inadequate in themselves, and their ad
+ministration by the properly constituted authori-
+ties so lax."
+
+"The California papers abound with accounts oi
+Lynch law executions, of murders, robberies, rev.
+elations Of crime, Indian massacree, sc. man
+named James Stuart, convicted of murder and rob-
+berry, tried, condemned, and executed by the
+vigilance committee of San Francisco, on the lth
+of July."
+__________________________
+
+7521
+lynching of jenkins
+
+__________________________
+
+
+
+__________________________
+
+7522:
+"What is remarkable, nay, astonishing, is that
+the Lynch law is becoming the popular law of the
+land. The San Francisco Herald, disproving the
+rumor that the Governor about to convoke an
+extraordinary session of the Legislature in order to
+reinvigorate the laws of the land"
+
+__________________________
+
+7523:
+sonora lynching
+___________________________
+7524:
+difficult to read but appears to be a movement in San Francisco to reign in lynching.
+
+___________________________
+7525:
+
+not relevant, discussion of lynching
+____________________________
+9645:
+three indians executed
+
+______________________________
+9646:
+letter from new south wales
+
+
+______________________________
+valid <- c(3070, 3071, 3072, 3073, 4685, 4686, 4687, 4688, 4689, 5973, 5974, 5975, 5976, 6880, 6881, 6882, 6883, 6885, 6887, 6889, 7519, 7520, 7521, 7522, 7523, 7524, 9645)
+
+# notlynch <-c(1014, 5972, 6884,6886, 6888, 6890, 7525, 9646)
+
+__________________________
+
+
+
+__________________________
+
+
+
+__________________________
+
+
+
+__________________________
+
+
+
+__________________________
+
+
+
+__________________________
+
+
+
+__________________________
+
+
+
+__________________________
+
+
+
+__________________________
+
+
+
+__________________________
+
+
+
+__________________________
+
+
+
+__________________________
+
+
+
+__________________________
+
+
+
+__________________________
+
+
+
+__________________________
