@@ -295,7 +295,7 @@ valid <- c(3070, 3071, 3072, 3073, 4685, 4686, 4687, 4688, 4689, 5973, 5974, 597
 __________________________
 
 
-
+Users/robwells/Dropbox/Current_Projects/Lynching UMD Sp 2022/article_text_7_15/1872_0.txt
 __________________________
 
 

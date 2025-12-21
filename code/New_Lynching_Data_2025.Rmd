@@ -334,23 +334,182 @@ precivil_narrow |>
 ## Read Google Sheet With Student Entries
 ```{r}
 #imports 618 entries
-precivil_students_entries <- rio::import("https://docs.google.com/spreadsheets/d/17nL8YBMIys7iJI1eeufiCpI1Plpmid2FSd6zuti5iSk/edit#gid=1208290507", skip=0) |> 
-  janitor::clean_names() |> 
-  rename(lynching = 'y_n_describes_a_lynching') |> 
-  mutate(id =  as.numeric(id)) |> 
-  mutate(sn = str_extract(url, "sn[^/]+"))
+# precivil_students_entries <- rio::import("https://docs.google.com/spreadsheets/d/17nL8YBMIys7iJI1eeufiCpI1Plpmid2FSd6zuti5iSk/edit#gid=1208290507", skip=0) |> 
+#   janitor::clean_names() |> 
+#   rename(lynching = 'y_n_describes_a_lynching') |> 
+#   mutate(id =  as.numeric(id)) |> 
+#   mutate(sn = str_extract(url, "sn[^/]+"))
   
-precivil_students_entries <- precivil_students_entries |> 
-  slice(-c(619,620)) 
+# precivil_students_entries <- precivil_students_entries |> 
+#   slice(-c(619,620)) 
 
-#46 lynching cases
-students <- precivil_students_entries |> 
+#1696 imported from precivil_new
+library(googlesheets4)
+gs4_deauth()
+
+precivil_22_students<- read_sheet("https://docs.google.com/spreadsheets/d/17nL8YBMIys7iJI1eeufiCpI1Plpmid2FSd6zuti5iSk/edit?usp=sharing", sheet="precivil_new", skip=0, col_types = "c") |> 
+  janitor::clean_names() |> 
+  mutate(sn = str_extract(url, "sn[^/]+"))
+
+
+#42 lynching cases
+students <- precivil_22_students |> 
   filter(lynching == "Yes") |> 
-  mutate(source = "students")
+  mutate(source = "students") |> 
+  mutate(date = as.Date(date)) |> 
+  mutate(file_id_txt = paste0(file_id2, ".txt")) |> 
+   mutate(file_id_txt = str_trim(file_id_txt))
 
 ```
 
 
+match the clean students to articles in this directory
+/Users/gizmofo/Code/hcij_lynching_phase_two/Storage_Older_Versions/latest_articles_aug23/16808_0.txt
+
+rename clean students to add .txt to filename and then extract
+
+# Compiler of raw text. 
+```{r include=FALSE}
+
+files <- list.files("~/Code/hcij_lynching_phase_two/Storage_Older_Versions/latest_articles_aug23/", pattern="*.txt") %>% 
+  as.data.frame() %>%
+  rename(filename = 1) 
+
+index <- students |> 
+  inner_join(files, by=c("file_id_txt"="filename")) %>%
+  mutate(filepath = paste0("~/Code/hcij_lynching_phase_two/Storage_Older_Versions/latest_articles_aug23/",file_id_txt)) |> 
+  rename(filename = file_id_txt)
+
+#AI to the rescue
+library(dplyr)
+library(readr)
+library(purrr)
+
+# Function to process a chunk of rows
+process_chunk <- function(chunk_rows, chunk_index) {
+  articles_chunk <- tibble()
+  
+  for (row_value in chunk_rows) {
+    temp <- index %>%
+      slice(row_value)
+    
+    temp_filename <- temp$filename
+    
+    # Read lines from file
+    tryCatch({
+      articles_df_temp <- read_lines(temp$filepath) %>%
+        as_tibble() %>%
+        mutate(filename = temp_filename)
+      
+      # Append to chunk results
+      articles_chunk <- bind_rows(articles_chunk, articles_df_temp)
+    }, error = function(e) {
+      message(paste("Error processing row", row_value, ":", conditionMessage(e)))
+    })
+  }
+  
+  # Write chunk to disk
+  write_csv(articles_chunk, paste0("articles_chunk_", chunk_index, ".csv"))
+}
+
+# Determine chunk size and create chunks
+chunk_size <- 500  # Adjust chunk size as needed
+row_values <- split(1:nrow(index), ceiling(seq_along(1:nrow(index))/chunk_size))
+
+# Process each chunk
+walk2(row_values, seq_along(row_values), process_chunk)
+
+# Combine all chunks into one data frame
+chunk_files <- list.files(pattern = "articles_chunk_.*\\.csv")
+
+articles_df <- map_dfr(chunk_files, read_csv)
+
+# Perform the inner join after all files are processed
+joined_df <- articles_df %>%
+  select(filename, sentence = value) %>%
+  inner_join(index, by = "filename")
+
+write.csv(joined_df, ("students_22_precvil_text_dec_21_2025.csv"))
+
+
+# View the resulting data frame
+print(head(joined_df))
+
+
+```
+
+
+```{r}
+joined_df %>%
+  summarize(n_unique_files = n_distinct(filename))
+```
+ #missing 15 text files from students
+```{r}
+missing <- students |> 
+  anti_join(files, by=c("file_id_txt"="filename")) 
+
+write_csv(missing, "missing_student_text_dec_21.csv")
+```
+
+
+
+#collapsed into one df
+i want to take joined_df, which is 31 articles, one line per sentence, and produce a dataframe with 31 rows and a new column called "article" that has all of the text from "sentence" 
+
+```{r}
+articles_collapsed <- joined_df |>
+  group_by(file_id2) |>
+  summarize(
+    article = paste(sentence, collapse = " "),
+    across(everything(), first)
+  ) |>
+  ungroup() 
+
+articles_collapsed <- articles_collapsed |> 
+  select("file_id2", "date", "newspaper_name", "article", "newspaper_state", "filename", "attempted_y_n", "similar_coverage_y_n", "notes_from_te", "sn", "year", "month","day", "page","edition", "mod_id", "source", "filepath", "url" )
+
+write_csv(articles_collapsed, "student_text_antebellum_12_21.csv")
+```
+
+
+
+# articles_collapsed print specific stories in a text file
+```{r}
+# Open a connection to the text file
+file_conn <- file("articles_collapsed.txt", "w")
+
+# Loop through each row of the dataframe
+for (i in 1:nrow(articles_collapsed)) {
+  # Extract the row
+  row_data <- articles_collapsed[i, c("newspaper_name", "date", "article", "filename", "url")]
+  
+  # Write each field on a separate line
+  # writeLines(paste0("Headline: ", row_data$headline), file_conn)
+  writeLines(paste0("Newspaper: ", row_data$newspaper_name), file_conn)
+  writeLines(paste0("Date: ", row_data$date), file_conn)
+  writeLines(paste0("Filename: ", row_data$filename), file_conn)
+  writeLines(paste0("URL: ", row_data$url), file_conn)
+  
+# Wrap article text at 60 characters
+  article_text <- row_data$article
+  wrapped_text <- strwrap(article_text, width = 60)
+  
+  writeLines("\nArticle:", file_conn)
+  writeLines(wrapped_text, file_conn)
+  
+  # Add separator line (except after the last entry)
+  if (i < nrow(articles_collapsed)) {
+    writeLines("\n**************************************************\n", file_conn)
+  }
+}
+
+# Close the file connection
+close(file_conn)
+```
+
+
+#----------------------------------------------------------------
+# notes on joining students to existing extracted dataframes of text
 #join
 
 ```{r}
@@ -399,10 +558,7 @@ hailmary |> count(file_id2)
 8  16812_0 13
 
 
-match the clean students to articles in this directory
-/Users/gizmofo/Code/hcij_lynching_phase_two/Storage_Older_Versions/latest_articles_aug23/16808_0.txt
 
-rename clean students to add .txt to filename and then extract
 
 ```
 
