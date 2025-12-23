@@ -334,26 +334,20 @@ precivil_narrow |>
 ## Read Google Sheet With Student Entries
 ```{r}
 #imports 618 entries
-# precivil_students_entries <- rio::import("https://docs.google.com/spreadsheets/d/17nL8YBMIys7iJI1eeufiCpI1Plpmid2FSd6zuti5iSk/edit#gid=1208290507", skip=0) |> 
-#   janitor::clean_names() |> 
-#   rename(lynching = 'y_n_describes_a_lynching') |> 
-#   mutate(id =  as.numeric(id)) |> 
-#   mutate(sn = str_extract(url, "sn[^/]+"))
-  
-# precivil_students_entries <- precivil_students_entries |> 
-#   slice(-c(619,620)) 
+precivil_students_entries <- rio::import("https://docs.google.com/spreadsheets/d/17nL8YBMIys7iJI1eeufiCpI1Plpmid2FSd6zuti5iSk/edit#gid=1208290507", skip=0) |>
+   janitor::clean_names() |>
+   rename(lynching = 'y_n_describes_a_lynching') |>
+   mutate(id =  as.numeric(id)) |>
+   mutate(sn = str_extract(url, "sn[^/]+"))
 
-#1696 imported from precivil_new
-library(googlesheets4)
-gs4_deauth()
-
-precivil_22_students<- read_sheet("https://docs.google.com/spreadsheets/d/17nL8YBMIys7iJI1eeufiCpI1Plpmid2FSd6zuti5iSk/edit?usp=sharing", sheet="precivil_new", skip=0, col_types = "c") |> 
-  janitor::clean_names() |> 
-  mutate(sn = str_extract(url, "sn[^/]+"))
+ precivil_students_entries <- precivil_students_entries |>
+   slice(-c(619,620))
 
 
-#42 lynching cases
-students <- precivil_22_students |> 
+
+
+#46 lynching cases
+students <- precivil_students_entries  |> 
   filter(lynching == "Yes") |> 
   mutate(source = "students") |> 
   mutate(date = as.Date(date)) |> 
@@ -362,15 +356,34 @@ students <- precivil_22_students |>
 
 ```
 
+# join students to main df by sn and date
 
-match the clean students to articles in this directory
-/Users/gizmofo/Code/hcij_lynching_phase_two/Storage_Older_Versions/latest_articles_aug23/16808_0.txt
+```{r}
+#matches 23 of 46
+#only retrieves two records
+joined_students <- df1 |> 
+  mutate(
+    sn = str_trim(sn),
+    date1 = as.Date(date1)
+  ) |> 
+  inner_join(
+    precivil_students_entries |> mutate(
+      sn = str_trim(sn),
+      date = as.Date(date)
+    ), 
+    by = c("sn", "date1" = "date")
+  ) |> 
+  distinct(article_id.x, .keep_all=TRUE)
 
-rename clean students to add .txt to filename and then extract
+
+
+```
+
+
 
 # Compiler of raw text. 
 ```{r include=FALSE}
-
+#3312 files
 files <- list.files("~/Code/hcij_lynching_phase_two/Storage_Older_Versions/latest_articles_aug23/", pattern="*.txt") %>% 
   as.data.frame() %>%
   rename(filename = 1) 
@@ -435,6 +448,7 @@ write.csv(joined_df, ("students_22_precvil_text_dec_21_2025.csv"))
 # View the resulting data frame
 print(head(joined_df))
 
+#captures text from 31 articles
 
 ```
 
@@ -508,8 +522,63 @@ close(file_conn)
 ```
 
 
+#join precivil_narrow and articles collapsed
+
+```{r}
+
+precivil_narrow <- precivil_narrow |> 
+  mutate(date = as.Date(date))
+precivil_complete <-bind_rows(precivil_narrow, articles_collapsed)
+
+#eliminates duplicates and irrelevant coverage
+precivil_complete <- precivil_complete |> 
+  filter(!file_id2 %in% c("16744_0", "16742_0", "16741_0", "16745_0"))
+
+precivil_complete <- precivil_complete |> 
+  filter(!validate %in% "N") |> 
+  mutate(article_id2 = coalesce(article_id, file_id2)) |> 
+  mutate(newspaper_state2 = coalesce(state, newspaper_state)) |> 
+   subset(select = -c(article_id, file_id2, byline, date1, state, newspaper_state, newspapers, validate, url )) |> 
+  select(newspaper_name, date, headline, article, cleaned_article, newspaper_state2, matches, notes_from_te, similar_coverage_y_n, everything())
+
+
+write_csv(precivil_complete, "../data/precivil_lynching_complete_12_22.csv")
+
+#74 articles from the narrow search of the feather files, all validates and the student verified files
+
+# #need to clean further: students
+#  --cut 16744_0.txt, 16742_0.txt, 16741_0.txt 16745_0.txt
+#  Newspaper: Lynchburg Virginian (Lynchburg [Va.])
+# Date: 1835-07-23
+# Filename: 16745_0.txt
+# --riot in cuba and lynching
+# check for dupes
+# Vermont telegraph (Brandon [Vt.])
+# ed-1
+# 1842-01-26
+# s
+
+```
+
+
+```{r}
+unique(precivil_complete$date)
+
+
+```
+
+
 #----------------------------------------------------------------
 # notes on joining students to existing extracted dataframes of text
+
+
+
+
+
+
+
+
+
 #join
 
 ```{r}

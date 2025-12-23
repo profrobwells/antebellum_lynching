@@ -1,0 +1,106 @@
+---
+title: "Antebellum Lynching Analysis 2025"
+author: "Rob Wells"
+date: "2025-12-22"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+#install.packages("arrow")
+library(arrow)
+library(jsonlite)
+library(janitor)
+library(lubridate)
+```
+
+#Import 65 cleaned articles
+```{r}
+precivil_complete <- read_csv("precivil_lynching_complete_12_22.csv")
+```
+
+
+#Chart - Results by year
+```{r}
+#Here is a chart, Figure 1, that describes lynching search results by year
+precivil_complete %>% 
+   group_by(year) %>% 
+  count(year) %>% 
+#Sandwich it onto a simple ggplot
+  ggplot(aes(x = year, y = n, fill = n)) +
+  geom_col(position = "dodge") + 
+  theme(legend.position = "none") +
+  scale_x_continuous(labels = c(seq(1830, 1865, 5)), breaks = seq(1830, 1865, 5)) +
+    scale_y_continuous(breaks = seq(0, 15, 1)) +
+  labs(title = "Precivil War Lynching Coverage By Year, 1835-1861", 
+       subtitle = "Count of Lynching Stories Examined",
+       caption = "n=65  articles. Graphic by Rob Wells, 12/22/2025",
+       y="Count of Articles",
+       x="Year")
+```
+
+
+year total descending
+```{r}
+precivil_complete  %>% 
+count(year) %>% 
+   group_by(year) |> 
+  arrange((year))
+
+
+```
+
+
+
+
+
+# precivil narrow print specific stories in a text file
+```{r}
+
+# Open a connection to the text file
+file_conn <- file("dataframe_entries.txt", "w")
+
+# Loop through each row of the dataframe
+for (i in 1:nrow(precivil_narrow)) {
+  # Extract the row
+  row_data <- precivil_narrow[i, c("headline", "newspaper_name", "date", "article", "matches", "article_id", "index")]
+  
+  # Write each field on a separate line
+  writeLines(paste0("Headline: ", row_data$headline), file_conn)
+  writeLines(paste0("Newspaper: ", row_data$newspaper_name), file_conn)
+  writeLines(paste0("Date: ", row_data$date), file_conn)
+  writeLines(paste0("Article ID: ", row_data$article_id), file_conn)
+  writeLines(paste0("Index Number: ", row_data$index), file_conn)
+  
+  # Handle the matches list column
+  matches_content <- unlist(row_data$matches)
+  if (length(matches_content) > 0) {
+    writeLines(paste0("Matches: ", paste(matches_content, collapse = ", ")), file_conn)
+  } else {
+    writeLines("Matches: None", file_conn)
+  }
+  
+  writeLines(paste0("\nArticle:\n", row_data$article), file_conn)
+  
+  # Add separator line (except after the last entry)
+  if (i < nrow(precivil_narrow)) {
+    writeLines("\n**************************************************\n", file_conn)
+  }
+}
+
+# Close the file connection
+close(file_conn)
+```
+
+
+
+
+ #missing 15 text files from students
+```{r}
+missing <- students |> 
+  anti_join(files, by=c("file_id_txt"="filename")) 
+
+write_csv(missing, "missing_student_text_dec_21.csv")
+```
+
+
