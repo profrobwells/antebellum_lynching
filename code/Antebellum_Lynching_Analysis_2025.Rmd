@@ -104,3 +104,7 @@ write_csv(missing, "missing_student_text_dec_21.csv")
 ```
 
 
+#Notes
+
+# Filter the dataframe: 9937 articles
+filtered_df <- df1 %>%

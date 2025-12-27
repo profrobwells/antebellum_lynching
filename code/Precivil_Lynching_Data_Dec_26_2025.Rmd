@@ -1,0 +1,706 @@
+---
+title: "New_Lynching_Data_2025"
+author: "Rob Wells"
+date: "2025-12-26"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+#install.packages("arrow")
+library(arrow)
+library(jsonlite)
+library(janitor)
+library(lubridate)
+#install.packages("readtext")
+library(quanteda)
+```
+
+
+# Import LLM scanned and Sean/Rob regex filtered lynching
+data from line 996 lynching_all_years_wells_modified
+```{r}
+
+#447 probable precivil lynching stories
+df_llm <- read_rds("/Users/gizmofo/Code/american_stories_lynching_article_llm/data/output_data/pre_civil_lynch/classified_articles/lynch_keyword_articles_classified.rds") |> 
+  filter(probable_specific_lynching_article=="yes - evaluated by llm") |> 
+  filter(x01_probably_lynch_story=="1") |> 
+  mutate(index = paste0("preciv",row_number())) |> 
+    mutate(extracted_string = str_extract(article_id, "(?:[^_]*_){3}([^_]+)")) |> 
+  mutate(sn = str_replace(extracted_string, ".*_", "")) |> 
+  mutate(date1 = as.Date(date, "%Y-%m-%d")) |> 
+  select(-c(extracted_string, extracted_json_1, extracted_json_category_id, 
+          extracted_json_article_id, output_json, recheck_valid_json_in_raw_response, 
+          repaired_json, folder, x04_unknown, x01_probably_lynch_story, 
+          x03_names_and_titles, x02_lynchburg, pass_to_llm, 
+          other_lynch_word_matches, model_provider, model_type, 
+          raw_response, original_raw_response, valid_json_in_raw_response, date)) |> 
+  rename(date = date1, article_spellchecked = extracted_json_spellchecked_text) |> 
+  mutate(word_count = str_count(article_spellchecked, "\\w+"))
+
+```
+
+
+# Word count metrics
+```{r}
+
+df_llm |> 
+  summarize(avg = mean(word_count),
+            median = median(word_count),
+            min = min(word_count),
+            max = max(word_count),
+            sd = sd(word_count))
+
+
+```
+
+
+# compare to precivil_complete
+```{r}
+#31 matches
+matches <- df_llm |> 
+  inner_join(precivil_complete, by =c("sn", "date"))
+
+#416 new entries after filtering against the precivil_complete
+df_llm <- df_llm |> 
+  anti_join(precivil_complete, by =c("sn", "date"))
+```
+
+### Print out entries
+```{r}
+
+df_print <- df_llm |> 
+  arrange(date)
+
+
+# Open a connection to the text file
+file_conn <- file("precivil_new_entries.txt", "w")
+
+# Loop through each row of the dataframe
+for (i in 1:nrow(df_print)) {
+  # Extract the row
+  row_data <- df_print[i, c("headline", "newspaper_name", "date", "article_spellchecked", "llm_explanation", "article_id", "index")]
+  
+  # Write each field on a separate line
+  writeLines(paste0("Headline: ", row_data$headline), file_conn)
+  writeLines(paste0("Newspaper: ", row_data$newspaper_name), file_conn)
+  writeLines(paste0("Date: ", row_data$date), file_conn)
+  writeLines(paste0("Article ID: ", row_data$article_id), file_conn)
+  wrapped_explanation <- strwrap(row_data$llm_explanation, width = 60)
+  wrapped_explanation[1] <- paste0("LLM Explains: ", wrapped_explanation[1])
+  writeLines(wrapped_explanation, file_conn)
+  writeLines(paste0("Index Number: ", row_data$index), file_conn)
+  # Handle the matches list column
+  # matches_content <- unlist(row_data$llm_explanation)
+  # if (length(matches_content) > 0) {
+  #   writeLines(paste0("LLM-explains: ", paste(llm_explanation, collapse = ", ")), file_conn)
+  # } else {
+  #   writeLines("Matches: None", file_conn)
+  # }
+  # Wrap article text at 60 characters
+  article_text <- row_data$article_spellchecked
+  wrapped_text <- strwrap(article_text, width = 60)
+  
+  writeLines("\nArticle:", file_conn)
+  writeLines(wrapped_text, file_conn)
+  
+  # writeLines(paste0("\nArticle:\n", row_data$article), file_conn)
+  
+  # Add separator line (except after the last entry)
+  if (i < nrow(df_print)) {
+    writeLines("\n**************************************************\n", file_conn)
+  }
+}
+
+# Close the file connection
+close(file_conn)
+
+```
+
+### validating entries
+```{r}
+# valid <- c(325, xxxx)
+#15-1 valid
+valid <- c(preciv446, preciv445,preciv444,preciv44, preciv442, preciv441, preciv440, preciv439, preciv438, preciv437, preciv436, preciv435, preciv434, preciv433, preciv432 )
+notlynch <-c(preciv447, )
+
+df_llm <- df_llm |> 
+  mutate(validate = if_else(index %in% valid, "Y", "N"))
+
+write_csv(df_llm, "../output/df_llm_dec_26.csv")
+
+```
+
+#KWIC
+### saved precivil_df_llm_dec_26.csv
+```{r}
+
+# Create a corpus using the 'article_spellchecked' column as the text field
+my_corpus <- corpus(df_llm, text_field = "article_spellchecked", docid_field = "index") # build a new 
+# Tokenize the corpus
+my_tokens <- tokens(my_corpus)
+
+#100 characters: Approximately 15-20 words, depending on word length.
+#200 characters:  6 (avg chars per word + space) ≈ 30-40 words
+#300 characters: about 45-60 words
+quanteda_df_llm <- kwic(my_tokens, phrase(c("lynch")), window = 300, valuetype = "regex") %>% as.data.frame() |> 
+  distinct(docname,  .keep_all = TRUE)
+
+df_llm <- df_llm |> 
+  inner_join(quanteda_df_llm, by=c("index"="docname")) |> 
+  mutate(select_text = paste0(pre," ", keyword," ",post)) |> 
+   select(-c(from, to,pre,post, keyword, pattern)) |> 
+  mutate(word_count_select = str_count(select_text, "\\w+"))
+#447 processed articles!
+write_csv(df_llm, "../data/precivil_df_llm_dec_26.csv")
+
+```
+
+
+#Stopped Dec 26
+
+to join with precivil_complete, precivil_complete has to have article spellchecked by an LLM
+```{r}
+df_llm2 <- df_llm |> 
+  inner_join(precivil_complete, by=c("sn", "date"))
+```
+
+
+
+
+```{r}
+#selected snippets are average 276 words, median 273 words, max 562 words. SD 163
+df_llm |> 
+  summarize(avg = mean(word_count_select),
+            median = median(word_count_select),
+            min = min(word_count_select),
+            max = max(word_count_select),
+            sd = sd(word_count_select))
+```
+
+
+### Print out snippets
+```{r}
+
+df_print <- df_llm |> 
+  arrange(date)
+
+
+# Open a connection to the text file
+file_conn <- file("df_llm_entries.txt", "w")
+
+# Loop through each row of the dataframe
+for (i in 1:nrow(df_print)) {
+  # Extract the row
+  row_data <- df_print[i, c("headline", "newspaper_name", "date", "select_text", "llm_explanation", "article_id", "index")]
+  
+  # Write each field on a separate line
+  writeLines(paste0("Headline: ", row_data$headline), file_conn)
+  writeLines(paste0("Newspaper: ", row_data$newspaper_name), file_conn)
+  writeLines(paste0("Date: ", row_data$date), file_conn)
+  writeLines(paste0("Article ID: ", row_data$article_id), file_conn)
+  wrapped_explanation <- strwrap(row_data$llm_explanation, width = 60)
+  wrapped_explanation[1] <- paste0("LLM Explains: ", wrapped_explanation[1])
+  writeLines(wrapped_explanation, file_conn)
+  writeLines(paste0("Index Number: ", row_data$index), file_conn)
+  # Handle the matches list column
+  # matches_content <- unlist(row_data$llm_explanation)
+  # if (length(matches_content) > 0) {
+  #   writeLines(paste0("LLM-explains: ", paste(llm_explanation, collapse = ", ")), file_conn)
+  # } else {
+  #   writeLines("Matches: None", file_conn)
+  # }
+  # Wrap article text at 60 characters
+  article_text <- row_data$select_text
+  wrapped_text <- strwrap(article_text, width = 60)
+  
+  writeLines("\nArticle:", file_conn)
+  writeLines(wrapped_text, file_conn)
+  
+  # writeLines(paste0("\nArticle:\n", row_data$article), file_conn)
+  
+  # Add separator line (except after the last entry)
+  if (i < nrow(df_print)) {
+    writeLines("\n**************************************************\n", file_conn)
+  }
+}
+
+# Close the file connection
+close(file_conn)
+
+```
+
+
+
+
+
+
+write.csv(df_short_precivil, "../output/df_short_precivil_dec_26.csv")
+
+
+
+
+#1720 - american sympathizers lynched
+Ii may not be known to many of readers that the Colonel
+Prince whose summary execution Of four OF the American
+"sympathizers' with the Canadian macontens has been broug
+under the notice of the House of Peers by Lord Brougham,
+was some few years since resident of Cheltenham where he
+prac- tsed as an attorney under the firm of Strator rd and
+Prince. -JPorcester Herald.
+
+#20 - man lynched for being in favor of union
+A RuNoR.--It is reported that Mr.. John Shackeltord.
+highly.respectable citizen ol | Dumfries, Virginia, was
+taken from his house | on Friday by mob of secessionists,
+and hung with grape vine in sight of his dwelling. The
+cause assigned is, that Mr.. Shackelford was in favor of
+the Union.
+
+
+#-----------------------
+#Creating precivil_complete
+#-----------------------
+
+```{r}
+precivil_complete <- read_csv("../data/precivil_lynching_complete_12_22.csv")
+```
+
+# precivil narrow print specific stories in a text file, created from df1`
+```{r}
+#precivil tightly filtered
+precivil_narrow <- filtered_df |> 
+  filter(date < "1861-04-11")
+
+#write.csv(precivil_narrow, "../data/precivil_narrow.csv")
+#47 articles, 1844-1861
+
+# Open a connection to the text file
+file_conn <- file("dataframe_entries.txt", "w")
+
+# Loop through each row of the dataframe
+for (i in 1:nrow(precivil_narrow)) {
+  # Extract the row
+  row_data <- precivil_narrow[i, c("headline", "newspaper_name", "date", "article", "matches", "article_id", "index")]
+  
+  # Write each field on a separate line
+  writeLines(paste0("Headline: ", row_data$headline), file_conn)
+  writeLines(paste0("Newspaper: ", row_data$newspaper_name), file_conn)
+  writeLines(paste0("Date: ", row_data$date), file_conn)
+  writeLines(paste0("Article ID: ", row_data$article_id), file_conn)
+  writeLines(paste0("Index Number: ", row_data$index), file_conn)
+  
+  # Handle the matches list column
+  matches_content <- unlist(row_data$matches)
+  if (length(matches_content) > 0) {
+    writeLines(paste0("Matches: ", paste(matches_content, collapse = ", ")), file_conn)
+  } else {
+    writeLines("Matches: None", file_conn)
+  }
+  
+  writeLines(paste0("\nArticle:\n", row_data$article), file_conn)
+  
+  # Add separator line (except after the last entry)
+  if (i < nrow(precivil_narrow)) {
+    writeLines("\n**************************************************\n", file_conn)
+  }
+}
+
+# Close the file connection
+close(file_conn)
+```
+
+# validating entries
+
+```{r}
+# valid <- c(325, 327, 1015, 1016, 1511, 1512, 1513,1514, 3067,3068,3069)
+
+valid <- c(325, 327, 1015, 1016, 1511, 1512, 1513,1514, 3067,3068,3069,3070, 3071, 3072, 3073, 4685, 4686, 4687, 4688, 4689, 5973, 5974, 5975, 5976, 6880, 6881, 6882, 6883, 6885, 6887, 6889, 7519, 7520, 7521, 7522, 7523, 7524, 9645)
+notlynch <-c(1014, 5972, 6884,6886, 6888, 6890,7525, 9646)
+
+precivil_narrow <- precivil_narrow |> 
+  mutate(validate = if_else(index %in% valid, "Y", "N"))
+
+write.csv(precivil_narrow, "../output/precivil_narrow_dec_20.csv")
+
+```
+
+
+```{r}
+precivil_narrow |> 
+  count(validate) |> 
+  mutate(pct = n/sum(n))
+
+#81 percent of the articles involved lynching or attempted lynchings, 19 percent did not.
+```
+
+
+```{r}
+
+precivil_narrow2 <- precivil_narrow |> 
+  filter(validate == "Y") 
+precivil_narrow |> 
+  filter(validate == "Y") |> 
+  count(year) |> 
+  arrange(year)
+
+
+```
+
+## Read Google Sheet With Student Entries
+```{r}
+#imports 618 entries
+precivil_students_entries <- rio::import("https://docs.google.com/spreadsheets/d/17nL8YBMIys7iJI1eeufiCpI1Plpmid2FSd6zuti5iSk/edit#gid=1208290507", skip=0) |>
+   janitor::clean_names() |>
+   rename(lynching = 'y_n_describes_a_lynching') |>
+   mutate(id =  as.numeric(id)) |>
+   mutate(sn = str_extract(url, "sn[^/]+"))
+
+ precivil_students_entries <- precivil_students_entries |>
+   slice(-c(619,620))
+
+
+
+
+#46 lynching cases
+students <- precivil_students_entries  |> 
+  filter(lynching == "Yes") |> 
+  mutate(source = "students") |> 
+  mutate(date = as.Date(date)) |> 
+  mutate(file_id_txt = paste0(file_id2, ".txt")) |> 
+   mutate(file_id_txt = str_trim(file_id_txt))
+
+```
+
+# join students to main df by sn and date
+
+```{r}
+#matches 23 of 46
+#only retrieves two records
+joined_students <- df1 |> 
+  mutate(
+    sn = str_trim(sn),
+    date1 = as.Date(date1)
+  ) |> 
+  inner_join(
+    precivil_students_entries |> mutate(
+      sn = str_trim(sn),
+      date = as.Date(date)
+    ), 
+    by = c("sn", "date1" = "date")
+  ) |> 
+  distinct(article_id.x, .keep_all=TRUE)
+
+
+
+```
+
+
+
+# Compiler of raw text. 
+```{r include=FALSE}
+#3312 files
+files <- list.files("~/Code/hcij_lynching_phase_two/Storage_Older_Versions/latest_articles_aug23/", pattern="*.txt") %>% 
+  as.data.frame() %>%
+  rename(filename = 1) 
+
+index <- students |> 
+  inner_join(files, by=c("file_id_txt"="filename")) %>%
+  mutate(filepath = paste0("~/Code/hcij_lynching_phase_two/Storage_Older_Versions/latest_articles_aug23/",file_id_txt)) |> 
+  rename(filename = file_id_txt)
+
+#AI to the rescue
+library(dplyr)
+library(readr)
+library(purrr)
+
+# Function to process a chunk of rows
+process_chunk <- function(chunk_rows, chunk_index) {
+  articles_chunk <- tibble()
+  
+  for (row_value in chunk_rows) {
+    temp <- index %>%
+      slice(row_value)
+    
+    temp_filename <- temp$filename
+    
+    # Read lines from file
+    tryCatch({
+      articles_df_temp <- read_lines(temp$filepath) %>%
+        as_tibble() %>%
+        mutate(filename = temp_filename)
+      
+      # Append to chunk results
+      articles_chunk <- bind_rows(articles_chunk, articles_df_temp)
+    }, error = function(e) {
+      message(paste("Error processing row", row_value, ":", conditionMessage(e)))
+    })
+  }
+  
+  # Write chunk to disk
+  write_csv(articles_chunk, paste0("articles_chunk_", chunk_index, ".csv"))
+}
+
+# Determine chunk size and create chunks
+chunk_size <- 500  # Adjust chunk size as needed
+row_values <- split(1:nrow(index), ceiling(seq_along(1:nrow(index))/chunk_size))
+
+# Process each chunk
+walk2(row_values, seq_along(row_values), process_chunk)
+
+# Combine all chunks into one data frame
+chunk_files <- list.files(pattern = "articles_chunk_.*\\.csv")
+
+articles_df <- map_dfr(chunk_files, read_csv)
+
+# Perform the inner join after all files are processed
+joined_df <- articles_df %>%
+  select(filename, sentence = value) %>%
+  inner_join(index, by = "filename")
+
+write.csv(joined_df, ("students_22_precvil_text_dec_21_2025.csv"))
+
+
+# View the resulting data frame
+print(head(joined_df))
+
+#captures text from 31 articles
+
+```
+
+
+```{r}
+joined_df %>%
+  summarize(n_unique_files = n_distinct(filename))
+```
+ #missing 15 text files from students
+```{r}
+missing <- students |> 
+  anti_join(files, by=c("file_id_txt"="filename")) 
+
+write_csv(missing, "missing_student_text_dec_23.csv")
+```
+
+
+```{r}
+missing <- missing |> 
+  mutate(seq = str_extract(url, "seq[^/]+"))
+  
+```
+
+
+```{r}
+# Create the missing pages lookup dataframe (without seq)
+missing_pages_lookup <- data.frame(
+  date = c("1805-01-14", "1805-01-19", "1805-02-01", "1835-07-31", "1835-08-01",
+           "1835-09-05", "1835-09-05", "1835-09-08", "1835-09-12", "1835-10-20",
+           "1835-10-20", "1835-10-22", "1836-11-09", "1851-05-10", "1851-06-03"),
+  sn = c("sn83045242", "sn84024710", "sn85059525", "sn87062070", "sn84026826",
+         "sn84026826", "sn84026826", "sn84024735", "sn84026826", "sn84024735",
+         "sn84024735", "sn84024649", "sn83016620", "sn83030313", "sn82014594"),
+  stringsAsFactors = FALSE
+)
+
+# Remove duplicate date-sn combinations
+missing_pages_lookup <- missing_pages_lookup %>%
+  distinct(date, sn)
+
+
+# Filter your df for matching records
+# Assuming your date column might need to be converted to character for matching
+found_df <- df_precivil_new %>%
+  mutate(date_char = as.character(date)) %>%
+  semi_join(missing_pages_lookup, by = c("date_char" = "date", "sn" = "sn")) %>%
+  select(-date_char)  # Remove the temporary column
+
+# View results
+print(found_df)
+
+# Or if you want to see how many matches were found
+cat("Found", nrow(found_df), "matching articles\n")
+```
+
+
+collapsed into one df
+i want to take joined_df, which is 31 articles, one line per sentence, and produce a dataframe with 31 rows and a new column called "article" that has all of the text from "sentence" 
+
+```{r}
+articles_collapsed <- joined_df |>
+  group_by(file_id2) |>
+  summarize(
+    article = paste(sentence, collapse = " "),
+    across(everything(), first)
+  ) |>
+  ungroup() 
+
+articles_collapsed <- articles_collapsed |> 
+  select("file_id2", "date", "newspaper_name", "article", "newspaper_state", "filename", "attempted_y_n", "similar_coverage_y_n", "notes_from_te", "sn", "year", "month","day", "page","edition", "mod_id", "source", "filepath", "url" )
+
+write_csv(articles_collapsed, "student_text_antebellum_12_21.csv")
+```
+
+
+
+# articles_collapsed print specific stories in a text file
+```{r}
+# Open a connection to the text file
+file_conn <- file("articles_collapsed.txt", "w")
+
+# Loop through each row of the dataframe
+for (i in 1:nrow(articles_collapsed)) {
+  # Extract the row
+  row_data <- articles_collapsed[i, c("newspaper_name", "date", "article", "filename", "url")]
+  
+  # Write each field on a separate line
+  # writeLines(paste0("Headline: ", row_data$headline), file_conn)
+  writeLines(paste0("Newspaper: ", row_data$newspaper_name), file_conn)
+  writeLines(paste0("Date: ", row_data$date), file_conn)
+  writeLines(paste0("Filename: ", row_data$filename), file_conn)
+  writeLines(paste0("URL: ", row_data$url), file_conn)
+  
+# Wrap article text at 60 characters
+  article_text <- row_data$article
+  wrapped_text <- strwrap(article_text, width = 60)
+  
+  writeLines("\nArticle:", file_conn)
+  writeLines(wrapped_text, file_conn)
+  
+  # Add separator line (except after the last entry)
+  if (i < nrow(articles_collapsed)) {
+    writeLines("\n**************************************************\n", file_conn)
+  }
+}
+
+# Close the file connection
+close(file_conn)
+```
+
+
+#join precivil_narrow and articles collapsed
+
+```{r}
+
+precivil_narrow <- precivil_narrow |> 
+  mutate(date = as.Date(date))
+precivil_complete <-bind_rows(precivil_narrow, articles_collapsed)
+
+#eliminates duplicates and irrelevant coverage
+precivil_complete <- precivil_complete |> 
+  filter(!file_id2 %in% c("16744_0", "16742_0", "16741_0", "16745_0"))
+
+precivil_complete <- precivil_complete |> 
+  filter(!validate %in% "N") |> 
+  mutate(article_id2 = coalesce(article_id, file_id2)) |> 
+  mutate(newspaper_state2 = coalesce(state, newspaper_state)) |> 
+   subset(select = -c(article_id, file_id2, byline, date1, state, newspaper_state, newspapers, validate, url )) |> 
+  select(newspaper_name, date, headline, article, cleaned_article, newspaper_state2, matches, notes_from_te, similar_coverage_y_n, everything())
+
+
+write_csv(precivil_complete, "../data/precivil_lynching_complete_12_22.csv")
+
+#74 articles from the narrow search of the feather files, all validates and the student verified files
+
+```
+
+
+```{r}
+precivil_complete |> 
+  anti_join(students, by=c("article_id2"="file_id2"))
+
+
+```
+
+
+
+Spot check results from Sean's rds file
+rds$article[1]
+--basically a threatened lynching 
+
+rds$article[2]
+--definitely a lynching
+
+rds$article[74]
+The LLM explanation was wrong: The article mentions 'lynch law' being used to justify such actions, indicating it relates to a lynching event." 
+rds$llm_explanation[74]
+
+rds$article[544]
+--correct, not a lynching article
+
+rds$article[545]
+--correct, not a lynching article
+
+rds$article[554]
+--? this was a potential lynching article. category 2
+the llm was correct: rds$llm_explanation[554]
+[1] "This article describes a situation where there was an immediate threat of lynching by the crowd, though the lynching did not occur. The use of the word 'lynching' suggests that there was a potential for it to happen in the future."
+
+
+```{r}
+
+rds1 <- rio::import("/Users/gizmofo/Library/CloudStorage/GoogleDrive-robwells@umd.edu/My Drive/Current Projects Gdrive/Lynching UMD/Data/updated_lynch_keyword_articles_classified.rds")
+
+```
+
+
+Notes from the updated text grab: 6872 articles
+
+filtered for mob. hung
+
+rds1$article[8]
+print(rds1[8, ])
+--correct: definite attempted lynching
+--this is not correct: extracted_json_category_description
+8                          1 An article that describes a specific lynching event that has already happened.
+
+
+print(rds1[10, ])
+--Correct:  extracted_json_category_description
+10                          1 An article that describes a specific lynching event that has already happened.
+
+
+print(rds1[67, ])
+--Correct, but it was one item in a long dispatch about many other misc events.
+extracted_json_category_description
+67                          1 An article that describes a specific lynching event that has already happened.
+
+
+print(rds1[70, ])
+--Correct.  extracted_json_category_description
+70                          1 An article that describes a specific lynching event that has already happened.
+
+(sorting to 1810)
+
+print(rds1[4662, ])
+--Correct, not a lynching article
+
+
+print(rds1[6872, ])
+--Correct, not a lynching article
+
+
+(earliest positive hit: 1825)
+print(rds1[788, ])
+--INCORRECT. Mentions a murder but does not describe a lynching or mob violence. "The article describes the discovery of a murdered man's body, the suspicion of foul play, and the involvement of a deaf and dumb witness. The mention of apprehending a suspect and the description of violence make it fit into the category of a specific lynching event that has already happened."
+
+print(rds1[775, ]) (1835)
+--Correct, describes attempted lynching
+--The LLM description is wrong: "An article that describes a specific lynching event that has already happened.
+    extracted_json_1" - The person wasn't lynched
+    
+print(rds1[776, ]) (1835)
+--Incorrect. a reference tothe vicksburg lynching in the round up of many events. "An article that describes a specific lynching event that has already happened." - so that is accurate but it lacks context
+
+print(rds1[777, ]) (1835)
+--Correct. "An article that describes a specific lynching event that has already happened.
+    extracted_json_1"
+    
+  print(rds1[786, ]) (1835)
+  --correct. extracted_json_category_description
+786                          1 An article that describes a specific lynching event that has already happened.
+
+print(rds1[787, ]) (1835)
+--correct. extracted_json_category_description
+787                          1 An article that describes a specific lynching event that has already happened.
+
+
+
