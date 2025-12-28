@@ -133,6 +133,8 @@ write_csv(df_llm, "../output/df_llm_dec_26.csv")
 
 #KWIC
 ### saved precivil_df_llm_dec_26.csv
+
+
 ```{r}
 
 # Create a corpus using the 'article_spellchecked' column as the text field
@@ -156,10 +158,32 @@ write_csv(df_llm, "../data/precivil_df_llm_dec_26.csv")
 
 ```
 
+### Load df_llm
+```{r}
+
+df_llm <- read_csv("../data/precivil_df_llm_dec_26.csv")
+```
+
 
 #Stopped Dec 26
 
+```{r}
+precivil_complete <- read_csv("../data/precivil_lynching_complete_12_22.csv")
+
+```
+
+
 to join with precivil_complete, precivil_complete has to have article spellchecked by an LLM
+
+```{r}
+```
+
+
+
+
+
+
+#-----------------------------------------------------
 ```{r}
 df_llm2 <- df_llm |> 
   inner_join(precivil_complete, by=c("sn", "date"))
