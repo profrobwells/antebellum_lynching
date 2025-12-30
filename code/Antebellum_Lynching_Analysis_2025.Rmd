@@ -12,11 +12,13 @@ library(arrow)
 library(jsonlite)
 library(janitor)
 library(lubridate)
+library(quanteda)
+library(tidytext)
 ```
 
-#Import 65 cleaned articles
+#Import 509 cleaned articles
 ```{r}
-precivil_complete <- read_csv("precivil_lynching_complete_12_22.csv")
+precivil_complete <- read_csv("../data/precivil_complete_dec_29.csv") 
 ```
 
 
@@ -30,11 +32,11 @@ precivil_complete %>%
   ggplot(aes(x = year, y = n, fill = n)) +
   geom_col(position = "dodge") + 
   theme(legend.position = "none") +
-  scale_x_continuous(labels = c(seq(1830, 1865, 5)), breaks = seq(1830, 1865, 5)) +
-    scale_y_continuous(breaks = seq(0, 15, 1)) +
-  labs(title = "Precivil War Lynching Coverage By Year, 1835-1861", 
+  scale_x_continuous(labels = c(seq(1825, 1865, 5)), breaks = seq(1825, 1865, 5)) +
+   # scale_y_continuous(breaks = seq(0, 15, 1)) +
+  labs(title = "Precivil War Lynching Coverage By Year, 1825-1861", 
        subtitle = "Count of Lynching Stories Examined",
-       caption = "n=65  articles. Graphic by Rob Wells, 12/22/2025",
+       caption = "n=509  articles. Graphic by Rob Wells, 12/29/2025",
        y="Count of Articles",
        x="Year")
 ```
@@ -50,8 +52,140 @@ count(year) %>%
 
 ```
 
+newspapers total descending
+```{r}
+precivil_complete  %>% 
+count(newspaper_name) %>% 
+  arrange(desc(n))
 
 
+```
+
+
+
+# Word count metrics
+```{r}
+#average story length is 449 words, but some articles ran up to 1,618 words
+
+precivil_complete |> 
+  summarize(avg = mean(word_count, na.rm=TRUE),
+            median = median(word_count, na.rm=TRUE),
+            min = min(word_count, na.rm=TRUE),
+            max = max(word_count, na.rm=TRUE),
+            sd = sd(word_count, na.rm=TRUE))
+
+
+```
+
+
+#KWIC
+
+
+
+
+```{r}
+
+# Create a corpus using the 'article_spellchecked' column as the text field
+my_corpus <- corpus(precivil_complete, text_field = "spellchecked", docid_field = "index") # build a new 
+# Tokenize the corpus
+my_tokens <- tokens(my_corpus)
+
+#100 characters: Approximately 15-20 words, depending on word length.
+#200 characters:  6 (avg chars per word + space) ≈ 30-40 words
+#300 characters: about 45-60 words
+quanteda_df_llm <- kwic(my_tokens, phrase(c("lynch")), window = 300, valuetype = "regex") %>% as.data.frame() |> 
+  distinct(docname,  .keep_all = TRUE)
+
+df_llm <- precivil_complete |> 
+  inner_join(quanteda_df_llm, by=c("index"="docname")) |> 
+  mutate(kwic_text = paste0(pre," ", keyword," ",post)) |> 
+   select(-c(from, to,pre,post, keyword, pattern)) |> 
+  mutate(word_count_select = str_count(select_text, "\\w+"))
+#447 processed articles!
+#write_csv(df_llm, "../data/precivil_df_llm_dec_26.csv")
+
+```
+
+## Bigrams
+
+### Tokenize
+
+```{r}
+
+stories <- str_replace_all(df_llm$kwic_text, "- ", "")
+stories_df <- tibble(stories,)
+
+# unnest includes lower, punct removal
+
+stories_tokenized <- stories_df %>%
+  unnest_tokens(word,stories)
+
+stories_tokenized
+```
+
+
+#Remove stopwords
+
+
+```{r}
+
+data(stop_words)
+
+stories_tokenized <- stories_tokenized %>%
+  anti_join(stop_words, by = c("word" = "word")) %>%
+  filter(word != "temp_file") %>%
+  filter(word != "stories_corpus") %>%
+  filter(!grepl('[0-9]', word))
+
+# Word Count
+
+story_word_ct <- stories_tokenized %>%
+  count(word, sort=TRUE)
+
+```
+
+### Create Bigrams
+
+```{r}
+bigrams <- stories_df %>%
+  unnest_tokens(bigram, stories, token="ngrams", n=2)
+
+
+#Filter out stop words.
+
+
+bigrams1 <- bigrams %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams2 <- bigrams1 %>%
+  filter(!word1 %in% stop_words$word) %>%
+  filter(!word2 %in% stop_words$word)
+
+bigrams <- bigrams2 %>%
+  count(word1, word2, sort = TRUE)
+
+
+```
+
+
+
+# Tolnay and Beck Lynching Inventory
+```{r}
+
+tolnay_beck <- read_csv("../data/Bailey_Beck_lynching_list_8_1_2022.csv") %>% 
+  as.data.frame()
+
+tolnay_beck <- janitor::clean_names(tolnay_beck)
+```
+
+
+```{r}
+tolnay_beck |> 
+  count(status_clean)
+```
+
+
+#-------------------------------------------------------------------------------
 
 
 # precivil narrow print specific stories in a text file

@@ -41,19 +41,6 @@ df_llm <- read_rds("/Users/gizmofo/Code/american_stories_lynching_article_llm/da
 ```
 
 
-# Word count metrics
-```{r}
-
-df_llm |> 
-  summarize(avg = mean(word_count),
-            median = median(word_count),
-            min = min(word_count),
-            max = max(word_count),
-            sd = sd(word_count))
-
-
-```
-
 
 # compare to precivil_complete
 ```{r}
@@ -161,21 +148,93 @@ write_csv(df_llm, "../data/precivil_df_llm_dec_26.csv")
 ### Load df_llm
 ```{r}
 
-df_llm <- read_csv("../data/precivil_df_llm_dec_26.csv")
+df_llm <- read_csv("../data/precivil_df_llm_dec_26.csv") 
+```
+
+### FIX STATE COLUMN
+```{r}
+library(dplyr)
+library(readr)
+
+# 1. Download the Master Newspaper List from LOC (approx 10MB)
+# This file contains the metadata for EVERY newspaper in their system.
+
+loc_master_list <- read_csv("/Users/gizmofo/Code/hcij_lynching_phase_two/Storage_Older_Versions/Older Code/article_extraction/automated_article_identification/visualization_tool/static/newspapers.csv") |> 
+  clean_names()
+
+# 2. Look at what we got (Columns: lccn, title, state, etc.)
+# Note: 'lccn' in their file is the same as your 'sn'
+head(loc_master_list)
+
+# 3. Join it to your dataframe locally
+# We match your 'sn' column to their 'lccn' column
+df_llm2_fixed <- df_llm |>
+  left_join(
+    loc_master_list |> select(lccn, state), 
+    by = c("sn" = "lccn")
+  ) |>
+  # Move the new state data into your newspaper_state column
+  mutate(newspaper_state = state) |>
+  select(-state) # Remove the extra column from the join
+
+# 4. Check how many are still missing
+missing_count <- sum(is.na(df_llm2_fixed$newspaper_state))
+
+missing_state <- df_llm2_fixed |> 
+  filter(is.na(newspaper_state))
+
+df_llm2_fixed |> 
+  filter(is.na(newspaper_state)) |> 
+  count(newspaper_name, sn)
+
+message(paste("Remaining missing states:", missing_count))
 ```
 
 
-#Stopped Dec 26
-
 ```{r}
-precivil_complete <- read_csv("../data/precivil_lynching_complete_12_22.csv")
+df_llm <- df_llm2_fixed |> 
+  mutate(state2 = case_when(
+    newspaper_name == "Arkansas intelligencer." ~ "Arkansas",
+    newspaper_name == "The Van Buren press." ~ "Arkansas",
+    newspaper_name == "Washington telegraph." ~ "Arkansas",
+    newspaper_name == "The Daily spy." ~ "Massachusetts",
+    newspaper_name == "Worcester daily spy." ~ "Massachusetts",
+    newspaper_name == "Washington telegraph." ~ "Arkansas",
+    newspaper_name == "The weekly Anglo-African." ~ "New York",
+   TRUE ~ as.character(newspaper_state)
+  )) |> 
+  select(-c(newspaper_state)) |> 
+  rename(newspaper_state = state2)
+
+
 
 ```
 
 
-to join with precivil_complete, precivil_complete has to have article spellchecked by an LLM
 
 ```{r}
+precivil_complete <- read_csv("../data/precivil_complete_dec_28.csv") |> 
+  mutate(index = as.character(index))
+
+
+```
+
+# write precivil_complete_dec_29.csv
+
+```{r}
+
+df_llm2 <- bind_rows(df_llm, precivil_complete)
+
+
+df_llm2 <- df_llm2 |> 
+  mutate(spellchecked = coalesce(spellchecked_text, article_spellchecked)) |> 
+  select(-c(probable_specific_lynching_article,era, extracted_json_category_description,source, original_text, spellchecked_text, article_spellchecked, newspaper_state2)) |> 
+  select(index, newspaper_name, date, year, spellchecked, article, word_count_select, newspaper_state, everything()) |> 
+   mutate(word_count = str_count(spellchecked, "\\w+")) |> 
+  distinct(index, .keep_all = TRUE)
+
+write_csv(df_llm2, "../data/precivil_complete_dec_29.csv")
+
 ```
 
 
@@ -186,7 +245,7 @@ to join with precivil_complete, precivil_complete has to have article spellcheck
 #-----------------------------------------------------
 ```{r}
 df_llm2 <- df_llm |> 
-  inner_join(precivil_complete, by=c("sn", "date"))
+  inner_join(precivil_complete, by=c("sn", "date")) 
 ```
 
 
