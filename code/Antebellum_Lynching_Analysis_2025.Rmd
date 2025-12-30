@@ -77,6 +77,15 @@ precivil_complete |>
 
 ```
 
+### states
+```{r}
+precivil_complete  %>% 
+count(newspaper_state) %>% 
+  arrange(desc(n))
+
+```
+
+
 
 #KWIC
 
@@ -190,14 +199,18 @@ tolnay_beck |>
 
 # precivil narrow print specific stories in a text file
 ```{r}
+#filter data to examine
+precivil_df <- precivil_complete |> 
+  filter(index=="preciv446")
+
 
 # Open a connection to the text file
 file_conn <- file("dataframe_entries.txt", "w")
 
 # Loop through each row of the dataframe
-for (i in 1:nrow(precivil_narrow)) {
+for (i in 1:nrow(precivil_df)) {
   # Extract the row
-  row_data <- precivil_narrow[i, c("headline", "newspaper_name", "date", "article", "matches", "article_id", "index")]
+  row_data <- precivil_df[i, c("headline", "newspaper_name", "date", "spellchecked", "article_id", "index")]
   
   # Write each field on a separate line
   writeLines(paste0("Headline: ", row_data$headline), file_conn)
@@ -205,19 +218,22 @@ for (i in 1:nrow(precivil_narrow)) {
   writeLines(paste0("Date: ", row_data$date), file_conn)
   writeLines(paste0("Article ID: ", row_data$article_id), file_conn)
   writeLines(paste0("Index Number: ", row_data$index), file_conn)
+   wrapped_explanation <- strwrap(row_data$spellchecked, width = 60)
+  wrapped_explanation[1] <- paste0("Spellchecked Text: ", wrapped_explanation[1])
+  writeLines(wrapped_explanation, file_conn)
   
-  # Handle the matches list column
-  matches_content <- unlist(row_data$matches)
-  if (length(matches_content) > 0) {
-    writeLines(paste0("Matches: ", paste(matches_content, collapse = ", ")), file_conn)
-  } else {
-    writeLines("Matches: None", file_conn)
-  }
+  # # Handle the matches list column
+  # matches_content <- unlist(row_data$matches)
+  # if (length(matches_content) > 0) {
+  #   writeLines(paste0("Matches: ", paste(matches_content, collapse = ", ")), file_conn)
+  # } else {
+  #   writeLines("Matches: None", file_conn)
+  # }
   
-  writeLines(paste0("\nArticle:\n", row_data$article), file_conn)
+  # writeLines(paste0("\nArticle:\n", row_data$spellchecked), file_conn)
   
   # Add separator line (except after the last entry)
-  if (i < nrow(precivil_narrow)) {
+  if (i < nrow(precivil_df)) {
     writeLines("\n**************************************************\n", file_conn)
   }
 }

@@ -156,6 +156,8 @@ df_llm <- read_csv("../data/precivil_df_llm_dec_26.csv")
 library(dplyr)
 library(readr)
 
+
+
 # 1. Download the Master Newspaper List from LOC (approx 10MB)
 # This file contains the metadata for EVERY newspaper in their system.
 
@@ -233,7 +235,12 @@ df_llm2 <- df_llm2 |>
    mutate(word_count = str_count(spellchecked, "\\w+")) |> 
   distinct(index, .keep_all = TRUE)
 
+#the 1825 entry isnt valid
+df_llm2 <- precivil_complete |> 
+  filter(!index=="preciv447")
+
 write_csv(df_llm2, "../data/precivil_complete_dec_29.csv")
+
 
 ```
 
