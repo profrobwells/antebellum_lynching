@@ -27,6 +27,9 @@ library(stringr)
 #Import 508 cleaned articles
 ```{r}
 precivil_complete <- read_csv("../data/precivil_complete_jan_3.csv") 
+
+
+
 ```
 
 
@@ -105,8 +108,11 @@ my_corpus <- corpus(precivil_complete, text_field = "spellchecked", docid_field 
 # Tokenize the corpus
 my_tokens <- tokens(my_corpus)
 
-#100 tokens on both sides of the search term
-quanteda_df_llm <- kwic(my_tokens, phrase(c("lynch")), window = 50, valuetype = "regex") %>% as.data.frame() |> 
+#15 tokens on both sides of the search term
+quanteda_df_llm <- kwic(my_tokens, phrase(c("lynch")), window = 15, valuetype = "regex") %>% as.data.frame() |> 
+  distinct(docname,  .keep_all = TRUE)
+
+quanteda_df_llm <- kwic(my_tokens, phrase(c("lynch|hung|hang(ed|ing)?|executed?|execution|mob\\s+law|vigilance\\s+committee")), window = 20, valuetype = "regex") %>% as.data.frame() |> 
   distinct(docname,  .keep_all = TRUE)
 
 df_llm <- precivil_complete |> 
@@ -388,22 +394,55 @@ text <- data.frame(
 parsed <- spacy_parse(text, entity = TRUE, 
                                lemma = TRUE,
                                pos = TRUE,
-                               tag= TRUE)
-
-# annotated_spacy <- spacy_parse(texts_to_parse, 
-#                                entity = TRUE,
-#                                lemma = TRUE,
-#                                pos = TRUE,
-#                                tag= TRUE)
-# Annotate with spacy
-# annotated_spacy <- spacy_parse(precivil_complete$spellchecked, 
-#                                entity = TRUE,
-#                                lemma = TRUE,
-#                                pos = TRUE,
-#                                tag= TRUE)
+                               tag= TRUE,  
+                              dependency = TRUE  )
 
 
 ```
+
+
+### Spacy Adjective-noun pairs
+using a much narrower corpus of the kwic text that is fitered to 30 tokens
+```{r}
+
+# Create adjective-noun pairs using spaCy output
+spacy_adj_noun_pairs <- parsed %>%
+  inner_join(
+    parsed %>% select(doc_id, sentence_id, token, token_id, pos),
+    by = c("doc_id", "sentence_id", "head_token_id" = "token_id"),
+    suffix = c("_adj", "_noun")
+  ) %>%
+  # Filter for adjectives modifying nouns
+  filter(
+    dep_rel == "amod" &           # amod = adjectival modifier
+    pos_adj == "ADJ" &            # first token is adjective
+    pos_noun == "NOUN"            # head word is noun
+  ) %>%
+  # Select and rename relevant columns
+  select(
+    article_id = doc_id,
+    sentence_id,
+    adjective = token_adj,
+    noun = token_noun
+  )
+
+# Count frequencies of adjective-noun pairs
+spacy_adj_noun_counts <- spacy_adj_noun_pairs %>%
+  group_by(adjective, noun) %>%
+  summarise(
+    frequency = n(),
+    articles = n_distinct(article_id),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(frequency))
+
+# Display results
+datatable(spacy_adj_noun_counts,
+          caption = "Spacy Top adjective-noun pairs in Antebellum Lynching coverage",
+          options = list(pageLength = 50))
+```
+
+
 
 ### Cities and towns
 Captures lynching locations!
@@ -527,6 +566,129 @@ datatable(location_counts2,
           ))
 ```
 
+### States from localities
+
+```{r}
+location_counts2 <- location_counts2 |> 
+  mutate(state = case_when(
+    # Already state names - pass through
+    location_clean %in% c("Alabama", "Arkansas", "California", "Delaware", "Georgia", 
+                          "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", 
+                          "Louisiana", "Minnesota", "Mississippi", "Missouri", 
+                          "Nebraska", "New Hampshire", "New York", "North Carolina",
+                          "Ohio", "Tennessee", "Texas", "Virginia") ~ location_clean,
+    
+    # California counties and cities
+    location_clean %in% c("Alameda", "Alameda County", "Annador County", "Calaveras County",
+                          "Merced County", "Napa", "Oakland", "Placer County", 
+                          "San Andreas", "San Antonio", "San Felipe", "San Francisco",
+                          "San Gabriel", "San Isidro", "San Jose", "San Luis Obispo",
+                           "Santa Barbara", "Shasta", "Solano County", 
+                          "Stockton", "Tejon", "Tuolumne County", "Yuba County",
+                          "Red Bluffs", "Drytown", "Iowa Hill", "Monterey",
+                          "Sawyer's Bar", "South Sulphur") ~ "California",
+    
+    # Texas counties and cities
+    location_clean %in% c("Uvalde County", "El Paso", "San Antonio") ~ "Texas",
+    
+    # Missouri counties and cities
+    location_clean %in% c("Buchanan County", "Gentry County") ~ "Missouri",
+    
+    # Illinois counties and cities
+    location_clean %in% c("Ogle County", "Keithsburg", "Rockford") ~ "Illinois",
+    
+    # Indiana counties and cities
+    location_clean %in% c("South Bend") ~ "Indiana",
+    #deleted "Noble County" "Allen County",  - too many variations
+    
+    # Mississippi counties and cities
+    location_clean %in% c("Issaquena County", "Panola", "Pontotoc County") ~ "Mississippi",
+    
+    # Iowa counties and cities
+    location_clean %in% c("Black Hawk", "Tama County") ~ "Iowa",
+    
+    # Kentucky cities
+    location_clean %in% c("Lexington", "Louisville") ~ "Kentucky",
+    
+    # Tennessee cities
+    location_clean %in% c("Memphis", "Nashville") ~ "Tennessee",
+    
+    # Georgia cities
+    location_clean %in% c("Savannah") ~ "Georgia",
+    
+    # Arkansas counties and cities
+    location_clean %in% c("Pike County", "Tuskegee") ~ "Alabama",
+    
+    # Louisiana cities
+    location_clean %in% c("Baton Rouge", "New Orleans") ~ "Louisiana",
+    
+    # Kansas cities
+    location_clean %in% c("Lecompton", "Leavenworth City", "Kansas Territory") ~ "Kansas",
+    
+    # New York cities
+    location_clean == "New York" ~ "New York",
+    
+    # Ohio cities
+    location_clean == "Williamstown" ~ "Kentucky",
+    
+    # Florida cities
+    location_clean == "Pensacola" ~ "Florida",
+    
+    # Nebraska cities
+    location_clean == "Omaha City" ~ "Nebraska",
+    
+    # Colorado cities
+    location_clean == "Denver City" ~ "Colorado",
+    
+    # Oregon counties
+    location_clean %in% c("Lewis County", "Rogue River", "Rogue River Valley") ~ "Oregon",
+    
+    # North Carolina cities
+    location_clean == "Wilmington" ~ "North Carolina",
+    
+    # District of Columbia
+    location_clean == "Washington" ~ "District of Columbia",
+    
+    # Rivers/geographic features - assign to primary state
+    location_clean == "Mississippi" ~ "Mississippi",
+    location_clean == "Upper Mississippi River" ~ "Multiple States",
+    location_clean == "Salmon River" ~ "Idaho",
+    
+    # Uncertain/generic locations
+    location_clean %in% c("Columbia", "Geneva", "Milton", "Alston", "Bargar",
+                          "Driskells", "Partridge", "Renick", "Scaggs", 
+                          "Shattuck", "Weatherford", "Weston", "Woodstock",
+                          "Shelbyville", "Lawrenceville", "Union City",
+                          "Grant County", "Randolph County", "Petersburg", "Essex County", "Melbourne", "Mount Alexander") ~ "Unknown",
+    
+    
+    # Default
+    TRUE ~ "Unknown"
+  ))
+
+# View results
+#unknown = 39
+map <- 
+location_counts2 |> 
+  count(state) |> 
+  arrange(desc(n)) |> 
+  filter(state!="Unknown")
+
+write_csv(map, "../output/map.csv")
+  
+```
+
+The
+whole neighborhood was aroused to a frenzy of excitement so
+soon as the bloody deed became known. 
+
+
+### Quick view of any entry by row
+```{r}
+wrapped_text <- strwrap(as.character(precivil_complete$spellchecked[162]), width = 60)
+writeLines(wrapped_text, "temp_text.txt")
+file.edit("temp_text.txt")
+```
 
 
 
@@ -672,7 +834,7 @@ write_csv(missing, "missing_student_text_dec_21.csv")
 
 
 ### Notes on parsing
-
+https://claude.ai/share/9c186ac7-2e5f-4e94-a64d-14e1e79aa49e
 
 using spacyr- needs work
 ```{r}
