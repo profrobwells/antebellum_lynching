@@ -1,0 +1,527 @@
+Document ID: preciv177
+Sentence ID: 2
+LOCATION IDENTIFIED: California
+Entity Type: GPE_B
+Headline: NA
+Newspaper: San Andreas independent.
+Date: 1857-05-30
+Full Context: Chile . They are each the father of a prodigy of devils , incarnate , and one
+of the sons of the Mexican Garcia family was a captain of the company which
+butchered Crabb and his party , and it was done in a spirit of revenge , for
+the lynching of his cousins in California . When we landed in California ,
+there were seven of these Garcia boys , now there are but two living , and one
+of them is destitute of a leg which he lost fighting against Fremont , at the
+battle of the Salinas ,
+
+==================================================
+
+Document ID: preciv21
+Sentence ID: 3
+LOCATION IDENTIFIED: Lewis county Oregon
+Entity Type: GPE_B, GPE_I
+Headline: CRIMES AND CASUALTIES.
+Newspaper: The weekly Butte record.
+Date: 1861-02-02
+Full Context: recently , between three Spaniards , in which two of them were seriously
+injured . The weather east of the Cascades had been very mild and pleasant ,
+but recently it had become very cold , and it was feared the stock would suffer
+severely . A fellow had been lynched in Lewis county , Oregon , for making
+improper advances to a Mrs . Wheeler . It appears that he wrote her a letter ,
+begging her to leave her husband and follow him to California . By some means ,
+Wheeler came in possession of the letter , and
+
+==================================================
+
+Document ID: preciv210
+Sentence ID: 7
+LOCATION IDENTIFIED: San Isidro
+Entity Type: FAC_B, FAC_I
+Headline: NA
+Newspaper: Butte record.
+Date: 1856-02-23
+Full Context: in H Street , in Sacramento by a Chinaman . Cause-jealousy . The murderer has
+been arrested . A native of France , named Francis Icithard , committed suicide
+last Sunday , Big Oak Flat . The motives which led this unfortunate man to such
+an extremity are unknown . Lynched . - The Monterey Sentinel states that during
+the past week a Californian named Isidoro Soto was hung at San Isidro for
+cattle stealing .
+
+==================================================
+
+Document ID: preciv269
+Sentence ID: 3
+LOCATION IDENTIFIED: California
+Entity Type: GPE_B
+Headline: Our San Francisco Correspondence
+SAN FRANc1sco,
+
+
+Jan. 81. 1855. {
+Newspaper: The Sierra citizen.
+Date: 1855-01-27
+Full Context: seventy square leagues of territory , and has an ocean water front of more than
+36 miles . Randall would be the richest proprietor in the world , if the
+emigration to California were promoted as it should be by good roads across the
+continent and through the State . Lynch Law continues to prevail in every part
+of California , and with excellent reasons to sustain it . You will see in your
+exchanges report of the hanging of two murderers in Los Angeles . Also in the
+Sonora Herald , a full description of the proceedings in the case
+
+==================================================
+
+Document ID: preciv278
+Sentence ID: 1
+LOCATION IDENTIFIED: Monterey
+Entity Type: GPE_B
+Headline: NA
+Newspaper: The Nevada journal.
+Date: 1854-09-29
+Full Context: La Cronica of the oath , Published at San Francisco , has the following account
+of lynching at Monterey . At one o'clock on Sunday , the 3rd inst , Jose
+Higuera , native of California , was hung without good cause , at the corner of
+a house opposite the building known as the Casa de Gobierno , by some riotous
+Americans , some of them
+
+==================================================
+
+Document ID: preciv309
+Sentence ID: 3
+LOCATION IDENTIFIED: San San Luis Luis Obispo Obispo
+Entity Type: FAC_B, FAC_I
+Headline: 6snsral gntslligsnts.
+
+From the Alta Californian, October 10.
+CALIFORNIA NEWS.
+Newspaper: Washington sentinel.
+Date: 1853-11-12
+Full Context: the fortnight , but none of extraordinary weight . A private expedition has
+gone out from Stockton to survey Tulare Valley , east of the lake , for the
+purpose of colonization . Three persons , two Sonorians and one Californian ,
+accused of murder and robbery , hung by Lynch law on the 9th instant , at San
+Luis Obispo . They were arrested , tried , and convicted by the citizens of Los
+Angeles , but the Spanish citizens outnumbered in the meeting the Americans ,
+who wished to hang the prisoners . The meeting determined to send the
+
+==================================================
+
+Document ID: preciv318
+Sentence ID: 1
+LOCATION IDENTIFIED: California
+Entity Type: GPE_B
+Headline: NA
+Newspaper: Litchfield enquirer.
+Date: 1853-06-02
+Full Context: Lynch law continues to prevail in California , although it has been banished
+from the precincts of the larger cities , and has retreated to the places and
+small towns . By the latest news we were informed of no less than five men
+having been hung by lynch law ,
+
+==================================================
+
+Document ID: preciv329
+Sentence ID: 1
+LOCATION IDENTIFIED: Mississippi
+Entity Type: LOC_B
+Headline: NA
+Newspaper: The Nevada journal.
+Date: 1852-05-15
+Full Context: A GAMBLER LYNCHED ON THE Mississippi . - The Louisville Courier states that
+recently a party of returned Californians left New Orleans for St . Louis and
+that during the trip a gambler named Williamson induced one of them to enter
+his state-room , and persuaded him to take a glass of liquor
+
+==================================================
+
+Document ID: preciv352
+Sentence ID: 3
+LOCATION IDENTIFIED: CALIFORNIA
+Entity Type: GPE_B
+Headline: THE MOB LAW IN CALIFORNIA.
+Newspaper: Weekly national intelligencer.
+Date: 1851-07-26
+Full Context: shall determine The of the majority is to be binding all and the members pledge
+themselves to defend and sustain each other in carrying the determined action
+of the committee , at the hazard of their lives and their fortunes . Comments
+on the above by the Boston Journal . LYNCH Law IN CALIFORNIA . - The last
+arrival from California brought intelligence of the trial and execution under
+the unwritten code of Judge Lynch , of a notorious English thief . This act
+committed under the auspices of some of the most respectable and influential
+citizens of San Francisco ,
+
+==================================================
+
+Document ID: preciv366
+Sentence ID: 3
+LOCATION IDENTIFIED: California
+Entity Type: GPE_B
+Headline: LATER FROM CALIFORNIA.
+Newspaper: Weekly national intelligencer.
+Date: 1851-04-19
+Full Context: night , from Chagres , with two hundred passengers . The New Orleans had
+arrived at Panama on the 1st of April with $ 780,900 in gold , the Nohener with
+$ 780,900 , and the Antelope with $ 780,900 , which all at Chagres when the
+Prometheus sailed . Lynch law appears to prevail in California to a
+considerable extent . Two men , who gave their names James Backsin of Maine and
+Charles Simmons of Massachusetts , were hung by the populace , under the Lynch
+code , on Consumes river lately for stealing horses . The political news
+
+==================================================
+
+Document ID: preciv376
+Sentence ID: 1
+LOCATION IDENTIFIED: California
+Entity Type: GPE_B
+Headline: Lynch Law i'm California.
+Newspaper: The Daily spy.
+Date: 1850-08-14
+Full Context: The following graphic account of the administration of Lynch law in California
+is taken from recent work written by Lieut . E . G . Buffum , giving the
+results of his three years ' experience in California We received report on the
+afternoon of January 20th that five men had been arrested at the dry diggings ,
+and
+
+==================================================
+
+Document ID: preciv190
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: DETAILS oE oALIFoRSIA NEWS.
+Newspaper: The daily union.
+Date: 1856-10-30
+Full Context: into what called kid gloves and returned to US as Alexandres best which may be
+displayed in the windows Of our fancy dry goods stores THE PROGRESS OF CRIME
+Crime is fearful in the increase throughout the State The papers filled with
+accounts Of highway robberies murders shootings stabbings and Lynch Law ,
+executions NOT SHASTA INSCRIBED LADIES ' / On Tuesday last , September 10th ,
+says the Yreka Union , the famous Shasta Butte mountain was assembled BY party
+Of ladies ' where they celebrated the admission Of California into the Union .
+The ladies performed this feat Mrs
+
+==================================================
+
+Document ID: preciv214
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: New YORK. Dec. II.
+Newspaper: Washington telegraph.
+Date: 1855-12-26
+Full Context: The steamer Northern Light arrived today from California . Gen W H . Richardon
+, United States Marshal , has been assassinated . The Sheriff had great
+difficulty in keeping his assassin from being lynched . Isaac D . Fall ,
+Collector at Fort Monterey , and Thomas Williamson have been murdered , it is
+supposed , by a party of Mexicans in arresting whom fight ensued , in which two
+Sheriffs were killed . A fight had occurred at Rogue River in which the
+
+==================================================
+
+Document ID: preciv246
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: NA
+Newspaper: Washington telegraph.
+Date: 1855-07-04
+Full Context: 133,606 gold coins . May 1 to May 30 $ 1,500,000 According to the monthly
+California homicide introduced by the Chronicle 122 persons had suffered
+violent deaths at the hands of their fellow men in this State in the first four
+months of the year , including fourteen hung by Lynch law and two hung
+according to statute law . On account of the delay in receiving news from the
+distant parts of the State , cannot bring up the list entirely to date but the
+appearances are that May will hold her own . The Lane Commission has confirmed
+the
+
+==================================================
+
+Document ID: preciv260
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: Later from
+O a liz F q R M 7 a
+Newspaper: Eastern times.
+Date: 1855-03-08
+Full Context: , or that might be found cruising along the coast , would be boarded and
+searched by Spanish vessels of war . The U.S . steamer San Jacinto was to leave
+for Havana on the 10th . Mining prospects are improving under the recent rains
+. Robberies , murders and lynch executions continued . Sixty-five dead bodies
+in all have been recovered from the wreck of the steamer Pearl at Sacramento .
+Some twenty persons are still missing . The boat has been raised and is
+repairing . On the 43rd ballot for Senator , in the California Legislature , Mr
+
+==================================================
+
+Document ID: preciv264
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: NA
+Newspaper: The Shasta courier.
+Date: 1855-02-10
+Full Context: HANGING MANIA . A spirit of mob law has recently prevailed to a fearful extent
+throughout the State . Within the past four weeks more than a dozen men have
+been hung up by virtue of decisions of Judge Lynch . We have never before known
+the people of California to evince , to the same extent , their disposition to
+elevate scoundrels to distinguished positions .
+
+==================================================
+
+Document ID: preciv277
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: Later From California.
+Newspaper: The true Democrat.
+Date: 1854-10-25
+Full Context: , the Whig candidate , is , however , elected Clerk of the Supreme Court . By
+the arrival of the Southerner on the 4th inst from San Diego , we have the
+particulars of a desperate affray at Monterey , resulting in the death of an
+American and the lynching of a native Californian . The American was a peace
+officer named William Hardmouth . He was attempting to arrest the Californian
+for disorderly conduct in a dance house , when he resisted , and finally shot
+him in the abdomen with buckshot . The Californian was afterward dragged from
+
+==================================================
+
+Document ID: preciv312
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: Red zsluT. Correspondence.
+Newspaper: The Shasta courier.
+Date: 1853-11-05
+Full Context: it is estimated , at an expenditure of about one hundred thousand dollars . Now
+, this is certainly a very trifling sum when we take into consideration the
+great advantages which will result from the successful navigation of the
+Sacramento River at all seasons of the year . Judge Lynch made his appearance
+in town a few days ago for the purpose of sitting on a case wherein the People
+of the State of California , whose special representative he is , was plaintiff
+, and Charley Bell defendant . It appears that the defendant had become
+intoxicated and had
+
+==================================================
+
+Document ID: preciv319
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: NA
+Newspaper: The Nevada journal.
+Date: 1853-04-15
+Full Context: TO By the California papers just received , we observe that the name ' Jones '
+figures rather too conspicuously in the criminal records of the Colder State .
+Near Sacramento , one William X . Jones , was hung under the auspices of Judge
+Lynch , for the murder , in a drunken frolic , of one McGaffin . At Nevada City
+, a man by the name of Jones was sentenced to 18 months in the penitentiary ,
+for involuntary manslaughter in the murder of a Mexican woman . For reasons
+which may be
+
+==================================================
+
+Document ID: preciv323
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: NA
+Newspaper: Daily American telegraph.
+Date: 1852-10-30
+Full Context: per cents , and pay the November interests . A fugitive slave mulatto woman had
+been claimed and remanded to her master in Missouri . The mining news from
+every quarter is cheering . Numerous outrages had been committed by Spanish
+Americans . Several horse thieves have been hung by lynch law . Doctor Gregor ,
+a Scotchman , has been murdered at Sonora . Indian outrages in the interior
+continue . Business is active and prosperous everywhere . Flour , grain , and
+provisions are firm and in good demand . Money is stringent . The general
+health in California
+
+==================================================
+
+Document ID: preciv327
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: Later frOzsa the Pacific
+Newspaper: Washington telegraph.
+Date: 1852-06-09
+Full Context: of pure gold ever found in California . There have been the usual number of
+affrays and consulates at the mines and in the cities during the fortnight . In
+this city the burglarious operations which were so common have suddenly ceased
+. In the mines the punishment accorded by lynch court has had the effect of
+preserving order in most places . Occasionally the propensity to commit crime
+breaks through the severe restrictions , and in these cases justice is not
+tardily administered when the culprit is taken . The sentence for petty thefts
+is usually whipping and banishment from
+
+==================================================
+
+Document ID: preciv337
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: NA
+Newspaper: The Nevada journal.
+Date: 1851-10-09
+Full Context: some of our contemporaries for justifying the motives of the San Francisco
+Committee of Vigilance , and the members of the Committee themselves have been
+made the subject of violent denunciation ; yet every successive arrival from
+California proves more clearly the justice of what we first asserted that the
+Lynch Law now in operation is not Mob Law , but the result of a universal
+sentiment of order , conscientious belief that it cannot be obtained by
+trusting to the regular authorities , and sense of danger which impelled them
+to immediate action . We have professed our inability to
+
+==================================================
+
+Document ID: preciv348
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: The California News by the Prometheus-
+
+
+Dreadful state OF Affairs.
+Newspaper: The New York herald.
+Date: 1851-08-15
+Full Context: from California , by way of the newly opened route of the San Juan de Nicaragua
+. The prominent , and by far the most conspicuous feature of the California
+news is the prevalence of what would be called on this side of the continent
+the supreme authority of Judge Lynch . In San Francisco it is the execution of
+the decrees of the Vigilance Committee of five hundred , not quite so
+ceremonious as the old Venetian Council , in the prompt punishment of criminals
+, and for the preservation of law and order . Strange as it may sound
+
+==================================================
+
+Document ID: preciv349
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: From California.
+Newspaper: The republic.
+Date: 1851-08-15
+Full Context: our citizens appears to be unabated . The burned district although not entirely
+rebuilt , is pretty thickly studded with tenements of all descriptions , and
+brick and stone buildings of the most substantial character in process of
+erection in all parts . The California papers abound with accounts of Lynch law
+executions , of murders , robberies , revelations of crime , Indian massacres ,
+etc . man named James Stuart , convicted of murder and robbery , tried ,
+condemned , and executed by the vigilance committee of San Francisco , on the
+11th of July . The affair
+
+==================================================
+
+Document ID: preciv351
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: TELEoRAPIIIC.
+
+ARRIVAL OF THE EMPIRE CITY.
+
+Late from CALIFORNIA;.
+Newspaper: The republic.
+Date: 1851-08-07
+Full Context: ARRIVAL OF THE EMPIRE CITY . Late from California . Destruction Conflagration -
+City Hall and City Hospital in Ruins - Mining Intelligence - Horrible Murders -
+Assassins Lynched by the People The Markets , etc , etc . New York , August
+6-10 a.m . - The Empire City has arrived , having left Chagres on the 25th ,
+and Kingston on the Both of July . She brings three hundred and sixty
+passengers , and 400 900
+
+==================================================
+
+Document ID: preciv361
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: NEWS BY THE TELEGRAPH.
+
+ARRIVAL OF THE ALABAMA.-LATER FROM
+
+
+CALIFORNIA-THE CUBAN EXPEDITION Sc
+Newspaper: Weekly national intelligencer.
+Date: 1851-05-10
+Full Context: collector suspicion of smuggling . Nothing wrong , however , was found . More
+mines have been discovered in Lower California . About one thousand Sonorans
+have returned to Buda and commenced rebuilding . The incendiaries who set fire
+to the place were discovered , but had escaped . The Lynch Law has again been
+resorted to - but no further hanging . The United States district court has
+decided in favor of suits for claim of lands at Sacramento . The propeller
+Massachusetts going to Oregon for rides ordered at Santa Fe via New Orleans .
+NEW PANAMA , APRIL
+
+==================================================
+
+Document ID: 4685
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: NA
+Newspaper: Kansas weekly herald.
+Date: 1855-09-01
+Full Context: all day June 1st , at Virginia City . Nothing remarkably new in the way of
+discoveries . The town was growing sensibly duller . Many were leaving , and
+Indian troubles deterred people from coming in . Provisions high and scarce . A
+vigilance committee was about organizing to lynch a butcher , but it was
+promptly nipped in the bud . In reference to the war the Colonel says , unless
+help in the way of provisions , etc . , is furnished by California , the
+volunteers must disband and the whole fighting given up to two hundred
+
+==================================================
+
+Document ID: 7519
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: The California News by the Prometheus-
+
+
+Dreadful state OF Affairs.
+Newspaper: The New York herald.
+Date: 1851-08-15
+Full Context: later intelligence from California , by way of the newly-opened route of San
+Juan de Nicaragua . The prominent , and by far the most conspicuous feature of
+the California news is the prevalence of what would be called on this side of
+the continent the supreme authority of Judge Lynch . In San Francisco , it is
+the execution of the decrees of the Vigilance Committee of Five Hundred ( not
+quite so ceremonious as the old Venetian Council ) , in the prompt punishment
+of criminals , and for the preservation of law and order . Strange as it
+
+==================================================
+
+Document ID: 7520
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: From California.
+Newspaper: The republic.
+Date: 1851-08-15
+Full Context: appears to be unabated . The burned district , although not entirely rebuilt ,
+is pretty thickly studded with tenements of all descriptions , and brick and
+stone buildings of the most substantial character in process of erection in all
+parts . " The California papers abound with accounts of Lynch law executions ,
+of murders , robberies , revelations of crime , Indian massacres , etc . A man
+named James Stuart , convicted of murder and robbery , tried , condemned , and
+executed by the vigilance committee of San Francisco , on the 7th of July . The
+
+==================================================
+
+Document ID: 7523
+Sentence ID: NA
+LOCATION IDENTIFIED: NA
+Entity Type: NA
+Headline: TELEoRAPIIIC.
+
+ARRIVAL OF THE EMPIRE CITY.
+
+Late from CALIFORNIA;.
+Newspaper: The republic.
+Date: 1851-08-07
+Full Context: ARRIVAL OF THE EMPIRE CITY . Late from California . Destructive
+Conflagration—City Hall and City Hospital in Ruins—Mining Intelligence—Horrible
+Murders—Assassins Lynched by the People—The Markets , & c . , & c . NEW YORK ,
+August 6—10 A.M . — The Empire City has arrived , having left Chagres on the
+25th , and Kingston on the 30th of July . She brings three hundred and sixty
+passengers , and

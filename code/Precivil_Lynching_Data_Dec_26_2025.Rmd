@@ -239,14 +239,233 @@ df_llm2 <- df_llm2 |>
 df_llm2 <- precivil_complete |> 
   filter(!index=="preciv447")
 
-write_csv(df_llm2, "../data/precivil_complete_dec_29.csv")
 
 
 ```
 
+```{r}
+precivil_complete <- df_llm2
+```
 
 
 
+```{r}
+
+precivil_complete <-  precivil_complete  %>%
+  mutate(newspaper_name_clean = case_when(
+    # New-York Tribune variants
+    str_detect(newspaper_name, regex("New-York.*tribune", ignore_case = TRUE)) ~ "New-York Tribune",
+    
+    # Daily national Democrat
+    newspaper_name == "Daily national Democrat." ~ "Daily National Democrat",
+    
+    # Nevada Journal
+    newspaper_name == "The Nevada journal." ~ "Nevada Journal",
+    
+    # Nevada Democrat
+    newspaper_name == "The Nevada Democrat." ~ "Nevada Democrat",
+    
+    # Shasta Courier
+    newspaper_name == "The Shasta courier." ~ "Shasta Courier",
+    
+    # Weekly National Intelligencer
+    newspaper_name == "Weekly national intelligencer." ~ "Weekly National Intelligencer",
+    
+    # Washington Telegraph
+    newspaper_name == "Washington telegraph." ~ "Washington Telegraph",
+    
+    # Litchfield Enquirer
+    newspaper_name == "Litchfield enquirer." ~ "Litchfield Enquirer",
+    
+    # Empire County Argus
+    newspaper_name == "The Empire County argus." ~ "Empire County Argus",
+    
+    # New York Herald
+    newspaper_name == "The New York herald." ~ "New York Herald",
+    
+    # Placer Herald variants
+    str_detect(newspaper_name, regex("Placer herald", ignore_case = TRUE)) ~ "Placer Herald",
+    
+    # True Democrat
+    newspaper_name == "The true Democrat." ~ "True Democrat",
+    
+    # Arkansas Intelligencer
+    newspaper_name == "Arkansas intelligencer." ~ "Arkansas Intelligencer",
+    
+    # Washington Sentinel
+    newspaper_name == "Washington sentinel." ~ "Washington Sentinel",
+    
+    # New Orleans Daily Crescent
+    newspaper_name == "New Orleans daily crescent." ~ "New Orleans Daily Crescent",
+    
+    # San Andreas Independent
+    newspaper_name == "San Andreas independent." ~ "San Andreas Independent",
+    
+    # Smyrna Times
+    newspaper_name == "Smyrna times." ~ "Smyrna Times",
+    
+    # Butte Record variants (multiple versions)
+    str_detect(newspaper_name, regex("Butte record", ignore_case = TRUE)) ~ "Butte Record",
+    
+    # Red Wing Sentinel
+    newspaper_name == "Red Wing sentinel." ~ "Red Wing Sentinel",
+    
+    # Trinity Journal variants
+    str_detect(newspaper_name, regex("Trinity.*journal", ignore_case = TRUE)) ~ "Trinity Journal",
+    
+    # Worcester Daily Spy and The Daily Spy
+    str_detect(newspaper_name, regex("(Worcester )?[Dd]aily spy", ignore_case = TRUE)) ~ "Worcester Daily Spy",
+    
+    # Arkansas True Democrat and Arkansas Democratic Banner (possibly related)
+    newspaper_name == "Arkansas true Democrat." ~ "Arkansas True Democrat",
+    newspaper_name == "Arkansas democratic banner." ~ "Arkansas Democratic Banner",
+    
+    # Saint Paul / St. Paul Minnesotian variants
+    str_detect(newspaper_name, regex("(Saint|St\\.) Paul.*Minnesotian", ignore_case = TRUE)) ~ "St. Paul Minnesotian",
+    
+    # Kansas Herald of Freedom / Kansas Weekly Herald
+    str_detect(newspaper_name, regex("Kansas.*herald", ignore_case = TRUE)) ~ "Kansas Herald",
+    
+    # The Republic
+    newspaper_name == "The republic." ~ "Republic",
+    
+    # Sierra Citizen
+    newspaper_name == "The Sierra citizen." ~ "Sierra Citizen",
+    
+    # Hydraulic Press
+    newspaper_name == "The hydraulic press." ~ "Hydraulic Press",
+    
+    # Southern Press
+    newspaper_name == "The southern press." ~ "Southern Press",
+    
+    # Des Arc Citizen
+    newspaper_name == "Des Arc citizen." ~ "Des Arc Citizen",
+    
+    # Minnesota Weekly Times and Weekly Minnesotian and Times
+    str_detect(newspaper_name, regex("Minnesota.*times", ignore_case = TRUE)) ~ "Minnesota Weekly Times",
+    
+    # South Branch Intelligencer
+    str_detect(newspaper_name, "South Branch intelligencer") ~ "South Branch Intelligencer",
+    
+    # Southport Telegraph
+    str_detect(newspaper_name, "Southport telegraph") ~ "Southport Telegraph",
+    
+    # Squatter Sovereign
+    newspaper_name == "Squatter sovereign." ~ "Squatter Sovereign",
+    
+    # Trinity Times
+    newspaper_name == "The Trinity times." ~ "Trinity Times",
+    
+    # Van Buren Press
+    newspaper_name == "The Van Buren press." ~ "Van Buren Press",
+    
+    # Daily Union
+    newspaper_name == "The daily union." ~ "Daily Union",
+    
+    # National Republican
+    newspaper_name == "The national Republican." ~ "National Republican",
+    
+    # Native American
+    newspaper_name == "The native American." ~ "Native American",
+    
+    # Volcano Weekly Ledger
+    newspaper_name == "Volcano weekly ledger." ~ "Volcano Weekly Ledger",
+    
+    # Columbia Gazette
+    newspaper_name == "Columbia gazette." ~ "Columbia Gazette",
+    
+    # Delaware State Journal and Statesman
+    newspaper_name == "Delaware State journal and statesman." ~ "Delaware State Journal and Statesman",
+    
+    # Grass Valley Telegraph
+    newspaper_name == "Grass Valley telegraph." ~ "Grass Valley Telegraph",
+    
+    # Arkansas Advocate variants
+    str_detect(newspaper_name, regex("Arkansas advocate", ignore_case = TRUE)) ~ "Arkansas Advocate",
+    
+    # Columbian Fountain
+    newspaper_name == "The Columbian fountain." ~ "Columbian Fountain",
+    
+    # Yazoo Democrat
+    newspaper_name == "The Yazoo Democrat." ~ "Yazoo Democrat",
+    
+    # Alexandria Gazette
+    str_detect(newspaper_name, "Alexandria gazette") ~ "Alexandria Gazette",
+    
+    # Eastern Times / Eastern Clarion (different papers)
+    newspaper_name == "Eastern times." ~ "Eastern Times",
+    newspaper_name == "The eastern clarion." ~ "Eastern Clarion",
+    
+    # Freeman's Champion
+    newspaper_name == "Freeman's champion." ~ "Freeman's Champion",
+    
+    # Marshall County Democrat
+    newspaper_name == "Marshall County Democrat." ~ "Marshall County Democrat",
+    
+    # Mobile Daily Commercial Register and Patriot
+    newspaper_name == "Mobile daily commercial register and patriot." ~ "Mobile Daily Commercial Register and Patriot",
+    
+    # Southern Shield
+    newspaper_name == "Southern shield." ~ "Southern Shield",
+    
+    # Evansville Daily Journal
+    newspaper_name == "The Evansville daily journal." ~ "Evansville Daily Journal",
+    
+    # North-Carolina Standard variants
+    str_detect(newspaper_name, regex("North-Carolina standard", ignore_case = TRUE)) ~ "North-Carolina Standard",
+    
+    # Ohio Democrat
+    str_detect(newspaper_name, "Ohio Democrat") ~ "Ohio Democrat",
+    
+    # Weekly Register
+    newspaper_name == "The Weekly register." ~ "Weekly Register",
+    
+    # Vermont Telegraph
+    str_detect(newspaper_name, "Vermont telegraph") ~ "Vermont Telegraph",
+    
+    # Southern Argus variants
+    str_detect(newspaper_name, regex("Southern Argus", ignore_case = TRUE)) ~ "Southern Argus",
+    
+    # Other standardizations
+    newspaper_name == "American Republican and Baltimore daily clipper." ~ "American Republican and Baltimore Daily Clipper",
+    str_detect(newspaper_name, "Constantine republican") ~ "Constantine Republican",
+    newspaper_name == "Daily American organ." ~ "Daily American Organ",
+    newspaper_name == "Daily American telegraph." ~ "Daily American Telegraph",
+    newspaper_name == "Daily national era." ~ "Daily National Era",
+    newspaper_name == "Indiana State sentinel." ~ "Indiana State Sentinel",
+    newspaper_name == "Iowa territorial gazette and advertiser." ~ "Iowa Territorial Gazette and Advertiser",
+    newspaper_name == "Lexington union." ~ "Lexington Union",
+    newspaper_name == "Liberty advocate." ~ "Liberty Advocate",
+    newspaper_name == "Nevada national." ~ "Nevada National",
+    newspaper_name == "Newbern weekly progress." ~ "Newbern Weekly Progress",
+    str_detect(newspaper_name, "Richmond enquirer") ~ "Richmond Enquirer",
+    newspaper_name == "Southern telegraph." ~ "Southern Telegraph",
+    newspaper_name == "The Arkansas banner." ~ "Arkansas Banner",
+    newspaper_name == "The Davenport gazette." ~ "Davenport Gazette",
+    newspaper_name == "The Georgetown news." ~ "Georgetown News",
+    newspaper_name == "The Ottawa free trader." ~ "Ottawa Free Trader",
+    newspaper_name == "The Port Gibson herald, and correspondent." ~ "Port Gibson Herald and Correspondent",
+    newspaper_name == "The Washington union." ~ "Washington Union",
+    newspaper_name == "The Woodville Republican." ~ "Woodville Republican",
+    newspaper_name == "The sun." ~ "The Sun",
+    newspaper_name == "The weekly Anglo-African." ~ "Weekly Anglo-African",
+    str_detect(newspaper_name, "Wheeling times and advertiser") ~ "Wheeling Times and Advertiser",
+    
+    # Keep NA as is or convert to "Unknown"
+    is.na(newspaper_name) ~ "Unknown",
+    
+    # Default: keep original but remove trailing period and "The " prefix
+    TRUE ~ str_remove(str_to_title(newspaper_name), "\\.$") %>% str_remove("^The ")
+  ))
+```
+
+
+```{r}
+
+precivil_complete <-precivil_complete[-508, ]
+  
+write_csv(precivil_complete, "../data/precivil_complete_jan_3.csv")
+```
 
 
 #-----------------------------------------------------
