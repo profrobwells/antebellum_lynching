@@ -1,0 +1,199 @@
+reviewing second_verify_states.txt
+
+left at line 
+
+Fix
+
+1015 - Iowa
+1016 - Mississippi
+1512 - California
+1513 - Illinois
+7522 - California
+16747 - Mississippi
+16748 - Mississippi
+16751 - South Carolina
+16756 - Mississippi
+16774 - Maryland
+16791 - Arkansas
+16792 - Illinois
+16792 - Illinois
+16794 - Illinois
+16794 - Illinois
+16795 - Kentucky
+16804 - Ohio
+16808 - Texas
+16812 - Tennessee
+16822 - Kentucky
+preciv1 - District of Columbia
+preciv2 - South Carolina
+preciv10 - Alabama
+preciv13 - New York
+preciv18 - Arkansas
+preciv19 - South Carolina
+preciv20 - New Mexico
+preciv21 - Oregon
+preciv22 - Colorado
+preciv60 - Missouri
+preciv79 - California
+preciv100 - California
+preciv101 - California
+preciv102 - Kentucky
+preciv103 - California
+preciv105 - Minnesota
+preciv107 - Virginia
+preciv109 - Minnesota
+preciv110 - California
+preciv110 - Arkansas
+preciv112 - Kentucky
+preciv115 - Delaware
+preciv118 - California
+preciv119 - Kentucky
+preciv120 - California
+preciv121 - California
+preciv122 - Missouri
+preciv124 - California
+preciv126 - Maryland
+preciv126 - Missouri
+preciv132 - California
+preciv133 - California
+preciv134 - Illinois
+preciv136 - California
+preciv137 - Delaware
+preciv143 - California
+preciv146 - California
+preciv147 - California
+preciv151 - California
+preciv152 - California
+preciv155 - Kansas
+preciv157 - California
+preciv158 - California
+preciv159 - California
+preciv160 - Iowa
+preciv162 - Wisconsin
+preciv164 - Louisiana
+preciv166 - Kansas
+preciv167 - Texas
+preciv170 - Kansas
+preciv173 - Nebraska
+preciv174 - Mississippi
+preciv175 - Kentucky
+#preciv176 - California
+#preciv176 - Iowa
+preciv177 - California
+preciv179 - Kansas
+preciv180 - California
+preciv181 - Virginia
+preciv184 - Nebraska
+preciv185 - Kansas
+preciv187 - California
+preciv189 - California
+preciv192 - California
+preciv193 - Alabama
+preciv195 - Illinois
+preciv196 - District of Columbia
+preciv198 - California
+preciv199 - California
+preciv202 - California
+preciv203 - California
+preciv205 - Texas
+preciv206 - California
+preciv207 - Arkansas
+preciv208 - Virginia
+preciv209 - California
+preciv210 - California
+preciv213 - California
+preciv215 - California
+preciv216 - California
+preciv217 - California
+preciv218 - California
+preciv219 - California
+preciv239 - Massachusetts
+preciv240 - Missouri
+preciv246 - California
+preciv426 - Arkansas
+
+3134
+
+Wrong
+preciv255 - was not lynched
+preciv330 - san antonio was probably texas
+preciv40 - should be Arkansas, not Washington
+16810 - should be Texas, not California
+preciv108 - Minnesota (not Kentucky)
+preciv116 - Texas (not California)
+preciv154 - Mississippi (not Florida)
+preciv168 - Iowa (not Illinois)
+
+
+delete
+preciv14 - France
+preciv17 - irrelevant
+preciv201 - Chinese lynching
+preciv211 - irrelevnt
+
+Notes
+
+
+From the Minnesota Weekly Times, August 16, 1856: "When the train of cars left Chatham, Illinois, a crowd of men were
+engaged lynching a man for insulting ladies on the street."
+
+
+From the New York Daily Tribune, August 29, 1856: " We stated the case the other day of Mr. Strickland & Co., the booksellers of
+Mobile, who were driven by the means process of Judge Lynch's Court from that
+city, wisely refusing to remain and stand trial, and await judgment for the
+crime of being suspected of selling to the inhabitants of that city books of
+anti-slavery tendency. It appears that a part at least of their offense
+consisted in furnishing their customers with books by Mr. Frederick Douglass,
+but whether it was confined to this is not stated. "
+
+
+From The Kanzas News, July 4, 1857: "At Florence, Nebraska, seven men were lately condemned to death by Judge Lynch
+for the crime of jumping claims. Ropes were procured, and but for the
+intercession of the father of one and the wives and sisters of the others the
+sentence would have been carried into execution. "
+
+
+
+From New York Daily Tribune, July 21, 1858:L
+
+
+From the Hagerstown Torch Light on June 20, 1860: "From the Hagerstown Torch Light. ELOPEMENT AND LYNCH LAW.—A white girl, aged
+about 17 or 18, of respectable parentage, eloped from Frederick County, last
+week, with a rough, rude, overgrown black fellow.,... having committed no offense, as it was
+thought, for which the law provided a punishment, he was about being dismissed,
+when the mob manifested a disposition to take him in hand...Here a parley took place which resulted in a compromise, according
+to which the offender received thirty-nine stripes on the bare back, well laid
+on. He was then committed; and in the afternoon, escorted out of town "
+
+From the Washington Telegraph on July 4, 1855, making the distinction between legal and lynch hangings in California: "According to the monthly
+California homicide introduced by the Chronicle 122 persons
+had suffered violent deaths at the hands of their fellow
+men in this State in the first four months of the year,
+including fourteen hung by Lynch law and two hung according
+to statute law."
+
+From the Weekly Trinity Journal, Octover 17, 1857, a group of woemn lynched a boy for peeping on girls who were bathing in a lake. "The hazel brushes which had formed his hiding place became rods of justice in the hands of his captors, and the offender received many a
+stripe for his curiosity."
+
+The Mobile Daily Commercial register anbd Patriot reported on August 18, 1841 that 27 men were lynched by drowning in the Mississippi River: 
+"It states that a
+company of armed men in Phillips County, (Ark) set out in
+pursuit of a set of counterfeiters and horse thieves, whom
+they overtook 40 miles below Helena, on the Mississippi
+River. They were taken and secured, and the whole number,
+twenty-seven, were tied hand and foot and drowned in the
+Mississippi at Island 69, in the presence of two men;
+Harrod and Burges, who, it appears, officiated or at least
+took an active part in the execution of the sentence."
+
+From the South Branch Intelligencer on Sept. 5, 1835: " R. W. Carroll, a hairdresser of Charleston, S.C., was lynched on the 21st ult.
+The mob seized him between 8 and 9 o'clock in the morning, gave him 20 lashes,
+a coat of tar and cotton, from head to foot, then marched through several
+principal streets and lodged him in jail. The account states that respectable
+citizens lent their presence, and all was "orderly conducted!" His offense was
+dealing with, and receiving stolen goods from slaves, against which he had
+repeatedly been warned. "
+
+
+
+

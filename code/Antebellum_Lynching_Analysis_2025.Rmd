@@ -1,7 +1,7 @@
 ---
 title: "Antebellum Lynching Analysis 2025"
 author: "Rob Wells"
-date: "2025-12-22"
+date: "2026-01-05"
 output: html_document
 ---
 
@@ -47,7 +47,7 @@ precivil_complete %>%
    # scale_y_continuous(breaks = seq(0, 15, 1)) +
   labs(title = "Precivil War Lynching Coverage By Year, 1835-1861", 
        subtitle = "Count of Lynching Stories Examined",
-       caption = "n=509  articles. Graphic by Rob Wells, 1/3/2026",
+       caption = "n=508  articles. Graphic by Rob Wells, 1/3/2026",
        y="Count of Articles",
        x="Year")
 
@@ -463,8 +463,15 @@ locations_with_prep <- parsed %>%
   ungroup() %>%
   # Join with lynch info
   inner_join(lynch_info, by = c("doc_id", "sentence_id")) %>%
-  # Filter for location prepositions and positions after lynch term
-  filter(prev_token %in% c("at", "in", "near", "on", "from", "to", "near") |
+  # old Filter for location prepositions and positions after lynch term
+  # filter(prev_token %in% c("at", "in", "near", "on", "from", "to", "near") |
+  #        token_id > lynch_token_id)
+   # Filter for:
+  # 1. Location prepositions, OR
+  # 2. Within 5 tokens before lynch term, OR
+  # 3. After lynch term
+  filter(prev_token %in% c("at", "in", "near", "on", "from", "to") |
+         (token_id >= lynch_token_id - 5 & token_id < lynch_token_id) |
          token_id > lynch_token_id)
 ```
 
@@ -477,7 +484,7 @@ captures 226 places
 
 # Extract location entities and combine multi-word locations
 location_counts2 <- locations_with_prep %>%
-  filter(str_detect(entity, "^(GPE|LOC|FAC)_(B|I)$")) %>%
+ # filter(str_detect(entity, "^(GPE|LOC|FAC)_(B|I)$")) %>%
   # Group by doc_id and sentence_id to keep entities together
   group_by(doc_id, sentence_id) %>%
   # Create entity groups - each _B starts a new entity
@@ -572,10 +579,10 @@ datatable(location_counts2,
 location_counts2 <- location_counts2 |> 
   mutate(state = case_when(
     # Already state names - pass through
-    location_clean %in% c("Alabama", "Arkansas", "California", "Delaware", "Georgia", 
+    location_clean %in% c("Alabama", "Arkansas", "California", "Delaware", "Florida", "Georgia", 
                           "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", 
                           "Louisiana", "Minnesota", "Mississippi", "Missouri", 
-                          "Nebraska", "New Hampshire", "New York", "North Carolina",
+                          "Nebraska", "New Hampshire", "New York", "North Carolina", "Oregon",
                           "Ohio", "Tennessee", "Texas", "Virginia") ~ location_clean,
     
     # California counties and cities
@@ -586,7 +593,7 @@ location_counts2 <- location_counts2 |>
                            "Santa Barbara", "Shasta", "Solano County", 
                           "Stockton", "Tejon", "Tuolumne County", "Yuba County",
                           "Red Bluffs", "Drytown", "Iowa Hill", "Monterey",
-                          "Sawyer's Bar", "South Sulphur") ~ "California",
+                          "Sawyer's Bar", "South Sulphur", "Los Angeles", "Sacramento", "Yreka") ~ "California",
     
     # Texas counties and cities
     location_clean %in% c("Uvalde County", "El Paso", "San Antonio") ~ "Texas",
@@ -685,19 +692,228 @@ soon as the bloody deed became known.
 
 ### Quick view of any entry by row
 ```{r}
-wrapped_text <- strwrap(as.character(precivil_complete$spellchecked[162]), width = 60)
+wrapped_text <- strwrap(as.character(precivil_complete$spellchecked[426]), width = 60)
 writeLines(wrapped_text, "temp_text.txt")
 file.edit("temp_text.txt")
 ```
 
 
-
+#***********************
 
 ## validate-read city entries
+
+
+Add a cleaned state column to locations_prep and then join to precivil and then view
+```{r}
+Xlocations_with_context <- locations_with_prep %>%
+  group_by(doc_id, sentence_id) %>%
+  summarize(
+    locations = paste(token, collapse = " "),
+    entity_types = paste(unique(entity), collapse = ", "),
+    .groups = "drop"
+  ) %>%
+  right_join(precivil_df, by = c("doc_id" = "index")) |> 
+   mutate(location_clean = tolower(locations)) |> 
+  mutate(location_clean = case_when(
+    # 1. REMOVE NOISE (Returns NA)
+    # Added: san, driskells, los
+    location_clean %in% c("a", "the memphis enquirer of the", "the yoakum gang", 
+                          "rev", "lieut", "jas", "sheriff", "fort", "5th", 
+                          "5th september september", "states", "west", "red",
+                          "a senor senor badlo badlo", "san", "driskells", "los") ~ NA_character_,
+    
+    # 2. SPECIFIC COMBINATIONS & CORRECTIONS
+    # Rogue River variants -> Rogue River Valley
+    location_clean %in% c("rogue", "rogue river", "rogue river river", 
+                          "rogue river river valley valley") ~ "Rogue River Valley",
+    
+    # Alameda -> Alameda County
+    location_clean == "alameda" ~ "Alameda County",
+    
+    # Annador -> Amador County
+    location_clean == "annador county" ~ "Amador County",
+    
+    # Gentry variants -> Gentry County
+    location_clean %in% c("gentry", "gentry county county") ~ "Gentry County",
+    
+    # 3. MAPPINGS & ABBREVIATIONS
+    location_clean %in% c("mo", "mo .", "mo . .") ~ "Missouri",
+    location_clean %in% c("ky", "ky .")            ~ "Kentucky",
+    location_clean %in% c("ill", "ill . .")        ~ "Illinois",
+    location_clean %in% c("la .")                  ~ "Louisiana",
+    location_clean %in% c("n.c")                   ~ "North Carolina",
+    
+    # 4. TYPO FIXES (Specific cases)
+    location_clean == "san francisco francisco"    ~ "San Francisco",
+    location_clean == "los angeles angeles"        ~ "Los Angeles",
+    location_clean == "santa barbara barbara"      ~ "Santa Barbara",
+    location_clean == "red bluffs bluffs"          ~ "Red Bluffs",
+    location_clean == "san luis luis obispo obispo" ~ "San Luis Obispo",
+    location_clean == "salmon river river"         ~ "Salmon River",
+    location_clean == "sawyer 's 's bar bar"       ~ "Sawyer's Bar",
+    
+    # 5. DEFAULT: Standardize everything else to Title Case
+    # This handles Alabama, Nashville, Iowa, etc., automatically.
+    TRUE ~ str_to_title(location_clean)
+  )) |> 
+### States from localities
+  mutate(state = case_when(
+    # Already state names - pass through
+    location_clean %in% c("Alabama", "Arkansas", "California", "Delaware", "Florida", "Georgia", 
+                          "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", 
+                          "Louisiana", "Minnesota", "Mississippi", "Missouri", 
+                          "Nebraska", "New Hampshire", "New York", "North Carolina", "Oregon",
+                          "Ohio", "Tennessee", "Texas", "Virginia") ~ location_clean,
+    
+    # California counties and cities
+    location_clean %in% c("Alameda", "Alameda County", "Annador County", "Calaveras County",
+                          "Merced County", "Napa", "Oakland", "Placer County", 
+                          "San Andreas", "San Antonio", "San Felipe", "San Francisco",
+                          "San Gabriel", "San Isidro", "San Jose", "San Luis Obispo",
+                           "Santa Barbara", "Shasta", "Solano County", 
+                          "Stockton", "Tejon", "Tuolumne County", "Yuba County",
+                          "Red Bluffs", "Drytown", "Iowa Hill", "Monterey",
+                          "Sawyer's Bar", "South Sulphur", "Los Angeles", "Sacramento", "Yreka") ~ "California",
+    
+    # Texas counties and cities
+    location_clean %in% c("Uvalde County", "El Paso", "San Antonio") ~ "Texas",
+    
+    # Missouri counties and cities
+    location_clean %in% c("Buchanan County", "Gentry County") ~ "Missouri",
+    
+    # Illinois counties and cities
+    location_clean %in% c("Ogle County", "Keithsburg", "Rockford") ~ "Illinois",
+    
+    # Indiana counties and cities
+    location_clean %in% c("South Bend") ~ "Indiana",
+    #deleted "Noble County" "Allen County",  - too many variations
+    
+    # Mississippi counties and cities
+    location_clean %in% c("Issaquena County", "Panola", "Pontotoc County") ~ "Mississippi",
+    
+    # Iowa counties and cities
+    location_clean %in% c("Black Hawk", "Tama County") ~ "Iowa",
+    
+    # Kentucky cities
+    location_clean %in% c("Lexington", "Louisville") ~ "Kentucky",
+    
+    # Tennessee cities
+    location_clean %in% c("Memphis", "Nashville") ~ "Tennessee",
+    
+    # Georgia cities
+    location_clean %in% c("Savannah") ~ "Georgia",
+    
+    # Arkansas counties and cities
+    location_clean %in% c("Pike County", "Tuskegee") ~ "Alabama",
+    
+    # Louisiana cities
+    location_clean %in% c("Baton Rouge", "New Orleans") ~ "Louisiana",
+    
+    # Kansas cities
+    location_clean %in% c("Lecompton", "Leavenworth City", "Kansas Territory") ~ "Kansas",
+    
+    # New York cities
+    location_clean == "New York" ~ "New York",
+    
+    # Ohio cities
+    location_clean == "Williamstown" ~ "Kentucky",
+    
+    # Florida cities
+    location_clean == "Pensacola" ~ "Florida",
+    
+    # Nebraska cities
+    location_clean == "Omaha City" ~ "Nebraska",
+    
+    # Colorado cities
+    location_clean == "Denver City" ~ "Colorado",
+    
+    # Oregon counties
+    location_clean %in% c("Lewis County", "Rogue River", "Rogue River Valley") ~ "Oregon",
+    
+    # North Carolina cities
+    location_clean == "Wilmington" ~ "North Carolina",
+    
+    # District of Columbia
+    location_clean == "Washington" ~ "District of Columbia",
+    
+    # Rivers/geographic features - assign to primary state
+    location_clean == "Mississippi" ~ "Mississippi",
+    location_clean == "Upper Mississippi River" ~ "Multiple States",
+    location_clean == "Salmon River" ~ "Idaho",
+    
+    # Uncertain/generic locations
+    location_clean %in% c("Columbia", "Geneva", "Milton", "Alston", "Bargar",
+                          "Driskells", "Partridge", "Renick", "Scaggs", 
+                          "Shattuck", "Weatherford", "Weston", "Woodstock",
+                          "Shelbyville", "Lawrenceville", "Union City",
+                          "Grant County", "Randolph County", "Petersburg", "Essex County", "Melbourne", "Mount Alexander") ~ "Unknown",
+    
+    
+    # Default
+    TRUE ~ "Unknown"
+  ))
+```
+
+
+
+# Extract location entities and combine multi-word locations
+locations_normalized <- locations_with_prep %>%
+  filter(str_detect(entity, "^(GPE|LOC|FAC)_(B|I)$")) %>%
+  # Group by doc_id and sentence_id to keep entities together
+  group_by(doc_id, sentence_id) %>%
+  # Create entity groups - each _B starts a new entity
+  mutate(entity_group = cumsum(str_detect(entity, "_B$"))) %>%
+  # Combine tokens within each entity group
+  group_by(doc_id, sentence_id, entity_group) %>%
+  summarise(
+    location = paste(token, collapse = " "),
+    .groups = "drop"
+  ) 
+
+
+
+
+x <- locations_with_prep |> 
+  inner_join(precivil_complete, by=c("doc_id"="index")
+
+```{r}
+# Now create the text file with locations highlighted
+file_conn <- file("verify_states.txt", "w")
+
+for (i in 1:nrow(Xlocations_with_context)) {
+  row_data <- Xlocations_with_context[i, ]
+  
+  writeLines(paste0("Document ID: ", row_data$doc_id), file_conn)
+  writeLines(paste0("Sentence ID: ", row_data$sentence_id), file_conn)
+  writeLines(paste0("State: ", row_data$state), file_conn)
+  writeLines(paste0("Location: ", row_data$locations), file_conn)
+  writeLines(paste0("Entity Type: ", row_data$entity_types), file_conn)
+  writeLines(paste0("Headline: ", row_data$headline), file_conn)
+  writeLines(paste0("Newspaper: ", row_data$newspaper_name), file_conn)
+  writeLines(paste0("Date: ", row_data$date), file_conn)
+
+  
+  # Wrap the full text
+  wrapped_text <- strwrap(row_data$kwic_text, width = 80)
+  wrapped_text[1] <- paste0("Full Context: ", wrapped_text[1])
+  writeLines(wrapped_text, file_conn)
+  
+  if (i < nrow(Xlocations_with_context)) {
+    writeLines("\n==================================================\n", file_conn)
+  }
+}
+
+close(file_conn)
+```
+
+#**********************
 
 ```{r}
 # First, merge locations with your original dataframe
 # Assuming your original docs have a doc_id that matches locations3$doc_id
+precivil_df <- df_llm
+#filter here if needed
+
 
 locations_with_context <- locations_with_prep %>%
   group_by(doc_id, sentence_id) %>%

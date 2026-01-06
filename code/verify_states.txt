@@ -1,6 +1,7 @@
 Document ID: 1015
 Sentence ID: 1
-LOCATION IDENTIFIED: IOWA
+State: Iowa
+Location: IOWA
 Entity Type: GPE_B
 Headline: NA
 Newspaper: The Nevada Democrat.
@@ -12,7 +13,8 @@ Full Context: SUICIDE OF LYNCHER IN IOWA . — In Cedar county , Iowa , a young 
 
 Document ID: 16753
 Sentence ID: 2
-LOCATION IDENTIFIED: La .
+State: Louisiana
+Location: La .
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: Richmond enquirer (Richmond, Va.)
@@ -25,7 +27,8 @@ the sentence of Judge Lynch . He had five
 
 Document ID: 16771
 Sentence ID: 2
-LOCATION IDENTIFIED: Nashville
+State: Tennessee
+Location: Nashville
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Vermont telegraph (Brandon [Vt.])
@@ -38,7 +41,8 @@ Senate , the lynching of Dresser at Nashville . His colleague , Senator Grundy
 
 Document ID: 16790
 Sentence ID: 1
-LOCATION IDENTIFIED: WEST
+State: Unknown
+Location: WEST
 Entity Type: LOC_B
 Headline: NA
 Newspaper: NA
@@ -50,7 +54,8 @@ American the following particulars respecting the murder
 
 Document ID: 16793
 Sentence ID: 2
-LOCATION IDENTIFIED: Ogle County
+State: Illinois
+Location: Ogle County
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: Southport telegraph (Southport, W.T....)
@@ -62,7 +67,8 @@ lynching tragedy in Ogle County ,
 
 Document ID: 16801
 Sentence ID: 1
-LOCATION IDENTIFIED: Arkansas
+State: Arkansas
+Location: Arkansas
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Southern Argus (Columbus, Miss.)
@@ -74,7 +80,8 @@ those who were lynched in Arkansas .
 
 Document ID: 16810
 Sentence ID: 1
-LOCATION IDENTIFIED: San San San Felipe Felipe Felipe
+State: Unknown
+Location: San San San Felipe Felipe Felipe
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: Southport telegraph (Southport, W.T....)
@@ -86,7 +93,8 @@ jury , at San Felipe . He had killed one or
 
 Document ID: 16822
 Sentence ID: 2
-LOCATION IDENTIFIED: Williamstown Grant County Ky .
+State: Unknown
+Location: Williamstown Grant County Ky .
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: The Ohio Democrat (Canal Dover, Oh...)
@@ -98,7 +106,8 @@ Full Context: MORE LYNCH LAW . — Two men named Couch and Maythe were lynched a
 
 Document ID: 16832
 Sentence ID: 3
-LOCATION IDENTIFIED: the Yoakum Gang
+State: Unknown
+Location: the Yoakum Gang
 Entity Type: FAC_B, FAC_I
 Headline: NA
 Newspaper: Alexandria gazette (Alexandria, D.C...)
@@ -111,7 +120,8 @@ this affair
 
 Document ID: 325
 Sentence ID: 1
-LOCATION IDENTIFIED: South
+State: Unknown
+Location: South
 Entity Type: LOC_B
 Headline: NA
 Newspaper: Red Wing sentinel.
@@ -124,7 +134,8 @@ the South . This is a timely movement . If the Cotton States intended
 
 Document ID: 5973
 Sentence ID: 1
-LOCATION IDENTIFIED: MISSOURI
+State: Missouri
+Location: MISSOURI
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -136,7 +147,8 @@ following
 
 Document ID: 5976
 Sentence ID: 1
-LOCATION IDENTIFIED: MISSOURI
+State: Missouri
+Location: MISSOURI
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -148,7 +160,8 @@ Simpson Lexton , was hung lately at
 
 Document ID: 6881
 Sentence ID: 1
-LOCATION IDENTIFIED: Pancho Daniel Los Angeles
+State: Unknown
+Location: Pancho Daniel Los Angeles
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: Weekly Trinity journal.
@@ -161,7 +174,8 @@ proper for the Governor to so remark , but
 
 Document ID: 6883
 Sentence ID: 3
-LOCATION IDENTIFIED: KY
+State: Kentucky
+Location: KY
 Entity Type: GPE_B
 Headline: RIVER NEWS, &c.
 Newspaper: Des Arc citizen.
@@ -174,7 +188,8 @@ The Louisville Courier of the 20th inst . says : We understand
 
 Document ID: 7524
 Sentence ID: 1
-LOCATION IDENTIFIED: CALIFORNIA CALIFORNIA
+State: Unknown
+Location: CALIFORNIA CALIFORNIA
 Entity Type: GPE_B
 Headline: 
 
@@ -188,7 +203,8 @@ Advertiser . It will be remembered that when
 
 Document ID: preciv106
 Sentence ID: 1
-LOCATION IDENTIFIED: Texas
+State: Texas
+Location: Texas
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Arkansas true Democrat.
@@ -201,7 +217,8 @@ the woods , suspended to trees , labeled with the
 
 Document ID: preciv110
 Sentence ID: 2
-LOCATION IDENTIFIED: LIEUT
+State: Unknown
+Location: LIEUT
 Entity Type: GPE_B
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -214,7 +231,8 @@ DESTROYED BY LIEUT .
 
 Document ID: preciv114
 Sentence ID: 1
-LOCATION IDENTIFIED: Kentucky
+State: Kentucky
+Location: Kentucky
 Entity Type: GPE_B
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -226,7 +244,8 @@ intense excitement has prevailed in Larue
 
 Document ID: preciv116
 Sentence ID: 2
-LOCATION IDENTIFIED: Uvalde County Texas
+State: Unknown
+Location: Uvalde County Texas
 Entity Type: GPE_B, GPE_I
 Headline: 7x Te1eE1.aph.
 
@@ -241,7 +260,8 @@ horse stealing . There is much excitement in the
 
 Document ID: preciv122
 Sentence ID: 2
-LOCATION IDENTIFIED: Grand Grand Glaize Glaize Jackson Jackson county county
+State: Unknown
+Location: Grand Grand Glaize Glaize Jackson Jackson county county
 Entity Type: FAC_B, FAC_I, GPE_B, GPE_I
 Headline: What the Arkansas Papers Say.
 Newspaper: Arkansas true Democrat.
@@ -254,7 +274,8 @@ hanging to a tree near Grand Glaize in Jackson county
 
 Document ID: preciv125
 Sentence ID: 1
-LOCATION IDENTIFIED: Texas
+State: Texas
+Location: Texas
 Entity Type: GPE_B
 Headline: lWsuAs ssoy ~ RoaySLs.-N - s.s.s, n Az
 Newspaper: New-York daily tribune.
@@ -266,7 +287,8 @@ lashes from leather strap administered in presence
 
 Document ID: preciv128
 Sentence ID: 1
-LOCATION IDENTIFIED: Lexington Louisville
+State: Unknown
+Location: Lexington Louisville
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Worcester daily spy.
@@ -278,7 +300,8 @@ the particulars of a tragedy which transpired in that
 
 Document ID: preciv13
 Sentence ID: 2
-LOCATION IDENTIFIED: New York
+State: New York
+Location: New York
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -291,7 +314,8 @@ after the arrival of the boat in New York , where he stood trial
 
 Document ID: preciv139
 Sentence ID: 1
-LOCATION IDENTIFIED: Oregon
+State: Oregon
+Location: Oregon
 Entity Type: GPE_B
 Headline: NA
 Newspaper: The Nevada Democrat.
@@ -303,7 +327,8 @@ Rogue River Valley
 
 Document ID: preciv139
 Sentence ID: 2
-LOCATION IDENTIFIED: Rogue Rogue River River Valley Valley
+State: Unknown
+Location: Rogue Rogue River River Valley Valley
 Entity Type: LOC_B, LOC_I
 Headline: NA
 Newspaper: The Nevada Democrat.
@@ -315,7 +340,8 @@ Rogue River Valley
 
 Document ID: preciv140
 Sentence ID: 3
-LOCATION IDENTIFIED: Placer County
+State: California
+Location: Placer County
 Entity Type: GPE_B, GPE_I
 Headline: THE NEWS OF THE FORTNIGHT.
 Newspaper: New-York daily tribune.
@@ -328,7 +354,8 @@ negro named Bracy a piece of ground
 
 Document ID: preciv141
 Sentence ID: 2
-LOCATION IDENTIFIED: Rogue Rogue River River Valley Valley
+State: Unknown
+Location: Rogue Rogue River River Valley Valley
 Entity Type: LOC_B, LOC_I
 Headline: NA
 Newspaper: The daily Butte record.
@@ -340,7 +367,8 @@ Full Context: Lynch LAW IN OREGON . The Alta contains an account of the hanging 
 
 Document ID: preciv147
 Sentence ID: 1
-LOCATION IDENTIFIED: Monterey - Anastasia Jesus
+State: Unknown
+Location: Monterey - Anastasia Jesus
 Entity Type: FAC_B, FAC_I
 Headline: NA
 Newspaper: The Nevada journal.
@@ -352,7 +380,8 @@ murder , at Monterey , but
 
 Document ID: preciv149
 Sentence ID: 2
-LOCATION IDENTIFIED: Bushville
+State: Unknown
+Location: Bushville
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Weekly Trinity journal.
@@ -364,7 +393,8 @@ exhibition of Lynch law took place at Bushville ,
 
 Document ID: preciv150
 Sentence ID: 1
-LOCATION IDENTIFIED: New York
+State: New York
+Location: New York
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: New Orleans daily crescent.
@@ -376,7 +406,8 @@ states that
 
 Document ID: preciv153
 Sentence ID: 1
-LOCATION IDENTIFIED: SOLANO COUNTY
+State: California
+Location: SOLANO COUNTY
 Entity Type: GPE_B, GPE_I
 Headline: WHOLE NO. 2l3.
 
@@ -390,7 +421,8 @@ Solano County , supposed to
 
 Document ID: preciv156
 Sentence ID: 1
-LOCATION IDENTIFIED: Geneva Geneva
+State: Unknown
+Location: Geneva Geneva
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Weekly Trinity journal.
@@ -402,7 +434,8 @@ case which occurred recently at Geneva , in
 
 Document ID: preciv16
 Sentence ID: 1
-LOCATION IDENTIFIED: Savannah
+State: Georgia
+Location: Savannah
 Entity Type: GPE_B
 Headline: THE EUROPEAN FLEETS.
 Newspaper: The national Republican.
@@ -415,7 +448,8 @@ Savannah . Bad as the predicament of things really is on the Gulf , it
 
 Document ID: preciv160
 Sentence ID: 2
-LOCATION IDENTIFIED: Iowa
+State: Iowa
+Location: Iowa
 Entity Type: GPE_B
 Headline: NA
 Newspaper: The Nevada Democrat.
@@ -428,7 +462,8 @@ taken place in Iowa were called by their right name . The hanging of William B
 
 Document ID: preciv161
 Sentence ID: 1
-LOCATION IDENTIFIED: Iowa
+State: Iowa
+Location: Iowa
 Entity Type: GPE_B
 Headline: NA
 Newspaper: The Nevada Democrat.
@@ -440,7 +475,8 @@ Finch , son of a
 
 Document ID: preciv163
 Sentence ID: 1
-LOCATION IDENTIFIED: Leavenworth City
+State: Kansas
+Location: Leavenworth City
 Entity Type: GPE_B, GPE_I
 Headline: Murder and Robbery at Leavenworth City Judge Lynch in the Field-Gang of Murderers and Thieves Broken up
 Newspaper: Arkansas true Democrat.
@@ -453,7 +489,8 @@ Emma arrived at Leavenworth at 1 o'clock , P.M . , on Sunday last
 
 Document ID: preciv165
 Sentence ID: 1
-LOCATION IDENTIFIED: Bargar Iowa
+State: Unknown
+Location: Bargar Iowa
 Entity Type: GPE_B
 Headline: Can this be True Effects of Lynch Law
 Newspaper: The Placer herald.
@@ -465,7 +502,8 @@ incident occurred which can hardly be credited in a civilized
 
 Document ID: preciv167
 Sentence ID: 2
-LOCATION IDENTIFIED: Texas
+State: Texas
+Location: Texas
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Smyrna times.
@@ -478,7 +516,8 @@ lawlessness , violence , rapine , lynching and
 
 Document ID: preciv168
 Sentence ID: 2
-LOCATION IDENTIFIED: IOWA
+State: Iowa
+Location: IOWA
 Entity Type: GPE_B
 Headline: Additional Atlantic Items.
 Newspaper: Weekly Trinity journal.
@@ -491,7 +530,8 @@ learn through a Clinton correspondent that Judge Lynch has been
 
 Document ID: preciv172
 Sentence ID: 1
-LOCATION IDENTIFIED: Iowa
+State: Iowa
+Location: Iowa
 Entity Type: GPE_B
 Headline: s
 
@@ -507,7 +547,8 @@ Ringleader . For some years past the
 
 Document ID: preciv176
 Sentence ID: 2
-LOCATION IDENTIFIED: Iowa
+State: Iowa
+Location: Iowa
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Smyrna times.
@@ -520,7 +561,8 @@ body of from fifty to sixty men ,
 
 Document ID: preciv177
 Sentence ID: 1
-LOCATION IDENTIFIED: California
+State: California
+Location: California
 Entity Type: GPE_B
 Headline: NA
 Newspaper: San Andreas independent.
@@ -533,7 +575,8 @@ California , there were seven of these Garcia boys ,
 
 Document ID: preciv178
 Sentence ID: 2
-LOCATION IDENTIFIED: Lecompton Lecompton
+State: Unknown
+Location: Lecompton Lecompton
 Entity Type: GPE_B
 Headline: From iianSas.
 Newspaper: The true Democrat.
@@ -545,7 +588,8 @@ men were tried by ' lynch law ' and hung in Lecompton for murder .
 
 Document ID: preciv184
 Sentence ID: 3
-LOCATION IDENTIFIED: Omaha City Nebraska
+State: Unknown
+Location: Omaha City Nebraska
 Entity Type: GPE_B, GPE_I
 Headline: News from all Quarters.
 
@@ -561,7 +605,8 @@ horse-stealing in Omaha City , Nebraska . Several policemen in Cincinnati have
 
 Document ID: preciv186
 Sentence ID: 3
-LOCATION IDENTIFIED: Monterey
+State: California
+Location: Monterey
 Entity Type: GPE_B
 Headline: Description of a Kansas Hero.
 Newspaper: The Placer herald.
@@ -574,7 +619,8 @@ says the Santa Cruz Sentinel , to extract the following from a private
 
 Document ID: preciv190
 Sentence ID: 1
-LOCATION IDENTIFIED: Sacramento San Andreas
+State: Unknown
+Location: Sacramento San Andreas
 Entity Type: GPE_B, LOC_B, LOC_I
 Headline: DETAILS oE oALIFoRSIA NEWS.
 Newspaper: The daily union.
@@ -588,7 +634,8 @@ Andreas September 26th says a cold-blooded murder
 
 Document ID: preciv198
 Sentence ID: 2
-LOCATION IDENTIFIED: San San Francisco Francisco
+State: Unknown
+Location: San San Francisco Francisco
 Entity Type: GPE_B, GPE_I
 Headline: He6ectiona.
 Newspaper: Butte record.
@@ -602,7 +649,8 @@ San Francisco
 
 Document ID: preciv201
 Sentence ID: 5
-LOCATION IDENTIFIED: China
+State: Unknown
+Location: China
 Entity Type: GPE_B
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -615,7 +663,8 @@ that Chinese was the most difficult
 
 Document ID: preciv205
 Sentence ID: 1
-LOCATION IDENTIFIED: TEXAS
+State: Texas
+Location: TEXAS
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Daily American organ.
@@ -627,7 +676,8 @@ the killing of Blessengame and his
 
 Document ID: preciv21
 Sentence ID: 2
-LOCATION IDENTIFIED: Lewis county Oregon
+State: Unknown
+Location: Lewis county Oregon
 Entity Type: GPE_B, GPE_I
 Headline: CRIMES AND CASUALTIES.
 Newspaper: The weekly Butte record.
@@ -640,7 +690,8 @@ to a Mrs . Wheeler . It appears that he
 
 Document ID: preciv212
 Sentence ID: 1
-LOCATION IDENTIFIED: Lexington
+State: Kentucky
+Location: Lexington
 Entity Type: GPE_B
 Headline: NA
 Newspaper: The Evansville daily journal.
@@ -652,7 +703,8 @@ touches up the editor of the Louisville Courier : We know nothing about Mr
 
 Document ID: preciv213
 Sentence ID: 2
-LOCATION IDENTIFIED: Sheriff
+State: Unknown
+Location: Sheriff
 Entity Type: FAC_B
 Headline: Of Dec. 20 the following
 
@@ -668,7 +720,8 @@ Full Context: . The homicide calendar for the first eleven months of the year sh
 
 Document ID: preciv215
 Sentence ID: 4
-LOCATION IDENTIFIED: Shasta Sheriff
+State: Unknown
+Location: Shasta Sheriff
 Entity Type: GPE_B, LOC_B
 Headline: California Homicide
 Newspaper: The Empire County argus.
@@ -681,7 +734,8 @@ shot and killed by one of his countrymen at Calaveras
 
 Document ID: preciv217
 Sentence ID: 2
-LOCATION IDENTIFIED: Alvarado
+State: Unknown
+Location: Alvarado
 Entity Type: GPE_B
 Headline: NA
 Newspaper: The Empire County argus.
@@ -693,7 +747,8 @@ and Hill , at Alvarado , on Thursday
 
 Document ID: preciv227
 Sentence ID: 1
-LOCATION IDENTIFIED: Columbia Tuolumne county
+State: Unknown
+Location: Columbia Tuolumne county
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: The Empire County argus.
@@ -705,7 +760,8 @@ Columbia , Tuolumne county by John S . Barclay
 
 Document ID: preciv239
 Sentence ID: 1
-LOCATION IDENTIFIED: Alabama
+State: Alabama
+Location: Alabama
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Washington telegraph.
@@ -718,7 +774,8 @@ first violated and then tortured to death a little white
 
 Document ID: preciv240
 Sentence ID: 3
-LOCATION IDENTIFIED: Weston Mo
+State: Unknown
+Location: Weston Mo
 Entity Type: GPE_B
 Headline: President of this abolition
 Newspaper: The weekly Placer herald.
@@ -731,7 +788,8 @@ terms by the citizens of Weston , Mo . The
 
 Document ID: preciv242
 Sentence ID: 1
-LOCATION IDENTIFIED: Kansas
+State: Kansas
+Location: Kansas
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Washington telegraph.
@@ -743,7 +801,8 @@ morning , says the St . Louis Republican of the
 
 Document ID: preciv244
 Sentence ID: 1
-LOCATION IDENTIFIED: Alameda County
+State: California
+Location: Alameda County
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: The Trinity times.
@@ -755,7 +814,8 @@ sunset man was found hanging upon a
 
 Document ID: preciv245
 Sentence ID: 1
-LOCATION IDENTIFIED: ALAMEDA
+State: California
+Location: ALAMEDA
 Entity Type: GPE_B
 Headline: NA
 Newspaper: The Empire County argus.
@@ -767,7 +827,8 @@ House , in
 
 Document ID: preciv246
 Sentence ID: 2
-LOCATION IDENTIFIED: Nicaragua
+State: Unknown
+Location: Nicaragua
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Washington telegraph.
@@ -781,7 +842,8 @@ all
 
 Document ID: preciv25
 Sentence ID: 3
-LOCATION IDENTIFIED: South
+State: Unknown
+Location: South
 Entity Type: LOC_B
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -794,7 +856,8 @@ have published the particular outrages on two of them . Making concessions
 
 Document ID: preciv255
 Sentence ID: 3
-LOCATION IDENTIFIED: Kansas Territory
+State: Kansas
+Location: Kansas Territory
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: Eastern times.
@@ -806,7 +869,8 @@ Park was not lynched in Kansas Territory , as has been reported .
 
 Document ID: preciv256
 Sentence ID: 3
-LOCATION IDENTIFIED: Kansas
+State: Kansas
+Location: Kansas
 Entity Type: GPE_B
 Headline: Print 1t. Let the People know it.
 Newspaper: Minnesota weekly times.
@@ -819,7 +883,8 @@ dwelling house burned to the ground , and say exultantly
 
 Document ID: preciv257
 Sentence ID: 1
-LOCATION IDENTIFIED: ILLINOIS
+State: Illinois
+Location: ILLINOIS
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Smyrna times.
@@ -831,7 +896,8 @@ considerable wealth and very respectfully connected
 
 Document ID: preciv259
 Sentence ID: 1
-LOCATION IDENTIFIED: Red Red Bluffs Bluffs
+State: Unknown
+Location: Red Red Bluffs Bluffs
 Entity Type: FAC_B, FAC_I
 Headline: NA
 Newspaper: The Trinity times.
@@ -844,7 +910,8 @@ Court ,
 
 Document ID: preciv26
 Sentence ID: 1
-LOCATION IDENTIFIED: Texas
+State: Texas
+Location: Texas
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Litchfield enquirer.
@@ -856,7 +923,8 @@ residing some time ago in Nacogdoches County ,
 
 Document ID: preciv265
 Sentence ID: 1
-LOCATION IDENTIFIED: Red Bluffs
+State: California
+Location: Red Bluffs
 Entity Type: FAC_B, FAC_I
 Headline: NA
 Newspaper: The Empire County argus.
@@ -868,7 +936,8 @@ Red Bluffs on the 30th ult . The culprit said he would disclose his real
 
 Document ID: preciv272
 Sentence ID: 1
-LOCATION IDENTIFIED: Iowa Hill
+State: California
+Location: Iowa Hill
 Entity Type: FAC_B, FAC_I
 Headline: NA
 Newspaper: The Trinity times.
@@ -881,7 +950,8 @@ voluntarily gave themselves up to the authorities .
 
 Document ID: preciv275
 Sentence ID: 1
-LOCATION IDENTIFIED: Texas
+State: Texas
+Location: Texas
 Entity Type: GPE_B
 Headline: LYNCH Law AND EXCITEMENT IN TEXAS
 Newspaper: Washington telegraph.
@@ -893,7 +963,8 @@ lately been greatly excited on
 
 Document ID: preciv278
 Sentence ID: 1
-LOCATION IDENTIFIED: Monterey
+State: California
+Location: Monterey
 Entity Type: GPE_B
 Headline: NA
 Newspaper: The Nevada journal.
@@ -906,7 +977,8 @@ Higuera , native of California ,
 
 Document ID: preciv281
 Sentence ID: 1
-LOCATION IDENTIFIED: Drytown Drytown
+State: Unknown
+Location: Drytown Drytown
 Entity Type: GPE_B
 Headline: NA
 Newspaper: The Nevada journal.
@@ -918,7 +990,8 @@ Chinaman . He protested his innocence
 
 Document ID: preciv286
 Sentence ID: 1
-LOCATION IDENTIFIED: Texas
+State: Texas
+Location: Texas
 Entity Type: GPE_B
 Headline: NA
 Newspaper: The daily union.
@@ -930,7 +1003,8 @@ States Navy , shot Laredo , Texas ,
 
 Document ID: preciv287
 Sentence ID: 1
-LOCATION IDENTIFIED: TEXAS
+State: Texas
+Location: TEXAS
 Entity Type: GPE_B
 Headline: From the Nueces Valley, june a.
 Newspaper: Washington sentinel.
@@ -942,7 +1016,8 @@ The U.S . Navy-Linton Lynched
 
 Document ID: preciv295
 Sentence ID: 1
-LOCATION IDENTIFIED: Washara County Wisconsin
+State: Unknown
+Location: Washara County Wisconsin
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: The Sierra citizen.
@@ -954,7 +1029,8 @@ latter part of February . It appears from correspondence
 
 Document ID: preciv296
 Sentence ID: 2
-LOCATION IDENTIFIED: Calaveras County
+State: California
+Location: Calaveras County
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: Columbia gazette.
@@ -966,7 +1042,8 @@ excited much feeling in Calaveras County . The particulars
 
 Document ID: preciv303
 Sentence ID: 2
-LOCATION IDENTIFIED: Yreka
+State: California
+Location: Yreka
 Entity Type: GPE_B
 Headline: 6eneral aateIliaente.
 
@@ -981,7 +1058,8 @@ Yreka . The account gives no names or dates , and the Herald
 
 Document ID: preciv305
 Sentence ID: 2
-LOCATION IDENTIFIED: Yreka
+State: California
+Location: Yreka
 Entity Type: GPE_B
 Headline: FROM CALIFORNIA.
 Newspaper: Weekly national intelligencer.
@@ -994,7 +1072,8 @@ No names or dates are given but it is spoken of
 
 Document ID: preciv307
 Sentence ID: 1
-LOCATION IDENTIFIED: Columbia
+State: Unknown
+Location: Columbia
 Entity Type: GPE_B
 Headline: LYNCH LAW IN COLUMBIA.
 Newspaper: Columbia gazette.
@@ -1006,7 +1085,8 @@ extraordinary excitement . An
 
 Document ID: preciv309
 Sentence ID: 2
-LOCATION IDENTIFIED: San San Luis Luis Obispo Obispo
+State: Unknown
+Location: San San Luis Luis Obispo Obispo
 Entity Type: FAC_B, FAC_I
 Headline: 6snsral gntslligsnts.
 
@@ -1022,7 +1102,8 @@ Luis Obispo . They were arrested , tried , and
 
 Document ID: preciv310
 Sentence ID: 3
-LOCATION IDENTIFIED: Missouri
+State: Missouri
+Location: Missouri
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Washington sentinel.
@@ -1035,7 +1116,8 @@ on the 18th ult . , a man named
 
 Document ID: preciv311
 Sentence ID: 1
-LOCATION IDENTIFIED: Missouri
+State: Missouri
+Location: Missouri
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Washington sentinel.
@@ -1047,7 +1129,8 @@ Winge
 
 Document ID: preciv318
 Sentence ID: 1
-LOCATION IDENTIFIED: California
+State: California
+Location: California
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Litchfield enquirer.
@@ -1059,7 +1142,8 @@ from the precincts of the larger cities ,
 
 Document ID: preciv329
 Sentence ID: 1
-LOCATION IDENTIFIED: Mississippi
+State: Mississippi
+Location: Mississippi
 Entity Type: LOC_B
 Headline: NA
 Newspaper: The Nevada journal.
@@ -1071,7 +1155,8 @@ recently a party of returned Californians left New Orleans for
 
 Document ID: preciv33
 Sentence ID: 2
-LOCATION IDENTIFIED: Buchanan County
+State: Missouri
+Location: Buchanan County
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: New Orleans daily crescent.
@@ -1084,7 +1169,8 @@ being a horse thief , and the hanging of
 
 Document ID: preciv330
 Sentence ID: 1
-LOCATION IDENTIFIED: San Antonio
+State: California
+Location: San Antonio
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: The Nevada journal.
@@ -1096,7 +1182,8 @@ inhuman murder and its signal punishment , which occurred
 
 Document ID: preciv332
 Sentence ID: 1
-LOCATION IDENTIFIED: States
+State: Unknown
+Location: States
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Washington telegraph.
@@ -1109,7 +1196,8 @@ Edmondson , and he was sixty-three years old .
 
 Document ID: preciv333
 Sentence ID: 4
-LOCATION IDENTIFIED: Milton Milton Florida Florida
+State: Unknown
+Location: Milton Milton Florida Florida
 Entity Type: GPE_B
 Headline: NA
 Newspaper: The Nevada journal.
@@ -1121,7 +1209,8 @@ Milton , Florida , with a negro , for murder , confessed the crime , and
 
 Document ID: preciv335
 Sentence ID: 1
-LOCATION IDENTIFIED: CALIFORNIA CALIFORNIA
+State: Unknown
+Location: CALIFORNIA CALIFORNIA
 Entity Type: GPE_B
 Headline: 
 
@@ -1135,7 +1224,8 @@ the intelligence reached us that so-called vigilante committee
 
 Document ID: preciv340
 Sentence ID: 1
-LOCATION IDENTIFIED: GEORGIA
+State: Georgia
+Location: GEORGIA
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Arkansas democratic banner.
@@ -1147,7 +1237,8 @@ Tuskegee , Georgia
 
 Document ID: preciv341
 Sentence ID: 1
-LOCATION IDENTIFIED: Georgia Tuskegee
+State: Unknown
+Location: Georgia Tuskegee
 Entity Type: GPE_B
 Headline: NA
 Newspaper: The Woodville Republican.
@@ -1159,7 +1250,8 @@ Tuskegee , a
 
 Document ID: preciv343
 Sentence ID: 2
-LOCATION IDENTIFIED: Pike county
+State: Alabama
+Location: Pike county
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: The southern press.
@@ -1172,7 +1264,8 @@ ground that he was an Abolitionist
 
 Document ID: preciv345
 Sentence ID: 1
-LOCATION IDENTIFIED: GEORGIA
+State: Georgia
+Location: GEORGIA
 Entity Type: GPE_B
 Headline: NA
 Newspaper: The southern press.
@@ -1184,7 +1277,8 @@ at Tuskegee ,
 
 Document ID: preciv346
 Sentence ID: 1
-LOCATION IDENTIFIED: Georgia
+State: Georgia
+Location: Georgia
 Entity Type: GPE_B
 Headline: NA
 Newspaper: The southern press.
@@ -1196,7 +1290,8 @@ Tuskegee , Georgia , a few
 
 Document ID: preciv347
 Sentence ID: 1
-LOCATION IDENTIFIED: Pike County
+State: Alabama
+Location: Pike County
 Entity Type: GPE_B, GPE_I
 Headline: McCoy again Iynchei,
 Newspaper: New-York daily tribune.
@@ -1208,7 +1303,8 @@ McCoy in Pike County , Ala , on the ground that he was an abolitionist .
 
 Document ID: preciv35
 Sentence ID: 1
-LOCATION IDENTIFIED: Shelbyville Illinois
+State: Unknown
+Location: Shelbyville Illinois
 Entity Type: GPE_B
 Headline: FREDERICK Z. PRIME,
 
@@ -1223,7 +1319,8 @@ Tuesday morning last our usually
 
 Document ID: preciv350
 Sentence ID: 2
-LOCATION IDENTIFIED: Verandah
+State: Unknown
+Location: Verandah
 Entity Type: GPE_B
 Headline: CALIFORNIA.
 Newspaper: Weekly national intelligencer.
@@ -1236,7 +1333,8 @@ Eldorado , and Union Hotels . Messrs . Charles S . Lyons and Bach
 
 Document ID: preciv355
 Sentence ID: 1
-LOCATION IDENTIFIED: Alston Alston Florida Florida
+State: Unknown
+Location: Alston Alston Florida Florida
 Entity Type: GPE_B
 Headline: NA
 Newspaper: The Davenport gazette.
@@ -1248,7 +1346,8 @@ Florida , with a negro , for murder , confessed the crime , and
 
 Document ID: preciv357
 Sentence ID: 3
-LOCATION IDENTIFIED: Pensacola Florida
+State: Unknown
+Location: Pensacola Florida
 Entity Type: GPE_B
 Headline: AnesAer DssgraeeGAl Preeeeaiar.
 Newspaper: Arkansas democratic banner.
@@ -1261,7 +1360,8 @@ Lynch law .
 
 Document ID: preciv358
 Sentence ID: 2
-LOCATION IDENTIFIED: El Paso
+State: Texas
+Location: El Paso
 Entity Type: GPE_B, GPE_I
 Headline: Later from, T.r...'
 Newspaper: The republic.
@@ -1274,7 +1374,8 @@ extent . Within two weeks fifteen persons , Americans and Mexicans
 
 Document ID: preciv366
 Sentence ID: 2
-LOCATION IDENTIFIED: California
+State: California
+Location: California
 Entity Type: GPE_B
 Headline: LATER FROM CALIFORNIA.
 Newspaper: Weekly national intelligencer.
@@ -1287,7 +1388,8 @@ considerable extent . Two men , who gave their names James Backsin
 
 Document ID: preciv374
 Sentence ID: 1
-LOCATION IDENTIFIED: Memphis
+State: Tennessee
+Location: Memphis
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Weekly national intelligencer.
@@ -1299,7 +1401,8 @@ Memphis . On the 1st instant a man was apprehended as a
 
 Document ID: preciv376
 Sentence ID: 1
-LOCATION IDENTIFIED: California
+State: California
+Location: California
 Entity Type: GPE_B
 Headline: Lynch Law i'm California.
 Newspaper: The Daily spy.
@@ -1311,7 +1414,8 @@ is taken from recent work written by Lieut . E . G . Buffum , giving the
 
 Document ID: preciv378
 Sentence ID: 1
-LOCATION IDENTIFIED: VIRGINIA
+State: Virginia
+Location: VIRGINIA
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Weekly national intelligencer.
@@ -1323,7 +1427,8 @@ mob assembled at the Court
 
 Document ID: preciv383
 Sentence ID: 1
-LOCATION IDENTIFIED: Tennessee
+State: Tennessee
+Location: Tennessee
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Arkansas intelligencer.
@@ -1335,7 +1440,8 @@ Full Context: Lynching and Robbery in Tennessee . - The Memphis Enquirer , of th
 
 Document ID: preciv40
 Sentence ID: 1
-LOCATION IDENTIFIED: Washington
+State: District of Columbia
+Location: Washington
 Entity Type: GPE_B
 Headline: NA
 Newspaper: The Van Buren press.
@@ -1347,7 +1453,8 @@ Fayetteville , charged with murdering his master ,
 
 Document ID: preciv414
 Sentence ID: 1
-LOCATION IDENTIFIED: Panola
+State: Mississippi
+Location: Panola
 Entity Type: GPE_B
 Headline: SLynchinG in Pamela.
 Newspaper: The Weekly register.
@@ -1359,7 +1466,8 @@ Enquirer of the 11th
 
 Document ID: preciv414
 Sentence ID: 2
-LOCATION IDENTIFIED: Panola the Memphis Enquirer of the
+State: Unknown
+Location: Panola the Memphis Enquirer of the
 Entity Type: GPE_B, FAC_B, FAC_I
 Headline: SLynchinG in Pamela.
 Newspaper: The Weekly register.
@@ -1371,7 +1479,8 @@ Enquirer of the 11th
 
 Document ID: preciv426
 Sentence ID: 1
-LOCATION IDENTIFIED: West
+State: Unknown
+Location: West
 Entity Type: LOC_B
 Headline: NA
 Newspaper: Mobile daily commercial register and patriot.
@@ -1384,7 +1493,8 @@ in the West . It states that a company of armed men in Phillips County , ( Ark
 
 Document ID: preciv43
 Sentence ID: 1
-LOCATION IDENTIFIED: JAS
+State: Unknown
+Location: JAS
 Entity Type: GPE_B
 Headline: FRANK LEsL1E,s NEWSPAPER. The las
 Newspaper: The Yazoo Democrat.
@@ -1397,7 +1507,8 @@ be an illustration of the lynching of JAS . B . Bunnings , at Chappell's depot
 
 Document ID: preciv431
 Sentence ID: 1
-LOCATION IDENTIFIED: Baton Rouge
+State: Louisiana
+Location: Baton Rouge
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: Southern telegraph.
@@ -1409,7 +1520,8 @@ imprisonment in the Penitentiary at Baton Rouge by
 
 Document ID: preciv44
 Sentence ID: 1
-LOCATION IDENTIFIED: Iowa
+State: Iowa
+Location: Iowa
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -1421,7 +1533,8 @@ Moines were hanged in the woods of Tama County
 
 Document ID: preciv44
 Sentence ID: 2
-LOCATION IDENTIFIED: Tama County
+State: Iowa
+Location: Tama County
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -1433,7 +1546,8 @@ Moines were hanged in the woods of Tama County
 
 Document ID: preciv445
 Sentence ID: 2
-LOCATION IDENTIFIED: Upper Mississippi
+State: Unknown
+Location: Upper Mississippi
 Entity Type: LOC_B, LOC_I
 Headline: NA
 Newspaper: Litchfield enquirer.
@@ -1446,7 +1560,8 @@ who had been guilty of murder was
 
 Document ID: preciv50
 Sentence ID: 2
-LOCATION IDENTIFIED: Minnesota
+State: Minnesota
+Location: Minnesota
 Entity Type: GPE_B
 Headline: From Our Regular Correspondent.
 
@@ -1464,7 +1579,8 @@ Minnesota , supposed to be imbued with all the exalted
 
 Document ID: preciv51
 Sentence ID: 1
-LOCATION IDENTIFIED: Yuba county
+State: California
+Location: Yuba county
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: The hydraulic press.
@@ -1476,7 +1592,8 @@ the Oregon House , in Yuba county , for robbing a teamster on the highway of
 
 Document ID: preciv56
 Sentence ID: 1
-LOCATION IDENTIFIED: Illinois
+State: Illinois
+Location: Illinois
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -1488,7 +1605,8 @@ thieves and counterfeiters , were hung by
 
 Document ID: preciv60
 Sentence ID: 2
-LOCATION IDENTIFIED: Renick Randolph County Mo
+State: Unknown
+Location: Renick Randolph County Mo
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -1501,7 +1619,8 @@ Renick , Randolph County , Mo , which resulted in the hanging
 
 Document ID: preciv61
 Sentence ID: 1
-LOCATION IDENTIFIED: Kentucky
+State: Kentucky
+Location: Kentucky
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -1513,7 +1632,8 @@ Hughes , in McLean county
 
 Document ID: preciv62
 Sentence ID: 1
-LOCATION IDENTIFIED: Denver City
+State: Colorado
+Location: Denver City
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: The Shasta courier.
@@ -1526,7 +1646,8 @@ pastime of making targets of a number
 
 Document ID: preciv67
 Sentence ID: 1
-LOCATION IDENTIFIED: 5th 5th September September
+State: Unknown
+Location: 5th 5th September September
 Entity Type: FAC_B, FAC_I
 Headline: NA
 Newspaper: The Nevada journal.
@@ -1539,7 +1660,8 @@ Leavenworth for attempting to take the lives of several citizens .
 
 Document ID: preciv69
 Sentence ID: 1
-LOCATION IDENTIFIED: South Bend Indiana
+State: Unknown
+Location: South Bend Indiana
 Entity Type: FAC_B, FAC_I, GPE_B
 Headline: NA
 Newspaper: Nevada national.
@@ -1551,7 +1673,8 @@ Bend Indiana . The ladies of that place assembled to the number
 
 Document ID: preciv7
 Sentence ID: 3
-LOCATION IDENTIFIED: Smyrna
+State: Unknown
+Location: Smyrna
 Entity Type: GPE_B
 Headline: Communicated.
 
@@ -1570,7 +1693,8 @@ to extenuate the crime , and seems to think it
 
 Document ID: preciv71
 Sentence ID: 3
-LOCATION IDENTIFIED: Santa Barbara Grand
+State: Unknown
+Location: Santa Barbara Grand
 Entity Type: GPE_B, GPE_I, LOC_B
 Headline: WHOLE NO. 3l2.
 
@@ -1585,7 +1709,8 @@ and Ebenezer Nidver , McKeon and Coates were liberated , the Grand
 
 Document ID: preciv72
 Sentence ID: 1
-LOCATION IDENTIFIED: South Bend Indiana
+State: Unknown
+Location: South Bend Indiana
 Entity Type: LOC_B, LOC_I, GPE_B
 Headline: NA
 Newspaper: The Nevada Democrat.
@@ -1597,7 +1722,8 @@ Bend , Indiana . The ladies of that place assembled to the
 
 Document ID: preciv74
 Sentence ID: 1
-LOCATION IDENTIFIED: LOUISVILLE
+State: Kentucky
+Location: LOUISVILLE
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -1609,7 +1735,8 @@ A man named Jesse Williams was rescued
 
 Document ID: preciv76
 Sentence ID: 2
-LOCATION IDENTIFIED: Issaquena county
+State: Mississippi
+Location: Issaquena county
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: The Yazoo Democrat.
@@ -1622,7 +1749,8 @@ a dose OF Judge Lynch , in Issaquena county , under the following circumstances
 
 Document ID: preciv8
 Sentence ID: 3
-LOCATION IDENTIFIED: Smyrna Smyrna
+State: Unknown
+Location: Smyrna Smyrna
 Entity Type: GPE_B
 Headline: LOCAL AFFAIRS.
 Newspaper: Delaware State journal and statesman.
@@ -1635,7 +1763,8 @@ named Jacob Hamilton , was hanged by a mob at Smyrna , on Friday
 
 Document ID: preciv80
 Sentence ID: 1
-LOCATION IDENTIFIED: SANTA BARBARA
+State: California
+Location: SANTA BARBARA
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -1647,7 +1776,8 @@ to the
 
 Document ID: preciv81
 Sentence ID: 1
-LOCATION IDENTIFIED: South Bend Indiana
+State: Unknown
+Location: South Bend Indiana
 Entity Type: LOC_B, LOC_I, GPE_B
 Headline: NA
 Newspaper: The eastern clarion.
@@ -1659,7 +1789,8 @@ Bend , Indiana . The ladies of that place assembled to the
 
 Document ID: preciv83
 Sentence ID: 2
-LOCATION IDENTIFIED: Jackson
+State: Unknown
+Location: Jackson
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Red Wing sentinel.
@@ -1672,7 +1803,8 @@ the agreement between the parties , the military force had
 
 Document ID: preciv85
 Sentence ID: 2
-LOCATION IDENTIFIED: JACKSON
+State: Unknown
+Location: JACKSON
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Red Wing sentinel.
@@ -1685,7 +1817,8 @@ the agreement between the parties , the military force had
 
 Document ID: preciv88
 Sentence ID: 3
-LOCATION IDENTIFIED: Petersburg
+State: Unknown
+Location: Petersburg
 Entity Type: GPE_B
 Headline: Mtms gummatp.
 Newspaper: The weekly Anglo-African.
@@ -1699,7 +1832,8 @@ sentenced to
 
 Document ID: preciv91
 Sentence ID: 1
-LOCATION IDENTIFIED: Tennessee Tennessee
+State: Unknown
+Location: Tennessee Tennessee
 Entity Type: GPE_B
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -1712,7 +1846,8 @@ probably came over here believing that there was no law in Tennessee : Squire
 
 Document ID: preciv93
 Sentence ID: 2
-LOCATION IDENTIFIED: Allen County
+State: Unknown
+Location: Allen County
 Entity Type: GPE_B, GPE_I
 Headline: Horse Thieves.
 Newspaper: The Kanzas news.
@@ -1725,7 +1860,8 @@ be done to stop horse-stealing , but we do not
 
 Document ID: preciv96
 Sentence ID: 1
-LOCATION IDENTIFIED: Pontotoc County
+State: Mississippi
+Location: Pontotoc County
 Entity Type: GPE_B, GPE_I
 Headline: NA
 Newspaper: Des Arc citizen.
@@ -1737,7 +1873,8 @@ Pontotoc day before yesterday , that on
 
 Document ID: preciv98
 Sentence ID: 1
-LOCATION IDENTIFIED: Rockford Oakland
+State: Unknown
+Location: Rockford Oakland
 Entity Type: GPE_B
 Headline: NA
 Newspaper: Saint Paul weekly Minnesotian.
@@ -1749,7 +1886,8 @@ down yesterday to this city , and buried in the Oakland cemetery
 
 Document ID: preciv1
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: CffmtnAl Court.
 Newspaper: The national Republican.
@@ -1762,7 +1900,8 @@ halloaing , ' Lynch him ! ' ' Lynch him ! ' ' There he goes ! ' ' There he goes
 
 Document ID: preciv2
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: SeryiIe InsurrectIOns in South Carolina
 Fearful Appehensions and Punishments.
@@ -1776,7 +1915,8 @@ occurred in the interior of the state , most of the servants
 
 Document ID: preciv3
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: gerada gemufrat.
 
@@ -1791,7 +1931,8 @@ John , protesting his innocence , was hauled some
 
 Document ID: preciv4
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Shasta courier.
@@ -1803,7 +1944,8 @@ Tribune says : ' a lady just from Wilmington , North Carolina
 
 Document ID: preciv5
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada Democrat.
@@ -1815,7 +1957,8 @@ City . He narrowly escaped being lynched .
 
 Document ID: preciv6
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Delaware State journal and statesman.
@@ -1828,7 +1971,8 @@ as the crime in this
 
 Document ID: preciv9
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Shasta courier.
@@ -1840,7 +1984,8 @@ living near Emery's Crossing , and whose names
 
 Document ID: preciv10
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: miscellaneous.
 Newspaper: The sun.
@@ -1853,7 +1998,8 @@ which was put into execution . So vast was
 
 Document ID: preciv11
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New Orleans daily crescent.
@@ -1866,7 +2012,8 @@ appearance of State prison . The transfer of the prisoners to Castle
 
 Document ID: preciv12
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -1880,7 +2027,8 @@ rope
 
 Document ID: preciv14
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -1893,7 +2041,8 @@ horror . ' Seventeen days after , Ferrand de
 
 Document ID: preciv15
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NORTH san JUAN, NEVADA co, SATURDAY, MAY Is, 1861
 Newspaper: The hydraulic press.
@@ -1906,7 +2055,8 @@ almost everyone left , feeling satisfied that Shattuck
 
 Document ID: preciv17
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NEWS Ms.
 Newspaper: The national Republican.
@@ -1919,7 +2069,8 @@ and the money drawer relieved of its small change , amounting to a trifling sum
 
 Document ID: preciv18
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: I LATEST BY TELEGRAPH
 
@@ -1940,7 +2091,8 @@ and attempted to escape ; he was fired upon and immediately killed .
 
 Document ID: preciv19
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: FROM SOUTH CAROLINA.
 
@@ -1955,7 +2107,8 @@ neighborhood , with nothing more against them than that they voted for the
 
 Document ID: preciv20
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: TEEEGRAPHKC,
 
@@ -1972,7 +2125,8 @@ with one of his companions and the last ,
 
 Document ID: preciv22
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: FROM THE PIXIES PEAK GOLD REGION
 
@@ -1990,7 +2144,8 @@ belonging to A . G . ElIithorpe blew up ,
 
 Document ID: preciv23
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: St. Paul weekly Minnesotian.
@@ -2003,7 +2158,8 @@ cheek or forehead or if the punishment is
 
 Document ID: preciv24
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada Democrat.
@@ -2016,7 +2172,8 @@ also relates the escape of Prof
 
 Document ID: preciv27
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: 303
 
@@ -2032,7 +2189,8 @@ severe
 
 Document ID: preciv28
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New Orleans daily crescent.
@@ -2045,7 +2203,8 @@ Full Context: with the action of the Court , assembled and elected twenty-four m
 
 Document ID: preciv29
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: MORE TROUBLES I'M KANSAS.
 Newspaper: Red Wing sentinel.
@@ -2058,7 +2217,8 @@ avowed purpose in this new movement is to liberate all the
 
 Document ID: preciv30
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: FRESH OUTBREAKS INKANsAs.
 Newspaper: Newbern weekly progress.
@@ -2071,7 +2231,8 @@ Territory immediately . The cause of the outbreak is
 
 Document ID: preciv31
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Terrible Shooting AfIray in Arizona.
 
@@ -2087,7 +2248,8 @@ Full Context: with the action of the Court , assembled and elected twenty-four m
 
 Document ID: preciv32
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New Orleans daily crescent.
@@ -2099,7 +2261,8 @@ Wednesday last , we extract the following
 
 Document ID: preciv34
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -2112,7 +2275,8 @@ Thirty-nine persons in the town of Romulus
 
 Document ID: preciv36
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: DlaboIleal Outrage in East tennessee.
 Newspaper: New Orleans daily crescent.
@@ -2125,7 +2289,8 @@ alternative .
 
 Document ID: preciv37
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -2138,7 +2303,8 @@ them , that all were guilty , and
 
 Document ID: preciv38
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Additional News by Pony Express.
 Newspaper: Daily national Democrat.
@@ -2151,7 +2317,8 @@ By Mob IN TEXAS . The Seguin ( Texas ) Mercury of April 11th
 
 Document ID: preciv39
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -2164,7 +2331,8 @@ watchmen that
 
 Document ID: preciv41
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -2176,7 +2344,8 @@ detected in the act of stealing a couple
 
 Document ID: preciv42
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -2190,7 +2359,8 @@ wood pile
 
 Document ID: preciv45
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -2203,7 +2373,8 @@ tar and feathers and thirty-nine lashes at the hands
 
 Document ID: preciv46
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: THE COUNTY.
 
@@ -2219,7 +2390,8 @@ Valley
 
 Document ID: preciv47
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada Democrat.
@@ -2231,7 +2403,8 @@ tried and punished by Judge Lynch .
 
 Document ID: preciv48
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: SUNDAY MORNING, JAN. sh.
 Newspaper: Daily national Democrat.
@@ -2244,7 +2417,8 @@ DEMOCRAT : - Some time ago I gave you an account
 
 Document ID: preciv49
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: WEAVERyILLE. CALIFORNIA SATURDAY. JANUARY T. 1860.
 Newspaper: Weekly Trinity journal.
@@ -2257,7 +2431,8 @@ stranger . He inspired them with the power of his own passions . He
 
 Document ID: preciv52
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Let Violence Cease.
 Newspaper: Daily national Democrat.
@@ -2270,7 +2445,8 @@ time before life was extinct . After this kind
 
 Document ID: preciv53
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Yazoo Democrat.
@@ -2282,7 +2458,8 @@ We learn that , last night
 
 Document ID: preciv54
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -2295,7 +2472,8 @@ suspicion of having assisted in capturing
 
 Document ID: preciv55
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada Democrat.
@@ -2307,7 +2485,8 @@ man was arrested
 
 Document ID: preciv57
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Saint Paul weekly Minnesotian.
@@ -2320,7 +2499,8 @@ was no Union , our citizens could travel as safely in the South as in
 
 Document ID: preciv58
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Saint Paul weekly Minnesotian.
@@ -2333,7 +2513,8 @@ Union , our citizens could travel as safely in the South as in
 
 Document ID: preciv59
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Saint Paul weekly Minnesotian.
@@ -2346,7 +2527,8 @@ citizens could travel as safely in the South as in
 
 Document ID: preciv63
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -2358,7 +2540,8 @@ movement to put down by lynch law , murder and robbery in that neighborhood .
 
 Document ID: preciv64
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: FRY WEDNESDAY, ATDES ARC PRAIRIE COUNTY ARKANSAS BY
 
@@ -2378,7 +2561,8 @@ governor
 
 Document ID: preciv65
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Van Buren press.
@@ -2391,7 +2575,8 @@ This was the most artful trick of all , and
 
 Document ID: preciv66
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: The Insurrection at Harper's Ferry.
 Newspaper: Smyrna times.
@@ -2404,7 +2589,8 @@ protect the insurgents . HARPER'S FERRY , Oct . 19-The prisoners
 
 Document ID: preciv68
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -2417,7 +2603,8 @@ attempting to take the lives of several citizens .
 
 Document ID: preciv70
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: The Befais Of Erseson.
 
@@ -2436,7 +2623,8 @@ earning a reputation which will neither add wealth or honor . Its
 
 Document ID: preciv73
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -2449,7 +2637,8 @@ unfortunate enterprise for them . On the night
 
 Document ID: preciv75
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: - .-s sosN.-.-.
 Newspaper: Arkansas true Democrat.
@@ -2461,7 +2650,8 @@ on Thursday night last Jesse Williams , an old and wealthy citizen of
 
 Document ID: preciv77
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Kansas herald of freedom.
@@ -2475,7 +2665,8 @@ matter . The lynching Jack
 
 Document ID: preciv78
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -2488,7 +2679,8 @@ flogged him so severely that his life is in danger
 
 Document ID: preciv79
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada Democrat.
@@ -2500,7 +2692,8 @@ Goodman , who arrived
 
 Document ID: preciv82
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Van Buren press.
@@ -2512,7 +2705,8 @@ from the officers
 
 Document ID: preciv84
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NeVndR Territory.
 Newspaper: Daily national Democrat.
@@ -2525,7 +2719,8 @@ recognize law and order as it is conducted under
 
 Document ID: preciv86
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Des Arc citizen.
@@ -2537,7 +2732,8 @@ Whipple , from Napoleon last
 
 Document ID: preciv87
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -2550,7 +2746,8 @@ was released , after a hanging and
 
 Document ID: preciv89
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Red Wing sentinel.
@@ -2563,7 +2760,8 @@ account at
 
 Document ID: preciv90
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Red Wing sentinel.
@@ -2576,7 +2774,8 @@ account at
 
 Document ID: preciv92
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Placer herald.
@@ -2589,7 +2788,8 @@ true to ourselves in advocating the great measures that I have indicated ;
 
 Document ID: preciv94
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: National Democrat.
 
@@ -2604,7 +2804,8 @@ comparatively few owners , and the number is constantly diminishing . It is
 
 Document ID: preciv95
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: PIRES PEAK.
 Newspaper: New-York daily tribune.
@@ -2617,7 +2818,8 @@ Capt . Bassett shot down in cold blood by Scudder , both
 
 Document ID: preciv97
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -2631,7 +2833,8 @@ hanging of Middleton by lynch law
 
 Document ID: preciv99
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: i ANOTHER .lNHUMAN OUTRAGE.
 Newspaper: Red Wing sentinel.
@@ -2643,7 +2846,8 @@ Wright County , in the state . Our readers will remember that Mr .
 
 Document ID: preciv100
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: VOL: |. NO: 81
 
@@ -2659,7 +2863,8 @@ ran
 
 Document ID: preciv101
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -2672,7 +2877,8 @@ three men were Allen , Miller and Ridgeley . The gold dust
 
 Document ID: preciv102
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: The Hawesville Tragedy.
 
@@ -2688,7 +2894,8 @@ while the mob would lynch him , but finally he was taken to prison and disarmed
 
 Document ID: preciv103
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: More Brutality.
 Newspaper: The hydraulic press.
@@ -2701,7 +2908,8 @@ case of this miserable Chinaman would rather have stolen a whole case of
 
 Document ID: preciv104
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NO. 18.
 
@@ -2716,7 +2924,8 @@ supper or dinner . This was peremptorily refused as contrary to
 
 Document ID: preciv105
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Worcester daily spy.
@@ -2728,7 +2937,8 @@ reports the lynching of Reinhart , the peddler
 
 Document ID: preciv107
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -2741,7 +2951,8 @@ and order prevailed , and they were handed over to
 
 Document ID: preciv108
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: sr'n the Minnesota (st: Peter, ss,se.maa-.Er.r..
 I THE LAWS sOUTRAGEDli'
@@ -2758,7 +2969,8 @@ Dec . 25 , 1858 . Dear Green
 
 Document ID: preciv109
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Saint Paul weekly Minnesotian.
@@ -2771,7 +2983,8 @@ by the writer of this letter to
 
 Document ID: preciv111
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New Orleans daily crescent.
@@ -2784,7 +2997,8 @@ dead . Upon consideration of Rogers having turned ,
 
 Document ID: preciv112
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Additional Items from the Atlantic Papers
 Newspaper: Daily national Democrat.
@@ -2797,7 +3011,8 @@ to the party who murdered Henry Simpson some months ago
 
 Document ID: preciv113
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Lynch Law.
 Newspaper: The weekly Butte record.
@@ -2810,7 +3025,8 @@ attempting to arrest Morgan and some other thieves .
 
 Document ID: preciv115
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Bold and Fiendish Outrage.
 Newspaper: Smyrna times.
@@ -2823,7 +3039,8 @@ struggled violently , when they kicked her in the side , beat her in the
 
 Document ID: preciv117
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -2836,7 +3053,8 @@ suffered by him in the attempt to lynch him for that murder . He claims over
 
 Document ID: preciv118
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national Democrat.
@@ -2848,7 +3066,8 @@ suffered the summary judgment of the above honorable court , says
 
 Document ID: preciv119
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: ALYNCHING IN KENTUCKY.
 
@@ -2862,7 +3081,8 @@ Kentucky living near Campbellsville , was murdered and robbed of
 
 Document ID: preciv120
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: WHOLE NO. 264.
 
@@ -2877,7 +3097,8 @@ on Monday afternoon , Oct . 18th , at Cooks Bar ,
 
 Document ID: preciv121
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The weekly Butte record.
@@ -2890,7 +3111,8 @@ thirty-two dollars in specimens , out of the cabin of
 
 Document ID: preciv123
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The daily Butte record.
@@ -2902,7 +3124,8 @@ been hung by a mob in Gentry
 
 Document ID: preciv124
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The daily Butte record.
@@ -2915,7 +3138,8 @@ Sayles of that place , found
 
 Document ID: preciv126
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -2929,7 +3153,8 @@ their
 
 Document ID: preciv127
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Worcester daily spy.
@@ -2942,7 +3167,8 @@ aforesaid-Improvement in machinery for polishing thread . A MAN HUNG BY A MOB .
 
 Document ID: preciv129
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: JUDGE LYNCH IN THE VEST.
 Newspaper: New-York daily tribune.
@@ -2955,7 +3181,8 @@ upon his trial . Eighteen love letters in his signature
 
 Document ID: preciv130
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -2968,7 +3195,8 @@ you at any other place on that day
 
 Document ID: preciv131
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Placer herald.
@@ -2980,7 +3208,8 @@ man named Smelling , last
 
 Document ID: preciv132
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -2994,7 +3223,8 @@ mulatto child
 
 Document ID: preciv133
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: FROM CAMPO sEco.
 
@@ -3009,7 +3239,8 @@ to have fifty lashes given them on the bare back
 
 Document ID: preciv134
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Ero,n the Ralt;,un,s Sun.
 Newspaper: Arkansas intelligencer.
@@ -3022,7 +3253,8 @@ done by a regular jury . The girl finally was found in Chicago
 
 Document ID: preciv135
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Judge Lynch in Kanzas.
 Newspaper: Freeman's champion.
@@ -3035,7 +3267,8 @@ Monday , 31 ult . , at the time our
 
 Document ID: preciv136
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The daily Butte record.
@@ -3048,7 +3281,8 @@ purse owner repaired to the ground where he made his cache
 
 Document ID: preciv137
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Smyrna times.
@@ -3060,7 +3294,8 @@ narrated in our last issue , prefacing it as a hum and saying '
 
 Document ID: preciv138
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: ( WRITER for the JoURNAL.
 
@@ -3078,7 +3313,8 @@ times . After considerable deliberation a committee of twelve was selected from
 
 Document ID: preciv142
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Territorial Items.
 Newspaper: The Kanzas news.
@@ -3091,7 +3327,8 @@ and Mr . J . A . Martin assuming charge of the paper under the
 
 Document ID: preciv143
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Placer herald.
@@ -3104,7 +3341,8 @@ must be desirable community for a peaceably
 
 Document ID: preciv144
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: The Flight of a Traitor.
 Newspaper: Freeman's champion.
@@ -3117,7 +3355,8 @@ Fighting Editor ' of the Squatter Sovereign , made
 
 Document ID: preciv145
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada Democrat.
@@ -3130,7 +3369,8 @@ Sunday law , must be desirable community for peaceably disposed
 
 Document ID: preciv146
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: San Andreas independent.
@@ -3142,7 +3382,8 @@ violently assaulted a
 
 Document ID: preciv148
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -3156,7 +3397,8 @@ of
 
 Document ID: preciv151
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Omuille IaiIg Battt RtrarG.
 
@@ -3170,7 +3412,8 @@ Calaveras Chronicle , have been committing depredations upon
 
 Document ID: preciv152
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Oroville daily Butte record.
@@ -3182,7 +3425,8 @@ Calaveras Chronicle , have been committing depredations upon
 
 Document ID: preciv154
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: sU,,nrARY OF EASTERN NEWS.
 Newspaper: The Nevada Democrat.
@@ -3195,7 +3439,8 @@ Sept . 4th contains a long account
 
 Document ID: preciv155
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Kansas herald of freedom.
@@ -3208,7 +3453,8 @@ compromise , and that they lynch him and let him go . This was
 
 Document ID: preciv157
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada Democrat.
@@ -3220,7 +3466,8 @@ following : On Sunday evening last , a man by
 
 Document ID: preciv158
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: WHOLE NO. 210.
 
@@ -3235,7 +3482,8 @@ no emotion , but after the sentence thanked the
 
 Document ID: preciv159
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Oroville daily Butte record.
@@ -3247,7 +3495,8 @@ County , were taken from the hands
 
 Document ID: preciv162
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: A NEWCOMER HORRIBLY MRDERED
 
@@ -3263,7 +3512,8 @@ open but the Sheriff struck the ringleader over the head
 
 Document ID: preciv164
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: The following is the statement OF the immigration
 Canada up to the 7th of August, the present year
@@ -3279,7 +3529,8 @@ surrounded the prison and threatened to hang him on the spot had he been
 
 Document ID: preciv166
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Kansas. Fearful Tragedy.
 Newspaper: Smyrna times.
@@ -3293,7 +3544,8 @@ Leavenworth , alluded to by telegraph . It seems that a Mr . Stevens , from St
 
 Document ID: preciv169
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Kanzas news.
@@ -3306,7 +3558,8 @@ rumors are afloat that three more have been condemned
 
 Document ID: preciv170
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Kanzas news.
@@ -3319,7 +3572,8 @@ rumors are afloat that three more have been served
 
 Document ID: preciv171
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Morals on the AIisouri River.
 Newspaper: Weekly Trinity journal.
@@ -3333,7 +3587,8 @@ Judges
 
 Document ID: preciv173
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Kanzas news.
@@ -3346,7 +3601,8 @@ intercession of the father of
 
 Document ID: preciv174
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Southern shield.
@@ -3358,7 +3614,8 @@ following account of a lynching operation
 
 Document ID: preciv175
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Arkansas true Democrat.
@@ -3370,7 +3627,8 @@ could discover as participants in the recent lynching of four slaves .
 
 Document ID: preciv179
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Kansas herald of freedom.
@@ -3383,7 +3641,8 @@ institutions of his native State . ' The Marshal and
 
 Document ID: preciv180
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -3396,7 +3655,8 @@ resolutions justifying the hanging of the robbers , and declaring that
 
 Document ID: preciv181
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: San Andreas independent.
@@ -3408,7 +3668,8 @@ holidays , information having been received in Scottsville that
 
 Document ID: preciv182
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Squatter sovereign.
@@ -3421,7 +3682,8 @@ negro to leave town , and threatened , if they ever came back again
 
 Document ID: preciv183
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Volcano weekly ledger.
@@ -3434,7 +3696,8 @@ that crowd know who-men walking
 
 Document ID: preciv185
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: LYNCH LAW IN KANsAs.-Tbe St Iopi. Republican, of the 14th ins, sa,
 Newspaper: The true Democrat.
@@ -3447,7 +3710,8 @@ stolen by them . One of the men thus hanged
 
 Document ID: preciv187
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada Democrat.
@@ -3459,7 +3723,8 @@ Full Context: MORE LYNCHING IN MONTEREY . - The Santa Cruz Sentinel , of the 9th
 
 Document ID: preciv188
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: San Andreas independent.
@@ -3472,7 +3737,8 @@ God ' . This was the most artful trick of all
 
 Document ID: preciv189
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: San Andreas independent.
@@ -3484,7 +3750,8 @@ have been kindly permitted to extract the following
 
 Document ID: preciv191
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: San Andreas independent.
@@ -3497,7 +3764,8 @@ returned a verdict of guilty of Manslaughter . The Judge
 
 Document ID: preciv192
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: San Andreas independent.
@@ -3509,7 +3777,8 @@ Angels , are entertained , on account of
 
 Document ID: preciv193
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -3522,7 +3791,8 @@ stand trial , and await judgment for the crime of
 
 Document ID: preciv194
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NtmQ Qnrk Dsdlu ekibrnre
 
@@ -3539,7 +3809,8 @@ through the fringe needles of the pines . The sound of
 
 Document ID: preciv195
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Minnesota weekly times.
@@ -3551,7 +3822,8 @@ were engaged lynching a man for insulting ladies on the street .
 
 Document ID: preciv196
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Correspondsnce OF the Virginia sentinsI.
 
@@ -3567,7 +3839,8 @@ of April 18 , 1848 , you will find a full statement
 
 Document ID: preciv197
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Redccfio,sn,
 Newspaper: Oroville daily Butte record.
@@ -3581,7 +3854,8 @@ San
 
 Document ID: preciv199
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Butte record.
@@ -3594,7 +3868,8 @@ greatest monstrosity of all is that some of the very men who , as
 
 Document ID: preciv200
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Death of MIR. King.
 Newspaper: Butte record.
@@ -3607,7 +3882,8 @@ influence and service to sustain the laws , by devoting an
 
 Document ID: preciv202
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Volcano weekly ledger.
@@ -3620,7 +3896,8 @@ unrecorded . It is said that Conway was murdered on
 
 Document ID: preciv203
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -3632,7 +3909,8 @@ Monterey , were hung by the vigilance committee
 
 Document ID: preciv204
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: TIE PERILs OF KAEsAs TsAvEL-
 Newspaper: The Kansas herald of freedom.
@@ -3645,7 +3923,8 @@ that he should be hung , and it was only on his producing
 
 Document ID: preciv206
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Volcano weekly ledger.
@@ -3658,7 +3937,8 @@ another part
 
 Document ID: preciv207
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: ail. The most intense ex.
 Newspaper: The true Democrat.
@@ -3671,7 +3951,8 @@ Spain , of Hopefield that the mob made an attack upon the jail last
 
 Document ID: preciv208
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Squatter sovereign.
@@ -3684,7 +3965,8 @@ week .
 
 Document ID: preciv209
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Incidents of Early Days.
 Newspaper: The Trinity journal.
@@ -3697,7 +3979,8 @@ believed a man guilty , very little proof was required to
 
 Document ID: preciv210
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Butte record.
@@ -3710,7 +3993,8 @@ chimney-sweep . The debt of Yuba County is SOL 136 . That of Placer
 
 Document ID: preciv211
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: 70 Mr. Robert s. Kelley, { Born in Mas
 Newspaper: Squatter sovereign.
@@ -3723,7 +4007,8 @@ meet his deserts in the Territory . He also makes other
 
 Document ID: preciv214
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: New YORK. Dec. II.
 Newspaper: Washington telegraph.
@@ -3736,7 +4021,8 @@ Collector at Fort Monterey , and Thomas Williamson have been murdered , it is
 
 Document ID: preciv216
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Placer herald.
@@ -3750,7 +4036,8 @@ at Stockton for
 
 Document ID: preciv218
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: a Foul Murder.
 Newspaper: The Shasta courier.
@@ -3763,7 +4050,8 @@ it was conceded that the murderer was safe in the custody Of the
 
 Document ID: preciv219
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Shasta courier.
@@ -3775,7 +4063,8 @@ German stole a band of cattle a few days
 
 Document ID: preciv220
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Ly.ch Law.
 Newspaper: The Shasta courier.
@@ -3788,7 +4077,8 @@ the man was pronounced worthy of death , and executed
 
 Document ID: preciv221
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: More Lynch Law.
 Newspaper: Volcano weekly ledger.
@@ -3801,7 +4091,8 @@ account of this tragic affair . In doubt to Hills Ferry by
 
 Document ID: preciv222
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Placer herald.
@@ -3813,7 +4104,8 @@ County are denouncing the hanging of Barclay at Columbia
 
 Document ID: preciv223
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Placer herald.
@@ -3826,7 +4118,8 @@ gallows . The following is a reliable account of the finale of the
 
 Document ID: preciv224
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: From the San Joaquin Republican.
 Lynch Law-Four Cattle Thieves Hung by
@@ -3843,7 +4136,8 @@ gallows . The following is a reliable account of the finale of the
 
 Document ID: preciv225
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Hanging Negroes in Tennessee, by Judge
 
@@ -3857,7 +4151,8 @@ of the hanging of two negroes in different parts of that State
 
 Document ID: preciv226
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Placer herald.
@@ -3870,7 +4165,8 @@ manner . They have recommended the withdrawal from service and from the line
 
 Document ID: preciv228
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Coloma, Saturday Morning, October 20, 1866
 
@@ -3885,7 +4181,8 @@ inst , murder was committed in Columbia .
 
 Document ID: preciv229
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Placer herald.
@@ -3898,7 +4195,8 @@ manner . They have recommended the withdrawal from service and from the line
 
 Document ID: preciv230
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Empire County argus.
@@ -3910,7 +4208,8 @@ an affray in Mariposa : A man named Peter
 
 Document ID: preciv231
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -3922,7 +4221,8 @@ particulars of the murder of Frank Clark at Horse Shoe Bend ,
 
 Document ID: preciv232
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Kansas weekly herald.
@@ -3936,7 +4236,8 @@ lynchers has
 
 Document ID: preciv233
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Kansas weekly herald.
@@ -3950,7 +4251,8 @@ remarks
 
 Document ID: preciv234
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: The Murder Mania,
 Newspaper: Smyrna times.
@@ -3963,7 +4265,8 @@ affair of the kind is the finding of the body of a young
 
 Document ID: preciv235
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Dreadful Tragedy at Webertosvn mean
 
@@ -3979,7 +4282,8 @@ were chosen from the people assembled , also 4 persons as counsel for
 
 Document ID: preciv236
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: OltINIuNNG
 Newspaper: The Empire County argus.
@@ -3992,7 +4296,8 @@ on hearing of the affair , sent out soldiers
 
 Document ID: preciv237
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Empire County argus.
@@ -4005,7 +4310,8 @@ Lynch . It is to be hoped that a similar fate will
 
 Document ID: preciv238
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Empire County argus.
@@ -4017,7 +4323,8 @@ the night of the 1st ult
 
 Document ID: preciv241
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: LYNCH LAW PRACTICED BY ABoLITIoNIsTs
 Newspaper: The true Democrat.
@@ -4029,7 +4336,8 @@ Full Context: LYNCH LAW PRACTICED BY ABOLITIONISTS IN KANSAS TERRITORY - publish
 
 Document ID: preciv243
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: More Lynching in Alameda County.
 Newspaper: The weekly Placer herald.
@@ -4042,7 +4350,8 @@ two cattle thieves , who were
 
 Document ID: preciv247
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Outrage on the Wabash and Erie
 
@@ -4057,7 +4366,8 @@ Burning of shanties , destruction
 
 Document ID: preciv248
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Kansas herald of freedom.
@@ -4070,7 +4380,8 @@ would suffer no person belonging to the Northern Methodist
 
 Document ID: preciv249
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: From Southern California.
 Newspaper: The Empire County argus.
@@ -4082,7 +4393,8 @@ another whose name is not mentioned , were hung recently at the
 
 Document ID: preciv250
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -4095,7 +4407,8 @@ Intelligencer , says : We scarcely know how to speak of
 
 Document ID: preciv251
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: From the Wilmington tDel) Reporter Of
 Saturday.
@@ -4112,7 +4425,8 @@ with him . Parker is , perhaps , the most
 
 Document ID: preciv252
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: 
 
@@ -4129,7 +4443,8 @@ article in the STATE JOURNAL , an Abolition sheet published
 
 Document ID: preciv253
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: rs Tragical scenes are still being en-
 Newspaper: The Nevada journal.
@@ -4142,7 +4457,8 @@ confession said the gang consisted of six hundred men
 
 Document ID: preciv254
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Finch, the contemplate liar.
 Newspaper: Kansas weekly herald.
@@ -4155,7 +4471,8 @@ certain members of the committee who had charge of Philips of cowardice for
 
 Document ID: preciv258
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Another Horrible Murder.
 Newspaper: The Shasta courier.
@@ -4168,7 +4485,8 @@ made to carry out this purpose . Officer
 
 Document ID: preciv260
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Later from
 O a liz F q R M 7 a
@@ -4183,7 +4501,8 @@ Sacramento
 
 Document ID: preciv261
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Shasta courier.
@@ -4195,7 +4514,8 @@ Journal is going the round of the papers ,
 
 Document ID: preciv262
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Butte record.
@@ -4207,7 +4527,8 @@ the State during the last four weeks . Those who like to
 
 Document ID: preciv263
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Shasta courier.
@@ -4219,7 +4540,8 @@ Allison ,
 
 Document ID: preciv264
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Shasta courier.
@@ -4231,7 +4553,8 @@ throughout the State . Within the
 
 Document ID: preciv266
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -4243,7 +4566,8 @@ publishes a long account of the circumstances connected with
 
 Document ID: preciv267
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Lynch Law !---One Man Hung and ane.
 
@@ -4259,7 +4583,8 @@ that he had been caught with a number of mules
 
 Document ID: preciv268
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: FROM YREKA.
 
@@ -4274,7 +4599,8 @@ the 10th inst . The victim was a young man by the
 
 Document ID: preciv269
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Our San Francisco Correspondence
 SAN FRANc1sco,
@@ -4291,7 +4617,8 @@ them by the Anglo Partisan correspondent of that paper . It appears
 
 Document ID: preciv270
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -4304,7 +4631,8 @@ duels , making in all 350 .
 
 Document ID: preciv271
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Empire County argus.
@@ -4317,7 +4645,8 @@ duels , making in all 550 .
 
 Document ID: preciv273
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Empire County argus.
@@ -4330,7 +4659,8 @@ duels , making in all 550
 
 Document ID: preciv274
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Shasta courier.
@@ -4342,7 +4672,8 @@ the 13th ult . A
 
 Document ID: preciv276
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The true Democrat.
@@ -4355,7 +4686,8 @@ Saline County , for not preventing the execution by Lynch law of the slave Toll
 
 Document ID: preciv277
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Later From California.
 Newspaper: The true Democrat.
@@ -4368,7 +4700,8 @@ was a peace officer named William Hardmouth . He was attempting to arrest
 
 Document ID: preciv279
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: The Smithville, Mo-, Tragedy
 Newspaper: The true Democrat.
@@ -4381,7 +4714,8 @@ were present . Wm . Shackelford was then
 
 Document ID: preciv280
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: MURDER AND LYScHISG IN MONTEREY.
 Newspaper: The weekly Placer herald.
@@ -4393,7 +4727,8 @@ Southerner , that an affray occurred ON Saturday night
 
 Document ID: preciv282
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: y1pDrR-PvTrg DoIyos-or rEgNSEs.
 
@@ -4408,7 +4743,8 @@ fate met John Galloway . The crowd blamed Samuel Shackelford for
 
 Document ID: preciv283
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -4421,7 +4757,8 @@ of Wm . B . Sheppard for the murder of H . C . Day took
 
 Document ID: preciv284
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Washington telegraph.
@@ -4434,7 +4771,8 @@ were disappointed , inasmuch as
 
 Document ID: preciv285
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Sierra citizen.
@@ -4448,7 +4786,8 @@ unfortunately is
 
 Document ID: preciv288
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Clerical 1ngenuity-Why the Tar
 
@@ -4463,7 +4802,8 @@ had firmly barricaded himself , and just
 
 Document ID: preciv289
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NEGROBu RNINC.
 Newspaper: New-York daily tribune.
@@ -4476,7 +4816,8 @@ must take place in punishment for murder and
 
 Document ID: preciv290
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Grass Valley telegraph.
@@ -4488,7 +4829,8 @@ listened to Clay , Webster and Calhoun to Dewey , lying ,
 
 Document ID: preciv291
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Minnesota weekly times.
@@ -4501,7 +4843,8 @@ stranger . He inspired them with the power of his own malicious feelings .
 
 Document ID: preciv292
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: ITEMS OF NEWS.
 Newspaper: Washington sentinel.
@@ -4514,7 +4857,8 @@ of an Indian , as was supposed , by some reckless emigrant .
 
 Document ID: preciv293
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Butte record.
@@ -4526,7 +4870,8 @@ lynching recently occurred at Black
 
 Document ID: preciv294
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: DUELs, MURDERS, AND GRIMES IN
 
@@ -4542,7 +4887,8 @@ times six other men have been suspended from without judge or
 
 Document ID: preciv297
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: SUMMARY OF NEWS.
 Newspaper: New-York daily tribune.
@@ -4556,7 +4902,8 @@ Auburn
 
 Document ID: preciv298
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: 5ABOLITION SANDERS AND SOUTH
 
@@ -4572,7 +4919,8 @@ done with a negro who had the impudence to raise
 
 Document ID: preciv299
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Sierra citizen.
@@ -4584,7 +4932,8 @@ on the road from Stockton to
 
 Document ID: preciv300
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Sierra citizen.
@@ -4597,7 +4946,8 @@ the bare back . Justice Burgess immediately issued warrants for the ringleaders
 
 Document ID: preciv301
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily national era.
@@ -4610,7 +4960,8 @@ placed around him . When the people had
 
 Document ID: preciv302
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: SHASTA CITY ITEMS.
 Newspaper: Grass Valley telegraph.
@@ -4623,7 +4974,8 @@ passed the sentence of the Law upon John China , that was caught prospecting
 
 Document ID: preciv304
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: INTERESTING FROM NEW MEXICO.
 Newspaper: Weekly national intelligencer.
@@ -4636,7 +4988,8 @@ die from his wounds although it
 
 Document ID: preciv306
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Shasta courier.
@@ -4648,7 +5001,8 @@ Green Horn Creek , in Siskiyou County last week
 
 Document ID: preciv308
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Columbia gazette.
@@ -4661,7 +5015,8 @@ in favor of the authorities , but the more
 
 Document ID: preciv312
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Red zsluT. Correspondence.
 Newspaper: The Shasta courier.
@@ -4674,7 +5029,8 @@ few days ago for the purpose of sitting on a case wherein the People
 
 Document ID: preciv313
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Shasta courier.
@@ -4686,7 +5042,8 @@ the course of the past month
 
 Document ID: preciv314
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -4698,7 +5055,8 @@ Springs on charge of grand larceny was
 
 Document ID: preciv315
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -4711,7 +5069,8 @@ thieves was Mexican and the other an American .
 
 Document ID: preciv316
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: - The Herald SAYS :
 Newspaper: Grass Valley telegraph.
@@ -4724,7 +5083,8 @@ was a Mexican and the other an American .
 
 Document ID: preciv317
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -4736,7 +5096,8 @@ being a party to numbering Chinaman .
 
 Document ID: preciv319
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -4749,7 +5110,8 @@ murder , in a drunken frolic , of one McGaffin .
 
 Document ID: preciv320
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Litchfield enquirer.
@@ -4761,7 +5123,8 @@ severe
 
 Document ID: preciv321
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: WHOLE NO., 149.
 
@@ -4776,7 +5139,8 @@ have suffered so severely in the loss of stock by thieves within the
 
 Document ID: preciv322
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: BY TELEGRAPH.
 
@@ -4795,7 +5159,8 @@ Judge Lynch . Doctor Gregor , a native of Scotland , murdered at Sonora the
 
 Document ID: preciv323
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Daily American telegraph.
@@ -4808,7 +5173,8 @@ Gregor , a Scotchman , has been murdered at Sonora . Indian outrages in the
 
 Document ID: preciv324
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The weekly Placer herald.
@@ -4820,7 +5186,8 @@ a store in this city , which
 
 Document ID: preciv325
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The weekly Placer herald.
@@ -4832,7 +5199,8 @@ stealing a watch . A
 
 Document ID: preciv326
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NEW YORK. July Sd. 1859
 Newspaper: Washington telegraph.
@@ -4846,7 +5214,8 @@ Christian .
 
 Document ID: preciv327
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Later frOzsa the Pacific
 Newspaper: Washington telegraph.
@@ -4860,7 +5229,8 @@ breaks through
 
 Document ID: preciv328
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Later From New South Wales, 4
 Newspaper: The Nevada journal.
@@ -4873,7 +5243,8 @@ same paper in illustration of this fearful assertion , states
 
 Document ID: preciv331
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -4885,7 +5256,8 @@ hung by the citizens
 
 Document ID: preciv334
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -4897,7 +5269,8 @@ accessory to the facts was hung by order of Judge Lynch .
 
 Document ID: preciv336
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -4909,7 +5282,8 @@ following circumstances . A company
 
 Document ID: preciv337
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -4922,7 +5296,8 @@ those who are unacquainted with the
 
 Document ID: preciv338
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Washington telegraph.
@@ -4935,7 +5310,8 @@ prevails in some parts of the country , one instance of which is given as
 
 Document ID: preciv339
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Worcester daily spy.
@@ -4947,7 +5323,8 @@ since ' the Vigilance Committee of Grayson County
 
 Document ID: preciv342
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Washington telegraph.
@@ -4959,7 +5336,8 @@ information : This has been truly an
 
 Document ID: preciv344
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -4972,7 +5350,8 @@ Wallace's company murdered a fellow at his camp a few
 
 Document ID: preciv348
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: The California News by the Prometheus-
 
@@ -4988,7 +5367,8 @@ the decrees of the Vigilance Committee of five hundred , not
 
 Document ID: preciv349
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: From California.
 Newspaper: The republic.
@@ -5001,7 +5381,8 @@ committee , body of citizen of the highest respectability and standing
 
 Document ID: preciv351
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: TELEoRAPIIIC.
 
@@ -5018,7 +5399,8 @@ Markets , etc , etc . New York , August 6-10 a.m . - The Empire
 
 Document ID: preciv352
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: THE MOB LAW IN CALIFORNIA.
 Newspaper: Weekly national intelligencer.
@@ -5031,7 +5413,8 @@ who testified were William Davis of Baltimore who endeavored to prevent two
 
 Document ID: preciv353
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Weekly national intelligencer.
@@ -5043,7 +5426,8 @@ culminated during the night of the instant and the
 
 Document ID: preciv354
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: LATE FROM CALIFORNIA.
 Newspaper: Weekly national intelligencer.
@@ -5056,7 +5440,8 @@ that the Governor intended to commute the sentence of McCav , sentenced
 
 Document ID: preciv356
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: HIGHLY IMPORTANT FROM
 
@@ -5078,7 +5463,8 @@ the offices of the Steamship Co . The fire also spread to the
 
 Document ID: preciv359
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: FROM CALIFORNIA.
 Newspaper: Washington telegraph.
@@ -5091,7 +5477,8 @@ inflicted in several instances , since the last mail . In
 
 Document ID: preciv360
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: CALIFORNIA INTELLIGENCE.
 Newspaper: Weekly national intelligencer.
@@ -5104,7 +5491,8 @@ court and found guilty of assault with intent to kill and robbery
 
 Document ID: preciv361
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NEWS BY THE TELEGRAPH.
 
@@ -5122,7 +5510,8 @@ no further hanging . The United States district court has decided in
 
 Document ID: preciv362
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: LHnth LaN in thr Gold llrrlnr,.
 Newspaper: Arkansas democratic banner.
@@ -5135,7 +5524,8 @@ upon each of the bodies , proceeded to fill
 
 Document ID: preciv363
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Weekly national intelligencer.
@@ -5148,7 +5538,8 @@ from San Francisco are to the 18th March . We copy the annexed
 
 Document ID: preciv364
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Additionai News from California.
 Newspaper: Arkansas democratic banner.
@@ -5161,7 +5552,8 @@ knocked down Mr . Janson while standing in his
 
 Document ID: preciv365
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Lates. from califorusa.
 Newspaper: Arkansas democratic banner.
@@ -5174,7 +5566,8 @@ another on the street at Sacramento was caught
 
 Document ID: preciv367
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Weekly national intelligencer.
@@ -5187,7 +5580,8 @@ better than none and so far benefit
 
 Document ID: preciv368
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: CALIFORNIA INTELLIGENCE.
 Newspaper: Weekly national intelligencer.
@@ -5200,7 +5594,8 @@ men named Stuart and Wildyed , noted scoundrels who nearly murdered Mr . Jansen
 
 Document ID: preciv369
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: THE SOUTHERN PRESS.
 
@@ -5215,7 +5610,8 @@ following each other in swift succession , crowd the columns of
 
 Document ID: preciv370
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: TELEGRAPH DISPATCHES.
 
@@ -5232,7 +5628,8 @@ man who had shot another in Sacramento was caught and executed
 
 Document ID: preciv371
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Washington telegraph.
@@ -5244,7 +5641,8 @@ Emancipation Society of New York ,
 
 Document ID: preciv372
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Ell E g r HIC.
 
@@ -5262,7 +5660,8 @@ murder .
 
 Document ID: preciv373
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Port Gibson herald, and correspondent.
@@ -5275,7 +5674,8 @@ towards Mr . Crouch's house , but , thinking
 
 Document ID: preciv375
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Washington telegraph.
@@ -5287,7 +5687,8 @@ The steamer Fleetwood , as has
 
 Document ID: preciv377
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Weekly national intelligencer.
@@ -5300,7 +5701,8 @@ similar executions of Mexicans for murders
 
 Document ID: preciv379
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The New York herald.
@@ -5313,7 +5715,8 @@ where a man had taken the law into his own hands
 
 Document ID: preciv380
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: John Mills. the Mormon.
 
@@ -5327,7 +5730,8 @@ to put down the Mormons , under the command of Colonel Turk—one of the most
 
 Document ID: preciv381
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Arkansas intelligencer.
@@ -5340,7 +5744,8 @@ San Francisco : Population . Our streets present a busy and populous
 
 Document ID: preciv382
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Late from ca,,fovwia.
 Newspaper: The Arkansas banner.
@@ -5353,7 +5758,8 @@ San Francisco : Population , streets present a busy and populous appearance
 
 Document ID: preciv384
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NUMBER 7l'n7,.
 Newspaper: The North-Carolina standard.
@@ -5366,7 +5772,8 @@ grocery and gambling house in Jackson .
 
 Document ID: preciv385
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Arkansas intelligencer.
@@ -5378,7 +5785,8 @@ ult . The
 
 Document ID: preciv386
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: DISTURBANCES IN ILLINOIS.
 Newspaper: Washington telegraph.
@@ -5391,7 +5799,8 @@ the mosquitoes and weather . He died several days
 
 Document ID: preciv387
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Arkansas intelligencer.
@@ -5403,7 +5812,8 @@ in that city , that Mr . R
 
 Document ID: preciv388
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: 4 Horrible Trausnctiop-Ly Lynchins in nick-
 Newspaper: New-York daily tribune.
@@ -5416,7 +5826,8 @@ of laws taking the law
 
 Document ID: preciv389
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: From California.
 
@@ -5436,7 +5847,8 @@ cargoes from Chile and Oregon have come in
 
 Document ID: preciv390
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: A SERIOUS ArrAIR.--we are informed
 Newspaper: Washington telegraph.
@@ -5449,7 +5861,8 @@ city . It is said that the
 
 Document ID: preciv391
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Washington telegraph.
@@ -5462,7 +5875,8 @@ long since , has been executed in due form under the lynch code , by the people
 
 Document ID: preciv392
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: American Republican and Baltimore daily clipper.
@@ -5474,7 +5888,8 @@ County , Ark was murdered
 
 Document ID: preciv393
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: ! NE WS TIE MS.
 
@@ -5492,7 +5907,8 @@ force , and going to a harvest field where some six or eight persons
 
 Document ID: preciv394
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Columbian fountain.
@@ -5505,7 +5921,8 @@ accomplices . He named some of the most respectable citizens of
 
 Document ID: preciv395
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Columbian fountain.
@@ -5517,7 +5934,8 @@ murder was perpetrated on the wife
 
 Document ID: preciv396
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: INDIANA STATE SENTINEL.
 
@@ -5537,7 +5955,8 @@ hang them . Bonney succeeded so well
 
 Document ID: preciv397
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Life at the West-Extenslve Organization
 
@@ -5553,7 +5972,8 @@ the of the Hodges , that he induced to undertake
 
 Document ID: preciv398
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: ST. LOUIS, Sept. lS45.
 Newspaper: The New York herald.
@@ -5566,7 +5986,8 @@ don't you have regular correspondent in our growing and prosperous city-one
 
 Document ID: preciv399
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The New York herald.
@@ -5578,7 +5999,8 @@ Haverstraw ,
 
 Document ID: preciv400
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The New York herald.
@@ -5591,7 +6013,8 @@ charge , and his sufferings were of such an intolerable
 
 Document ID: preciv401
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: From TIE z 4ai.i Rsveille.
 ALyncher's 6ten story sss
@@ -5604,7 +6027,8 @@ heavens , reprisals
 
 Document ID: preciv402
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Arkansas intelligencer.
@@ -5616,7 +6040,8 @@ instant , the town of Jefferson
 
 Document ID: preciv403
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Litchfield enquirer.
@@ -5629,7 +6054,8 @@ Exchange Place - Both sides , 26 . South William Street - Do . 22 . New Street
 
 Document ID: preciv404
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The New York herald.
@@ -5641,7 +6067,8 @@ a man of the name of Avant
 
 Document ID: preciv405
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Varieties.
 Newspaper: The New York herald.
@@ -5654,7 +6081,8 @@ both wives in the same house . The crime
 
 Document ID: preciv406
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -5667,7 +6095,8 @@ during the early part of last month mercantile house
 
 Document ID: preciv407
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -5680,7 +6109,8 @@ fire to it , but it was extinguished by the family
 
 Document ID: preciv408
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: isaiah fsynders, Captain Of the Empire Club,
 
@@ -5697,7 +6127,8 @@ raised
 
 Document ID: preciv409
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The New York herald.
@@ -5710,7 +6141,8 @@ desperadoes who call themselves Anti-tax men , alias Repudiators ,
 
 Document ID: preciv410
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The New York herald.
@@ -5723,7 +6155,8 @@ peace . LYNCHING On Saturday evening , 31st ult . , at the head of Vine Street
 
 Document ID: preciv411
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Arkansas intelligencer.
@@ -5736,7 +6169,8 @@ this cold-blooded
 
 Document ID: preciv412
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Arkansas intelligencer.
@@ -5748,7 +6182,8 @@ condemned before his Honor
 
 Document ID: preciv413
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Weekly register.
@@ -5761,7 +6196,8 @@ are to be found in our English vocabulary - -
 
 Document ID: preciv415
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The New York herald.
@@ -5775,7 +6211,8 @@ circumstances
 
 Document ID: preciv416
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Tn. MlnNuN nmTIrULTI.L-
 Newspaper: Liberty advocate.
@@ -5788,7 +6225,8 @@ justice in the case . Joe Smith has been
 
 Document ID: preciv417
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: DEATH OF THREE DISTINGUISHED MEN.-The
 NewHav Herald says:
@@ -5802,7 +6240,8 @@ Courier of the 18th inst . contains the particulars of an atrocious murder in
 
 Document ID: preciv418
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -5815,7 +6254,8 @@ shoemaker and his wife the other day near Herculaneum ,
 
 Document ID: preciv419
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Arkansas intelligencer.
@@ -5828,7 +6268,8 @@ proceedings against the leaders of the mob . In the
 
 Document ID: preciv420
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: LYNCIIING.
 Newspaper: Lexington union.
@@ -5840,7 +6281,8 @@ that there was now none in our community so desperate and
 
 Document ID: preciv421
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Arkansas intelligencer.
@@ -5853,7 +6295,8 @@ from the Signal of the 11th inst ,
 
 Document ID: preciv422
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -5865,7 +6308,8 @@ authority of a letter from the scene of
 
 Document ID: preciv423
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -5878,7 +6322,8 @@ citizens to visit the rendezvous of a
 
 Document ID: preciv424
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New-York daily tribune.
@@ -5890,7 +6335,8 @@ citizens of the rendezvous of a
 
 Document ID: preciv425
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: New-York tribune.
@@ -5903,7 +6349,8 @@ pinioned him , took him to the river bank , and after getting him in
 
 Document ID: preciv427
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Mobile daily commercial register and patriot.
@@ -5915,7 +6362,8 @@ of Williamstown (
 
 Document ID: preciv428
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: From IN, Atw Orleans Pieayunc.
 FUN ON BOARD A STEAMBOAT.
@@ -5929,7 +6377,8 @@ made one end of a rope fast to the neck of the wondering gambler
 
 Document ID: preciv429
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Southern Argus.
@@ -5942,7 +6391,8 @@ and considered likely to introduce him to the court of
 
 Document ID: preciv430
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The native American.
@@ -5955,7 +6405,8 @@ exercise of their newly acquired and well understood rights . From the New
 
 Document ID: preciv432
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Litchfield enquirer.
@@ -5968,7 +6419,8 @@ tree and ' lynched ' him with extreme severity : looking on , men exclaiming -
 
 Document ID: preciv433
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The native American.
@@ -5981,7 +6433,8 @@ remarks to say that after all we can conceive of
 
 Document ID: preciv434
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: PIETY, REAL AND FALSE.
 Newspaper: The native American.
@@ -5994,7 +6447,8 @@ a loud tone , ' These are thy
 
 Document ID: preciv435
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: FROM FLORIDA.
 Newspaper: Litchfield enquirer.
@@ -6007,7 +6461,8 @@ known in the bill of sale of the slave
 
 Document ID: preciv436
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The North-Carolina standard.
@@ -6019,7 +6474,8 @@ of a trial
 
 Document ID: preciv437
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: EtoR the ". V co,,r;pr.
 Newspaper: Litchfield enquirer.
@@ -6032,7 +6488,8 @@ coat of tar and feathers . For this purpose , some ten
 
 Document ID: preciv438
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Litchfield enquirer.
@@ -6045,7 +6502,8 @@ preferred the jurisdiction of Judge Lynch , when
 
 Document ID: preciv439
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: ALARMING FROM THE CREEK NATION.
 
@@ -6059,7 +6517,8 @@ was handed over to Judge Lynch , who gave bloody account of him .
 
 Document ID: preciv440
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Arkansas advocate.
@@ -6073,7 +6532,8 @@ under
 
 Document ID: preciv441
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Arkansas advocate.
@@ -6085,7 +6545,8 @@ give precedence to Judge Lynch , and the criminals were whipped promiscuously .
 
 Document ID: preciv442
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Litchfield enquirer.
@@ -6098,7 +6559,8 @@ received in town stating that Mr . Thom , formerly a
 
 Document ID: preciv443
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: DEFERRED ITEMS.
 Newspaper: Litchfield enquirer.
@@ -6111,7 +6573,8 @@ of his object in this respect . By observation made
 
 Document ID: preciv444
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: ITEMS-sELEcrEp.
 Newspaper: Litchfield enquirer.
@@ -6124,7 +6587,8 @@ stage about the subject of Slavery exasperated some of the passengers who
 
 Document ID: preciv446
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Litchfield enquirer.
@@ -6137,7 +6601,8 @@ of New Haven was removed from the office of County
 
 Document ID: 327
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: St. Paul weekly Minnesotian.
@@ -6150,7 +6615,8 @@ cheek or forehead . If the punishment
 
 Document ID: 1016
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: sU,,nrARY OF EASTERN NEWS.
 Newspaper: The Nevada Democrat.
@@ -6163,7 +6629,8 @@ of Sept . 4th contains a long account
 
 Document ID: 1511
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Death of MIR. King.
 Newspaper: Butte record.
@@ -6176,7 +6643,8 @@ influence and service to sustain the laws , by devoting an
 
 Document ID: 1512
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -6188,7 +6656,8 @@ Monterey , were hung by the vigilance
 
 Document ID: 1513
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Minnesota weekly times.
@@ -6200,7 +6669,8 @@ were engaged lynching a
 
 Document ID: 3073
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: 5ABOLITION SANDERS AND SOUTH
 
@@ -6216,7 +6686,8 @@ a negro who had the impudence to raise
 
 Document ID: 4685
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Kansas weekly herald.
@@ -6229,7 +6700,8 @@ promptly nipped in the bud . In reference to the war the Colonel says
 
 Document ID: 4686
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: More Lynching in Alameda County.
 Newspaper: The weekly Placer herald.
@@ -6242,7 +6714,8 @@ hanging upon a tree on the premises where the unfortunate Rochebave and Connout
 
 Document ID: 4687
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Trinity times.
@@ -6254,7 +6727,8 @@ before sunset , a man
 
 Document ID: 4688
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Shasta courier.
@@ -6266,7 +6740,8 @@ the 6th ult .
 
 Document ID: 4689
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: FROM YREKA.
 
@@ -6281,7 +6756,8 @@ the 10th inst . The victim was a young man by the
 
 Document ID: 5974
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: The Hawesville Tragedy.
 
@@ -6297,7 +6773,8 @@ while the mob would lynch him , but finally he was taken to prison and disarmed
 
 Document ID: 5975
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: Eastern News Items.
 Newspaper: The Nevada Democrat.
@@ -6310,7 +6787,8 @@ participating in
 
 Document ID: 6880
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada Democrat.
@@ -6323,7 +6801,8 @@ against a Sunday law , must be a desirable
 
 Document ID: 6882
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: There xva. n way after All.
 Newspaper: Daily national Democrat.
@@ -6337,7 +6816,8 @@ lawless individuals
 
 Document ID: 6885
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: San Andreas independent.
@@ -6348,7 +6828,8 @@ Full Context: HUNG BY A MOB . — A negro named Bracy , on Friday , 10th inst . 
 
 Document ID: 6887
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Placer herald.
@@ -6361,7 +6842,8 @@ must be a desirable community
 
 Document ID: 6889
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Worcester daily spy.
@@ -6374,7 +6856,8 @@ aforesaid—Improvement in machinery for polishing thread . A MAN HUNG BY A MOB 
 
 Document ID: 7519
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: The California News by the Prometheus-
 
@@ -6390,7 +6873,8 @@ of the decrees of the Vigilance Committee of Five Hundred (
 
 Document ID: 7520
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: From California.
 Newspaper: The republic.
@@ -6403,7 +6887,8 @@ committee , a body of citizens of the highest
 
 Document ID: 7521
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Weekly national intelligencer.
@@ -6415,7 +6900,8 @@ transpired during the night of the 10th
 
 Document ID: 7522
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: From The NstO York Express.
 
@@ -6431,7 +6917,8 @@ alarming enough in principle , but , wonderful to say
 
 Document ID: 7523
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: TELEoRAPIIIC.
 
@@ -6449,7 +6936,8 @@ August 6—10 A.M . —
 
 Document ID: 9645
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Nevada journal.
@@ -6462,7 +6950,8 @@ recently been holding his session in the western part of our county .
 
 Document ID: 14213
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Constantine republican (Constantine, Mi...)
@@ -6475,7 +6964,8 @@ violence and misrule , denominated Lynch law , must be put down in this country
 
 Document ID: 16746
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Arkansas advocate (Little Rock, A....)
@@ -6488,7 +6978,8 @@ He was an accomplice of the celebrated Murrell—who had been a member in
 
 Document ID: 16747
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: South Branch intelligencer (Romney, Va. [W....)
@@ -6500,7 +6991,8 @@ justice , scorning the law's delay , is
 
 Document ID: 16748
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: South Branch intelligencer (Romney, Va. [W....)
@@ -6512,7 +7004,8 @@ on the authority of a
 
 Document ID: 16751
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: South Branch intelligencer (Romney, Va. [W....)
@@ -6524,7 +7017,8 @@ ult . The mob seized him between 8 and 9 o'clock in the morning , gave him
 
 Document ID: 16756
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: South Branch intelligencer (Romney, Va. [W....)
@@ -6536,7 +7030,8 @@ the arrest of THREE PERSONS in
 
 Document ID: 16774
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: NA
@@ -6548,7 +7043,8 @@ aged about 17 or 18 , of respectable parentage , eloped from Frederick
 
 Document ID: 16791
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The North-Carolina standard (Raleigh, N.C.)
@@ -6560,7 +7056,8 @@ yesterday , informs us of the manner in
 
 Document ID: 16792
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Southport telegraph (Southport, W.T....)
@@ -6572,7 +7069,8 @@ Lamborn , has published an opinion
 
 Document ID: 16794
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: NA
@@ -6585,7 +7083,8 @@ patiently for further progress ,
 
 Document ID: 16795
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Wheeling times and advertiser (Wheeling, Va. [...)
@@ -6597,7 +7096,8 @@ have a show
 
 Document ID: 16804
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The North-Carolina standard (Raleigh, N.C.)
@@ -6610,7 +7110,8 @@ custody as fast as they could be caught , with the
 
 Document ID: 16808
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Southport telegraph (Southport, W.T....)
@@ -6623,7 +7124,8 @@ been put in possession of the facts in relation to this affair
 
 Document ID: 16812
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: The Ohio Democrat (Canal Dover, Oh...)
@@ -6635,7 +7137,8 @@ Tennessee County has found a
 
 Document ID: 16813
 Sentence ID: NA
-LOCATION IDENTIFIED: NA
+State: Unknown
+Location: NA
 Entity Type: NA
 Headline: NA
 Newspaper: Vermont telegraph (Brandon [Vt.])

@@ -1,0 +1,511 @@
+---
+title: "Untitled"
+author: "Wells"
+date: "2026-01-05"
+output: html_document
+---
+#KWIC
+
+```{r}
+
+# Create a corpus using the 'article_spellchecked' column as the text field
+my_corpus <- corpus(precivil_complete, text_field = "spellchecked", docid_field = "index") # build a new 
+# Tokenize the corpus
+my_tokens <- tokens(my_corpus)
+
+#15 tokens on both sides of the search term
+quanteda_df_llm <- kwic(my_tokens, phrase(c("lynch")), window = 15, valuetype = "regex") %>% as.data.frame() |> 
+  distinct(docname,  .keep_all = TRUE)
+
+quanteda_df_llm <- kwic(my_tokens, phrase(c("lynch|hung|hang(ed|ing)?|executed?|execution|mob\\s+law|vigilance\\s+committee")), window = 20, valuetype = "regex") %>% as.data.frame() |> 
+  distinct(docname,  .keep_all = TRUE)
+
+df_llm <- precivil_complete |> 
+  inner_join(quanteda_df_llm, by=c("index"="docname")) |> 
+  mutate(kwic_text = paste0(pre," ", keyword," ",post)) |> 
+   select(-c(from, to,pre,post, keyword, pattern)) |> 
+  mutate(word_count_select = str_count(select_text, "\\w+"))
+#447 processed articles!
+#write_csv(df_llm, "../data/precivil_df_llm_dec_26.csv")
+
+```
+
+## Spacy parsing
+```{r}
+
+# Initialize spacy (one-time setup required: spacy_install())
+spacy_initialize(model = "en_core_web_sm")
+```
+
+```{r}
+text <- data.frame(
+  doc_id = precivil_complete$index,
+  text = precivil_complete$spellchecked,
+  stringsAsFactors = FALSE
+)
+
+# Parse with spacyr
+parsed <- spacy_parse(text, entity = TRUE, 
+                               lemma = TRUE,
+                               pos = TRUE,
+                               tag= TRUE,  
+                              dependency = TRUE  )
+
+
+```
+
+
+```{r}
+locations_with_prep <- parsed %>%
+  filter(str_detect(entity, "^(GPE|LOC|FAC)_(B|I)$")) %>%
+  group_by(doc_id, sentence_id) %>%
+  mutate(prev_token = lag(token)) %>%
+  ungroup() %>%
+  inner_join(lynch_info, by = c("doc_id", "sentence_id"), relationship = "many-to-many") %>%
+  filter(prev_token %in% c("at", "in", "near", "on", "from", "to") |
+         (token_id >= lynch_token_id - 5 & token_id < lynch_token_id) |
+         token_id > lynch_token_id) %>%
+  # Remove duplicates!
+  distinct(doc_id, sentence_id, token_id, .keep_all = TRUE)
+```
+
+
+
+```{r}
+location_counts2 <- locations_with_prep %>%
+  arrange(doc_id, sentence_id, token_id) %>%
+  group_by(doc_id, sentence_id) %>%
+  # Combine ALL consecutive locations
+  summarise(
+    location = paste(token, collapse = " "),
+    .groups = "drop"
+  )
+```
+
+```{r}
+Wlocation_counts2 <- locations_with_prep %>%
+  arrange(doc_id, sentence_id, token_id) %>%
+  group_by(doc_id, sentence_id) %>%
+  mutate(
+    # Check if this token is consecutive with the previous one
+    is_consecutive = (token_id - lag(token_id, default = -999)) == 1,
+    # Create merged groups: start new group if NOT consecutive
+    entity_group_merged = cumsum(!is_consecutive)
+  ) %>%
+  group_by(doc_id, sentence_id, entity_group_merged) %>%
+  summarise(
+    location = paste(token, collapse = " "),
+    .groups = "drop"
+  ) |> 
+  arrange(desc(doc_id))
+```
+
+
+#new classifier
+
+```{r}
+new_location <- Wlocation_counts2 |> 
+  # right_join(precivil_df, by = c("doc_id" = "index")) |> 
+mutate(location_clean = tolower(location)) |> 
+  # Remove duplicate consecutive words first
+  mutate(location_clean = str_replace_all(location_clean, "\\b(\\w+)\\s+\\1\\b", "\\1")) |>
+  mutate(location_clean = case_when(
+    # 1. REMOVE NOISE (Returns NA)
+    location_clean %in% c("a", "the memphis enquirer of the", "the yoakum gang", 
+                          "rev", "lieut", "jas", "sheriff", "fort", "5th", 
+                          "5th september september", "states", "west", "red",
+                          "a senor senor badlo badlo", "san", "driskells", "los") ~ NA_character_,
+    
+    # 2. SPECIFIC COMBINATIONS & CORRECTIONS
+    # Rogue River variants -> Rogue River Valley
+    location_clean %in% c("rogue", "rogue river", "rogue river valley") ~ "Rogue River Valley",
+    
+    # Alameda -> Alameda County
+    location_clean == "alameda" ~ "Alameda County",
+    
+    # Annador -> Amador County
+    location_clean == "annador county" ~ "Amador County",
+    
+    # Gentry variants -> Gentry County
+    location_clean %in% c("gentry", "gentry county") ~ "Gentry County",
+    
+    # 3. MAPPINGS & ABBREVIATIONS
+    location_clean %in% c("mo", "mo .", "mo . .", "weston mo") ~ "Missouri",
+    location_clean %in% c("ky", "ky .")            ~ "Kentucky",
+    location_clean %in% c("ill", "ill . .")        ~ "Illinois",
+    location_clean %in% c("la .")                  ~ "Louisiana",
+    location_clean %in% c("n.c")                   ~ "North Carolina",
+    
+    # 4. TYPO FIXES (Specific cases)
+    location_clean == "san francisco"              ~ "San Francisco",
+    location_clean == "los angeles"                ~ "Los Angeles",
+    location_clean == "santa barbara"              ~ "Santa Barbara",
+    location_clean == "red bluffs"                 ~ "Red Bluffs",
+    location_clean == "san luis obispo"            ~ "San Luis Obispo",
+    location_clean == "salmon river"               ~ "Salmon River",
+    location_clean == "sawyer 's bar"              ~ "Sawyer's Bar",
+    
+    # 5. DEFAULT: Standardize everything else to Title Case
+    TRUE ~ str_to_title(location_clean)
+  )) |> 
+  
+  ### Extract state from multi-part locations BEFORE state classification
+  mutate(
+    # Extract last word if it's a state name
+    last_word = word(location_clean, -1),
+    # Extract second-to-last word
+    second_last_word = word(location_clean, -2),
+    
+    # If last word is a state, extract it
+    extracted_state = case_when(
+      last_word %in% c("Alabama", "Arkansas", "California", "Colorado", "Delaware", 
+                       "Florida", "Georgia", "Idaho", "Illinois", "Indiana", "Iowa", 
+                       "Kansas", "Kentucky", "Louisiana", "Minnesota", "Mississippi", 
+                       "Missouri", "Nebraska", "New", "North", "Ohio", "Oregon", 
+                       "Tennessee", "Texas", "Virginia", "Wisconsin") ~ last_word,
+      # Handle "New York", "North Carolina"
+      paste(second_last_word, last_word) %in% c("New York", "New Hampshire", 
+                                                  "North Carolina") ~ paste(second_last_word, last_word),
+      TRUE ~ NA_character_
+    ),
+    
+    # Clean location by removing the state suffix
+    location_clean = if_else(
+      !is.na(extracted_state),
+      str_trim(str_remove(location_clean, paste0("\\s*", extracted_state, "$"))),
+      location_clean
+    )
+  ) |>
+  
+  ### States from localities
+  mutate(state = case_when(
+    # Use extracted state first
+    !is.na(extracted_state) ~ extracted_state,
+    
+    # Already state names - pass through
+    location_clean %in% c("Alabama", "Arkansas", "California", "Colorado", "Delaware", 
+                          "Florida", "Georgia", "Idaho", "Illinois", "Indiana", "Iowa", 
+                          "Kansas", "Kentucky", "Louisiana", "Minnesota", "Mississippi", 
+                          "Missouri", "Nebraska", "New Hampshire", "New York", "North Carolina", 
+                          "Ohio", "Oregon", "Tennessee", "Texas", "Virginia", "Wisconsin") ~ location_clean,
+    
+    # California counties and cities
+    location_clean %in% c("Alameda", "Alameda County", "Annador County", "Calaveras County",
+                          "Merced County", "Napa", "Oakland", "Placer County", 
+                          "San Andreas", "San Antonio", "San Felipe", "San Francisco",
+                          "San Gabriel", "San Isidro", "San Jose", "San Luis Obispo",
+                          "Santa Barbara", "Shasta", "Solano County", 
+                          "Stockton", "Tejon", "Tuolumne County", "Yuba County",
+                          "Red Bluffs", "Drytown", "Iowa Hill", "Monterey",
+                          "Sawyer's Bar", "South Sulphur", "Los Angeles", "Sacramento", 
+                          "Yreka", "Verandah", "Columbia", "Pancho Daniel") ~ "California",
+    str_detect(location_clean, "Tuolumne") ~ "California",
+    
+    # Texas counties and cities
+    location_clean %in% c("Uvalde County", "El Paso", "San Antonio") ~ "Texas",
+    
+    # Missouri counties and cities
+    location_clean %in% c("Buchanan County", "Gentry County", "Grand Glaize Jackson County", 
+                          "Renick Randolph County") ~ "Missouri",
+    str_detect(location_clean, "Jackson County") ~ "Missouri",
+    
+    # Illinois counties and cities
+    location_clean %in% c("Ogle County", "Keithsburg", "Rockford", "Shelbyville") ~ "Illinois",
+    
+    # Indiana counties and cities
+    location_clean %in% c("South Bend") ~ "Indiana",
+    
+    # Mississippi counties and cities
+    location_clean %in% c("Issaquena County", "Panola", "Pontotoc County") ~ "Mississippi",
+    
+    # Iowa counties and cities
+    location_clean %in% c("Black Hawk", "Tama County", "Bargar") ~ "Iowa",
+    
+    # Kentucky cities
+    location_clean %in% c("Lexington", "Louisville", "Williamstown Grant County") ~ "Kentucky",
+    str_detect(location_clean, "Grant County") ~ "Kentucky",
+    
+    # Tennessee cities
+    location_clean %in% c("Memphis", "Nashville") ~ "Tennessee",
+    
+    # Georgia cities
+    location_clean %in% c("Savannah", "Tuskegee") ~ "Georgia",
+    
+    # Alabama counties and cities
+    location_clean %in% c("Pike County") ~ "Alabama",
+    
+    # Louisiana cities
+    location_clean %in% c("Baton Rouge", "New Orleans") ~ "Louisiana",
+    
+    # Kansas cities
+    location_clean %in% c("Lecompton", "Leavenworth City", "Kansas Territory") ~ "Kansas",
+    
+    # Florida cities
+    location_clean %in% c("Pensacola", "Alston", "Milton") ~ "Florida",
+    
+    # Nebraska cities
+    location_clean %in% c("Omaha City") ~ "Nebraska",
+    
+    # Colorado cities
+    location_clean == "Denver City" ~ "Colorado",
+    
+    # Wisconsin
+    location_clean %in% c("Washara County", "Geneva") ~ "Wisconsin",
+    
+    # New York
+    location_clean == "Bushville" ~ "New York",
+    
+    # Oregon counties
+    location_clean %in% c("Lewis County", "Rogue River", "Rogue River Valley") ~ "Oregon",
+    
+    # North Carolina cities
+    location_clean == "Wilmington" ~ "North Carolina",
+    
+    # District of Columbia
+    location_clean == "Washington" ~ "District of Columbia",
+    
+    # Rivers/geographic features
+    location_clean == "Mississippi" ~ "Mississippi",
+    location_clean == "Upper Mississippi River" ~ "Multiple States",
+    location_clean == "Salmon River" ~ "Idaho",
+    
+    # Uncertain/generic locations
+    location_clean %in% c("Driskells", "Partridge", "Scaggs", 
+                          "Shattuck", "Weatherford", "Woodstock",
+                          "Lawrenceville", "Union City", "Petersburg", 
+                          "Essex County", "Melbourne", "Mount Alexander",
+                          "Anastasia Jesus") ~ "Unknown",
+    
+    # Default
+    TRUE ~ "Unknown"
+  )) |>
+  select(-last_word, -second_last_word, -extracted_state) |> 
+  ungroup() |> 
+  group_by(doc_id) |>
+  filter(
+    # Keep this row if either:
+    # 1. It has a known state, OR
+    # 2. All rows for this doc_id have Unknown state
+    state != "Unknown" | all(state == "Unknown")
+  ) |>
+  # If still multiple rows (multiple known states), keep first
+  slice(1) |>
+  ungroup()
+```
+
+# fix missing states 
+```{r}
+x <- new_location |> 
+  mutate(state = case_when(
+    doc_id == "1015" ~ "Iowa",
+    doc_id == "1016" ~ "Mississippi",
+    doc_id == "1512" ~ "California",
+    doc_id == "1513" ~ "Illinois",
+    doc_id == "7522" ~ "California",
+    doc_id == "16747" ~ "Mississippi",
+    doc_id == "16748" ~ "Mississippi",
+    doc_id == "16751" ~ "South Carolina",
+    doc_id == "16756" ~ "Mississippi",
+    doc_id == "16774" ~ "Maryland",
+    doc_id == "16791" ~ "Arkansas",
+    doc_id == "16792" ~ "Illinois",
+    doc_id == "16794" ~ "Illinois",
+    doc_id == "16795" ~ "Kentucky",
+    doc_id == "16804" ~ "Ohio",
+    doc_id == "16808" ~ "Texas",
+    doc_id == "16812" ~ "Tennessee",
+    doc_id == "16822" ~ "Kentucky",
+    doc_id == "preciv1" ~ "District of Columbia",
+    doc_id == "preciv2" ~ "South Carolina",
+    doc_id == "preciv10" ~ "Alabama",
+    doc_id == "preciv13" ~ "New York",
+    doc_id == "preciv18" ~ "Arkansas",
+    doc_id == "preciv19" ~ "South Carolina",
+    doc_id == "preciv20" ~ "New Mexico",
+    doc_id == "preciv21" ~ "Oregon",
+    doc_id == "preciv22" ~ "Colorado",
+    doc_id == "preciv60" ~ "Missouri",
+    doc_id == "preciv79" ~ "California",
+    doc_id == "preciv100" ~ "California",
+    doc_id == "preciv101" ~ "California",
+    doc_id == "preciv102" ~ "Kentucky",
+    doc_id == "preciv103" ~ "California",
+    doc_id == "preciv105" ~ "Minnesota",
+    doc_id == "preciv107" ~ "Virginia",
+    doc_id == "preciv109" ~ "Minnesota",
+    doc_id == "preciv110" ~ "California",
+    doc_id == "preciv112" ~ "Kentucky",
+    doc_id == "preciv115" ~ "Delaware",
+    doc_id == "preciv118" ~ "California",
+    doc_id == "preciv119" ~ "Kentucky",
+    doc_id == "preciv120" ~ "California",
+    doc_id == "preciv121" ~ "California",
+    doc_id == "preciv122" ~ "Missouri",
+    doc_id == "preciv124" ~ "California",
+    doc_id == "preciv126" ~ "Maryland",
+    doc_id == "preciv132" ~ "California",
+    doc_id == "preciv133" ~ "California",
+    doc_id == "preciv134" ~ "Illinois",
+    doc_id == "preciv136" ~ "California",
+    doc_id == "preciv137" ~ "Delaware",
+    doc_id == "preciv143" ~ "California",
+    doc_id == "preciv146" ~ "California",
+    doc_id == "preciv147" ~ "California",
+    doc_id == "preciv151" ~ "California",
+    doc_id == "preciv152" ~ "California",
+    doc_id == "preciv155" ~ "Kansas",
+    doc_id == "preciv157" ~ "California",
+    doc_id == "preciv158" ~ "California",
+    doc_id == "preciv159" ~ "California",
+    doc_id == "preciv160" ~ "Iowa",
+    doc_id == "preciv162" ~ "Wisconsin",
+    doc_id == "preciv164" ~ "Louisiana",
+    doc_id == "preciv166" ~ "Kansas",
+    doc_id == "preciv167" ~ "Texas",
+    doc_id == "preciv170" ~ "Kansas",
+    doc_id == "preciv173" ~ "Nebraska",
+    doc_id == "preciv174" ~ "Mississippi",
+    doc_id == "preciv175" ~ "Kentucky",
+    doc_id == "preciv177" ~ "California",
+    doc_id == "preciv179" ~ "Kansas",
+    doc_id == "preciv180" ~ "California",
+    doc_id == "preciv181" ~ "Virginia",
+    doc_id == "preciv184" ~ "Nebraska",
+    doc_id == "preciv185" ~ "Kansas",
+    doc_id == "preciv187" ~ "California",
+    doc_id == "preciv189" ~ "California",
+    doc_id == "preciv192" ~ "California",
+    doc_id == "preciv193" ~ "Alabama",
+    doc_id == "preciv195" ~ "Illinois",
+    doc_id == "preciv196" ~ "District of Columbia",
+    doc_id == "preciv198" ~ "California",
+    doc_id == "preciv199" ~ "California",
+    doc_id == "preciv202" ~ "California",
+    doc_id == "preciv203" ~ "California",
+    doc_id == "preciv205" ~ "Texas",
+    doc_id == "preciv206" ~ "California",
+    doc_id == "preciv207" ~ "Arkansas",
+    doc_id == "preciv208" ~ "Virginia",
+    doc_id == "preciv209" ~ "California",
+    doc_id == "preciv210" ~ "California",
+    doc_id == "preciv213" ~ "California",
+    doc_id == "preciv215" ~ "California",
+    doc_id == "preciv216" ~ "California",
+    doc_id == "preciv217" ~ "California",
+    doc_id == "preciv218" ~ "California",
+    doc_id == "preciv219" ~ "California",
+    doc_id == "preciv239" ~ "Massachusetts",
+    doc_id == "preciv240" ~ "Missouri",
+    doc_id == "preciv246" ~ "California",
+    doc_id == "preciv426" ~ "Arkansas",
+    TRUE ~ state  # Keep existing state value if doc_id not in list
+  ))
+
+
+
+
+```
+
+
+
+
+```{r}
+new_total <- x |> 
+  count(state) |> 
+  arrange(desc(n))
+#-- jan 5: 26 states, calif 41 reports. 147 reports total
+```
+
+```{r}
+new_text_location <- new_location |> 
+  right_join(precivil_df, by = c("doc_id" = "index")) |> 
+  # For each doc_id, remove locations that are substrings of other locations
+  group_by(doc_id) |>
+  arrange(doc_id, desc(nchar(location_clean))) |>  # Longest first
+  filter(!duplicated(location_clean)) |>  # Remove exact duplicates first
+  mutate(
+    # Check if this location is a substring of any longer location in same doc
+    is_substring = sapply(location_clean, function(loc) {
+      if (is.na(loc)) return(FALSE)
+      others <- location_clean[location_clean != loc & !is.na(location_clean)]
+      any(str_detect(others, fixed(loc)))
+    })
+  ) |>
+  filter(!is_substring) |>  # Remove substrings
+  select(-is_substring) 
+
+# Now create the text file with locations highlighted
+file_conn <- file("third_verify_states.txt", "w")
+
+for (i in 1:nrow(new_text_location)) {
+  row_data <- new_text_location[i, ]
+  
+  writeLines(paste0("Document ID: ", row_data$doc_id), file_conn)
+  writeLines(paste0("Sentence ID: ", row_data$sentence_id), file_conn)
+  writeLines(paste0("State: ", row_data$state), file_conn)
+  writeLines(paste0("Location: ", row_data$location), file_conn)
+  # writeLines(paste0("Entity Type: ", row_data$entity_types), file_conn)
+  writeLines(paste0("Headline: ", row_data$headline), file_conn)
+  writeLines(paste0("Newspaper: ", row_data$newspaper_name), file_conn)
+  writeLines(paste0("Date: ", row_data$date), file_conn)
+
+  
+  # Wrap the full text
+  wrapped_text <- strwrap(row_data$spellchecked, width = 80)
+  wrapped_text[1] <- paste0("Full Context: ", wrapped_text[1])
+  writeLines(wrapped_text, file_conn)
+  
+  if (i < nrow(new_text_location)) {
+    writeLines("\n==================================================\n", file_conn)
+  }
+}
+
+close(file_conn)
+```
+
+```{r}
+new_text_location |> 
+  count(doc_id) |> 
+  arrange(desc(n))
+```
+
+
+
+
+
+```{r}
+# See what's being filtered OUT
+locations_filtered_out <- parsed %>%
+  filter(str_detect(entity, "^(GPE|LOC|FAC)_(B|I)$")) %>%
+  group_by(doc_id, sentence_id) %>%
+  mutate(prev_token = lag(token)) %>%
+  ungroup() %>%
+  inner_join(lynch_info, by = c("doc_id", "sentence_id")) %>%
+  # OPPOSITE of your filter
+  filter(!(prev_token %in% c("at", "in", "near", "on", "from", "to", "near") |
+           token_id > lynch_token_id))
+
+# Look at examples
+locations_filtered_out %>% 
+  select(doc_id, token, prev_token, token_id, lynch_token_id) %>%
+  head(20)
+```
+
+```{r}
+locations_filtered_out %>%
+  filter(token_id >= lynch_token_id - 5 & token_id < lynch_token_id) %>%
+  nrow()
+```
+
+```{r}
+parsed %>%
+  filter(doc_id == "preciv69") %>%
+  select(token_id, token,  entity)
+```
+
+```{r}
+locations_with_prep %>%
+  filter(doc_id == "preciv69", sentence_id == 1) %>%
+  mutate(entity_group = cumsum(str_detect(entity, "_B$"))) %>%
+  select(token_id, token, entity, entity_group)
+```
