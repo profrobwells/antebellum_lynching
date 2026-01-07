@@ -1,0 +1,697 @@
+---
+title: "Classify Lynching Location"
+author: "Wells"
+date: "2026-01-07"
+output: html_document
+---
+
+This notebook takes the precivil_complete and tags geometery using spacyr. 
+It then processes results of a manual review of all 508 entries and retags 292 entries with the correct states.
+
+
+#Import 491 cleaned articles
+```{r}
+precivil_complete <- read_csv("../data/precivil_complete_jan_7.csv") 
+```
+
+## Spacy parsing
+```{r}
+
+# Initialize spacy (one-time setup required: spacy_install())
+spacy_initialize(model = "en_core_web_sm") 
+```
+
+```{r}
+text <- data.frame(
+  doc_id = precivil_complete$index,
+  text = precivil_complete$spellchecked,
+  stringsAsFactors = FALSE
+)
+
+# Parse with spacyr
+parsed <- spacy_parse(text, entity = TRUE, 
+                               lemma = TRUE,
+                               pos = TRUE,
+                               tag= TRUE,  
+                              dependency = TRUE  )
+
+
+```
+
+### Tag geographic entities
+```{r}
+# Get lynch sentences
+lynch_info <- parsed |>
+   filter(grepl("lynch|hung|hang(ed|ing)?|executed?|execution|mob\\s+law|vigilance\\s+committee", token, ignore.case = TRUE)) |>
+  distinct(doc_id, sentence_id, lynch_token_id = token_id)
+
+#tag entity near the lynching term appearance
+locations_with_prep <- parsed |>
+  filter(str_detect(entity, "^(GPE|LOC|FAC)_(B|I)$")) |>
+  group_by(doc_id, sentence_id) |>
+  mutate(prev_token = lag(token)) |>
+  ungroup() |>
+  inner_join(lynch_info, by = c("doc_id", "sentence_id"), relationship = "many-to-many") |>
+  filter(prev_token %in% c("at", "in", "near", "on", "from", "to") |
+         (token_id >= lynch_token_id - 5 & token_id < lynch_token_id) |
+         token_id > lynch_token_id) |>
+  distinct(doc_id, sentence_id, token_id, .keep_all = TRUE)
+```
+
+
+```{r}
+location_counts3 <- locations_with_prep |>
+  arrange(doc_id, sentence_id, token_id) |>
+  group_by(doc_id, sentence_id) |>
+  mutate(
+    # Check if this token is consecutive with the previous one
+    is_consecutive = (token_id - lag(token_id, default = -999)) == 1,
+    # Create merged groups: start new group if NOT consecutive
+    entity_group_merged = cumsum(!is_consecutive)
+  ) |>
+  group_by(doc_id, sentence_id, entity_group_merged) |>
+  summarise(
+    location = paste(token, collapse = " "),
+    .groups = "drop"
+  ) |> 
+  arrange(desc(doc_id))
+```
+
+
+#new classifier
+
+```{r}
+new_location <- location_counts3 |> 
+  # right_join(precivil_df, by = c("doc_id" = "index")) |> 
+mutate(location_clean = tolower(location)) |> 
+  # Remove duplicate consecutive words first
+  mutate(location_clean = str_replace_all(location_clean, "\\b(\\w+)\\s+\\1\\b", "\\1")) |>
+  mutate(location_clean = case_when(
+    # 1. REMOVE NOISE (Returns NA)
+    location_clean %in% c("a", "the memphis enquirer of the", "the yoakum gang", 
+                          "rev", "lieut", "jas", "sheriff", "fort", "5th", 
+                          "5th september september", "states", "west", "red",
+                          "a senor senor badlo badlo", "san", "driskells", "los") ~ NA_character_,
+    
+    # 2. SPECIFIC COMBINATIONS & CORRECTIONS
+    # Rogue River variants -> Rogue River Valley
+    location_clean %in% c("rogue", "rogue river", "rogue river valley") ~ "Rogue River Valley",
+    
+    # Alameda -> Alameda County
+    location_clean == "alameda" ~ "Alameda County",
+    
+    # Annador -> Amador County
+    location_clean == "annador county" ~ "Amador County",
+    
+    # Gentry variants -> Gentry County
+    location_clean %in% c("gentry", "gentry county") ~ "Gentry County",
+    
+    # 3. MAPPINGS & ABBREVIATIONS
+    location_clean %in% c("mo", "mo .", "mo . .", "weston mo") ~ "Missouri",
+    location_clean %in% c("ky", "ky .")            ~ "Kentucky",
+    location_clean %in% c("ill", "ill . .")        ~ "Illinois",
+    location_clean %in% c("la .")                  ~ "Louisiana",
+    location_clean %in% c("n.c")                   ~ "North Carolina",
+    
+    # 4. TYPO FIXES (Specific cases)
+    location_clean == "san francisco"              ~ "San Francisco",
+    location_clean == "los angeles"                ~ "Los Angeles",
+    location_clean == "santa barbara"              ~ "Santa Barbara",
+    location_clean == "red bluffs"                 ~ "Red Bluffs",
+    location_clean == "san luis obispo"            ~ "San Luis Obispo",
+    location_clean == "salmon river"               ~ "Salmon River",
+    location_clean == "sawyer 's bar"              ~ "Sawyer's Bar",
+    
+    # 5. DEFAULT: Standardize everything else to Title Case
+    TRUE ~ str_to_title(location_clean)
+  )) |> 
+  
+  ### Extract state from multi-part locations BEFORE state classification
+  mutate(
+    # Extract last word if it's a state name
+    last_word = word(location_clean, -1),
+    # Extract second-to-last word
+    second_last_word = word(location_clean, -2),
+    
+    # If last word is a state, extract it
+    extracted_state = case_when(
+      last_word %in% c("Alabama", "Arkansas", "California", "Colorado", "Delaware", 
+                       "Florida", "Georgia", "Idaho", "Illinois", "Indiana", "Iowa", 
+                       "Kansas", "Kentucky", "Louisiana", "Minnesota", "Mississippi", 
+                       "Missouri", "Nebraska", "New", "North", "Ohio", "Oregon", 
+                       "Tennessee", "Texas", "Virginia", "Wisconsin") ~ last_word,
+      # Handle "New York", "North Carolina"
+      paste(second_last_word, last_word) %in% c("New York", "New Hampshire", 
+                                                  "North Carolina") ~ paste(second_last_word, last_word),
+      TRUE ~ NA_character_
+    ),
+    
+    # Clean location by removing the state suffix
+    location_clean = if_else(
+      !is.na(extracted_state),
+      str_trim(str_remove(location_clean, paste0("\\s*", extracted_state, "$"))),
+      location_clean
+    )
+  ) |>
+  
+  ### States from localities
+  mutate(state = case_when(
+    # Use extracted state first
+    !is.na(extracted_state) ~ extracted_state,
+    
+    # Already state names - pass through
+    location_clean %in% c("Alabama", "Arkansas", "California", "Colorado", "Delaware", 
+                          "Florida", "Georgia", "Idaho", "Illinois", "Indiana", "Iowa", 
+                          "Kansas", "Kentucky", "Louisiana", "Minnesota", "Mississippi", 
+                          "Missouri", "Nebraska", "New Hampshire", "New York", "North Carolina", 
+                          "Ohio", "Oregon", "Tennessee", "Texas", "Virginia", "Wisconsin") ~ location_clean,
+    
+    # California counties and cities
+    location_clean %in% c("Alameda", "Alameda County", "Annador County", "Calaveras County",
+                          "Merced County", "Napa", "Oakland", "Placer County", 
+                          "San Andreas", "San Antonio", "San Felipe", "San Francisco",
+                          "San Gabriel", "San Isidro", "San Jose", "San Luis Obispo",
+                          "Santa Barbara", "Shasta", "Solano County", 
+                          "Stockton", "Tejon", "Tuolumne County", "Yuba County",
+                          "Red Bluffs", "Drytown", "Iowa Hill", "Monterey",
+                          "Sawyer's Bar", "South Sulphur", "Los Angeles", "Sacramento", 
+                          "Yreka", "Verandah", "Columbia", "Pancho Daniel") ~ "California",
+    str_detect(location_clean, "Tuolumne") ~ "California",
+    
+    # Texas counties and cities
+    location_clean %in% c("Uvalde County", "El Paso", "San Antonio") ~ "Texas",
+    
+    # Missouri counties and cities
+    location_clean %in% c("Buchanan County", "Gentry County", "Grand Glaize Jackson County", 
+                          "Renick Randolph County") ~ "Missouri",
+    str_detect(location_clean, "Jackson County") ~ "Missouri",
+    
+    # Illinois counties and cities
+    location_clean %in% c("Ogle County", "Keithsburg", "Rockford", "Shelbyville") ~ "Illinois",
+    
+    # Indiana counties and cities
+    location_clean %in% c("South Bend") ~ "Indiana",
+    
+    # Mississippi counties and cities
+    location_clean %in% c("Issaquena County", "Panola", "Pontotoc County") ~ "Mississippi",
+    
+    # Iowa counties and cities
+    location_clean %in% c("Black Hawk", "Tama County", "Bargar") ~ "Iowa",
+    
+    # Kentucky cities
+    location_clean %in% c("Lexington", "Louisville", "Williamstown Grant County") ~ "Kentucky",
+    str_detect(location_clean, "Grant County") ~ "Kentucky",
+    
+    # Tennessee cities
+    location_clean %in% c("Memphis", "Nashville") ~ "Tennessee",
+    
+    # Georgia cities
+    location_clean %in% c("Savannah", "Tuskegee") ~ "Georgia",
+    
+    # Alabama counties and cities
+    location_clean %in% c("Pike County") ~ "Alabama",
+    
+    # Louisiana cities
+    location_clean %in% c("Baton Rouge", "New Orleans") ~ "Louisiana",
+    
+    # Kansas cities
+    location_clean %in% c("Lecompton", "Leavenworth City", "Kansas Territory") ~ "Kansas",
+    
+    # Florida cities
+    location_clean %in% c("Pensacola", "Alston", "Milton") ~ "Florida",
+    
+    # Nebraska cities
+    location_clean %in% c("Omaha City") ~ "Nebraska",
+    
+    # Colorado cities
+    location_clean == "Denver City" ~ "Colorado",
+    
+    # Wisconsin
+    location_clean %in% c("Washara County", "Geneva") ~ "Wisconsin",
+    
+    # New York
+    location_clean == "Bushville" ~ "New York",
+    
+    # Oregon counties
+    location_clean %in% c("Lewis County", "Rogue River", "Rogue River Valley") ~ "Oregon",
+    
+    # North Carolina cities
+    location_clean == "Wilmington" ~ "North Carolina",
+    
+    # District of Columbia
+    location_clean == "Washington" ~ "District of Columbia",
+    
+    # Rivers/geographic features
+    location_clean == "Mississippi" ~ "Mississippi",
+    location_clean == "Upper Mississippi River" ~ "Multiple States",
+    location_clean == "Salmon River" ~ "Idaho",
+    
+    # Uncertain/generic locations
+    location_clean %in% c("Driskells", "Partridge", "Scaggs", 
+                          "Shattuck", "Weatherford", "Woodstock",
+                          "Lawrenceville", "Union City", "Petersburg", 
+                          "Essex County", "Melbourne", "Mount Alexander",
+                          "Anastasia Jesus") ~ "Unknown",
+    
+    # Default
+    TRUE ~ "Unknown"
+  )) |>
+  select(-last_word, -second_last_word, -extracted_state) |> 
+  ungroup() |> 
+  group_by(doc_id) |>
+  filter(
+    # Keep this row if either:
+    # 1. It has a known state, OR
+    # 2. All rows for this doc_id have Unknown state
+    state != "Unknown" | all(state == "Unknown")
+  ) |>
+  # If still multiple rows (multiple known states), keep first
+  slice(1) |>
+  ungroup()
+```
+
+# fix missing states 
+
+```{r}
+
+docs_states <- new_location  |> 
+  select(doc_id, state)
+
+precivil_complete <- precivil_complete |> 
+  left_join(docs_states, by=c("index"="doc_id"))
+
+```
+
+
+
+```{r}
+precivil_complete <- precivil_complete |>
+mutate(state = case_when(
+    index == "1015" ~ "Iowa",
+    index == "1016" ~ "Mississippi",
+    index == "1512" ~ "California",
+    index == "1513" ~ "Illinois",
+    index == "7522" ~ "California",
+    index == "16747" ~ "Mississippi",
+    index == "16748" ~ "Mississippi",
+    index == "16751" ~ "South Carolina",
+    index == "16756" ~ "Mississippi",
+    index == "16774" ~ "Maryland",
+    index == "16791" ~ "Arkansas",
+    index == "16792" ~ "Illinois",
+    index == "16794" ~ "Illinois",
+    index == "16795" ~ "Kentucky",
+    index == "16804" ~ "Ohio",
+    index == "16808" ~ "Texas",
+    index == "16812" ~ "Tennessee",
+    index == "16822" ~ "Kentucky",
+    index == "preciv1" ~ "District of Columbia",
+    index == "preciv2" ~ "South Carolina",
+    index == "preciv5" ~ "Nevada",
+    index == "preciv7" ~ "Delaware",
+    index == "preciv8" ~ "Delaware",
+    index == "preciv9" ~ "California",
+    index == "preciv398" ~ "North Carolina",
+    index == "preciv10" ~ "Alabama",
+    index == "preciv13" ~ "New York",
+    index == "preciv18" ~ "Arkansas",
+    index == "preciv19" ~ "South Carolina",
+    index == "preciv20" ~ "New Mexico",
+    index == "preciv21" ~ "Oregon",
+    index == "preciv22" ~ "Colorado",
+    index == "preciv24" ~ "Mississippi",
+    index == "preciv27" ~ "Georgia",
+    index == "preciv29" ~ "Kansas",
+    index == "preciv31" ~ "Arizona",
+    index == "preciv32" ~ "Arkansas",
+    index == "preciv34" ~ "Michigan",
+    index == "preciv36" ~ "Tennessee",
+    index == "preciv37" ~ "California",
+    index == "preciv38" ~ "Texas",
+    index == "preciv39" ~ "Nevada",
+    index == "preciv40" ~ "Arkansas",
+    index == "preciv41" ~ "Colorado",
+    index == "preciv42" ~ "Mississippi",
+    index == "preciv43" ~ "South Carolina",
+    index == "preciv45" ~ "South Carolina",
+    index == "preciv46" ~ "California",
+    index == "preciv47" ~ "California",
+    index == "preciv52" ~ "Virginia",
+    index == "preciv53" ~ "Georgia",
+    index == "preciv54" ~ "Ohio",
+    index == "preciv57" ~ "South Carolina",
+    index == "preciv60" ~ "Missouri",
+    index == "preciv63" ~ "Arizona",
+    index == "preciv66" ~ "West Virginia",
+    index == "preciv67" ~ "Kansas",
+    index == "preciv68" ~ "Kansas",
+    index == "preciv70" ~ "Kansas",
+    index == "preciv71" ~ "California",
+    index == "preciv73" ~ "California",
+    index == "preciv75" ~ "Kentucky",
+    index == "preciv76" ~ "Mississippi",
+    index == "preciv78" ~ "Illinois",
+    index == "preciv79" ~ "California",
+    index == "preciv82" ~ "Arkansas",
+    index == "preciv84" ~ "Nevada",
+    index == "preciv86" ~ "Arkansas",
+    index == "preciv87" ~ "Illinois",
+    index == "preciv88" ~ "Virginia",
+    index == "preciv89" ~ "Minnesota",
+    index == "preciv90" ~ "Minnesota",
+    index == "preciv91" ~ "Tennessee",
+    index == "preciv92" ~ "California",
+    index == "preciv93" ~ "Kansas",
+    index == "preciv94" ~ "Illinois",
+    index == "preciv95" ~ "Colorado",
+    index == "preciv97" ~ "Texas",
+    index == "preciv99" ~ "Minnesota",
+    index == "preciv100" ~ "California",
+    index == "preciv101" ~ "California",
+    index == "preciv102" ~ "Kentucky",
+    index == "preciv103" ~ "California",
+    index == "preciv105" ~ "Minnesota",
+    index == "preciv107" ~ "Virginia",
+    index == "preciv109" ~ "Minnesota",
+    index == "preciv110" ~ "California",
+    index == "preciv112" ~ "Kentucky",
+    index == "preciv115" ~ "Delaware",
+    index == "preciv118" ~ "California",
+    index == "preciv119" ~ "Kentucky",
+    index == "preciv120" ~ "California",
+    index == "preciv121" ~ "California",
+    index == "preciv122" ~ "Missouri",
+    index == "preciv124" ~ "California",
+    index == "preciv126" ~ "Maryland",
+    index == "preciv132" ~ "California",
+    index == "preciv133" ~ "California",
+    index == "preciv134" ~ "Illinois",
+    index == "preciv136" ~ "California",
+    index == "preciv137" ~ "Delaware",
+    index == "preciv143" ~ "California",
+    index == "preciv146" ~ "California",
+    index == "preciv147" ~ "California",
+    index == "preciv151" ~ "California",
+    index == "preciv152" ~ "California",
+    index == "preciv155" ~ "Kansas",
+    index == "preciv157" ~ "California",
+    index == "preciv158" ~ "California",
+    index == "preciv159" ~ "California",
+    index == "preciv160" ~ "Iowa",
+    index == "preciv162" ~ "Wisconsin",
+    index == "preciv164" ~ "Louisiana",
+    index == "preciv166" ~ "Kansas",
+    index == "preciv167" ~ "Texas",
+    index == "preciv170" ~ "Kansas",
+    index == "preciv173" ~ "Nebraska",
+    index == "preciv174" ~ "Mississippi",
+    index == "preciv175" ~ "Kentucky",
+    index == "preciv177" ~ "California",
+    index == "preciv179" ~ "Kansas",
+    index == "preciv180" ~ "California",
+    index == "preciv181" ~ "Virginia",
+    index == "preciv184" ~ "Nebraska",
+    index == "preciv185" ~ "Kansas",
+    index == "preciv187" ~ "California",
+    index == "preciv189" ~ "California",
+    index == "preciv192" ~ "California",
+    index == "preciv193" ~ "Alabama",
+    index == "preciv195" ~ "Illinois",
+    index == "preciv196" ~ "District of Columbia",
+    index == "preciv198" ~ "California",
+    index == "preciv199" ~ "California",
+    index == "preciv202" ~ "California",
+    index == "preciv203" ~ "California",
+    index == "preciv205" ~ "Texas",
+    index == "preciv206" ~ "California",
+    index == "preciv207" ~ "Arkansas",
+    index == "preciv208" ~ "Virginia",
+    index == "preciv209" ~ "California",
+    index == "preciv210" ~ "California",
+    index == "preciv213" ~ "California",
+    index == "preciv215" ~ "California",
+    index == "preciv216" ~ "California",
+    index == "preciv217" ~ "California",
+    index == "preciv218" ~ "California",
+    index == "preciv219" ~ "California",
+    index == "preciv221" ~ "California",
+    index == "preciv223" ~ "California",
+    index == "preciv224" ~ "California",
+    index == "preciv226" ~ "Arkansas",
+    index == "preciv228" ~ "California",
+    index == "preciv229" ~ "Arkansas",
+    index == "preciv230" ~ "California",
+    index == "preciv231" ~ "California",
+    index == "preciv233" ~ "Kansas",
+    index == "preciv235" ~ "California",
+    index == "preciv237" ~ "California",
+    index == "preciv238" ~ "Texas",
+    index == "preciv239" ~ "Massachusetts",
+    index == "preciv240" ~ "Missouri",
+    index == "preciv243" ~ "California",
+    index == "preciv246" ~ "California",
+    index == "preciv247" ~ "Indiana",
+    index == "preciv248" ~ "Missouri",
+    index == "preciv250" ~ "Missouri",
+    index == "preciv253" ~ "California",
+    index == "preciv255" ~ "Missouri",
+    index == "preciv256" ~ "Missouri",
+    index == "preciv264" ~ "California",
+    index == "preciv266" ~ "California",
+    index == "preciv267" ~ "California",
+    index == "preciv268" ~ "California",
+    index == "preciv269" ~ "California",
+    index == "preciv270" ~ "California",
+    index == "preciv271" ~ "California",
+    index == "preciv273" ~ "California",
+    index == "preciv274" ~ "California",
+    index == "preciv276" ~ "Arkansas",
+    index == "preciv277" ~ "California",
+    index == "preciv279" ~ "Missouri",
+    index == "preciv280" ~ "California",
+    index == "preciv282" ~ "Missouri",
+    index == "preciv283" ~ "California",
+    index == "preciv284" ~ "Illinois",
+    index == "preciv287" ~ "Texas",
+    index == "preciv288" ~ "Illinois",
+    index == "preciv289" ~ "Tennessee",
+    index == "preciv292" ~ "Iowa",
+    index == "preciv293" ~ "California",
+    index == "preciv294" ~ "California",
+    index == "preciv297" ~ "California",
+    index == "preciv298" ~ "Louisiana",
+    index == "preciv300" ~ "California",
+    index == "preciv301" ~ "Louisiana",
+    index == "preciv302" ~ "California",
+    index == "preciv303" ~ "California",
+    index == "preciv304" ~ "New Mexico",
+    index == "preciv306" ~ "California",
+    index == "preciv308" ~ "California",
+    index == "preciv309" ~ "California",
+    index == "preciv310" ~ "Missouri",
+    index == "preciv312" ~ "California",
+    index == "preciv314" ~ "California",
+    index == "preciv317" ~ "California",
+    index == "preciv319" ~ "California",
+    index == "preciv321" ~ "California",
+    index == "preciv322" ~ "California",
+    index == "preciv323" ~ "California",
+    index == "preciv324" ~ "California",
+    index == "preciv325" ~ "California",
+    index == "preciv326" ~ "California",
+    index == "preciv327" ~ "California",
+    index == "preciv331" ~ "California",
+    index == "preciv333" ~ "Florida",
+    index == "preciv334" ~ "California",
+    index == "preciv337" ~ "California",
+    index == "preciv338" ~ "California",
+    index == "preciv339" ~ "Virginia",
+    index == "preciv342" ~ "California",
+    index == "preciv344" ~ "Texas",
+    index == "preciv349" ~ "California",
+    index == "preciv350" ~ "California",
+    index == "preciv351" ~ "California",
+    index == "preciv352" ~ "California",
+    index == "preciv353" ~ "District of Columbia",
+    index == "preciv354" ~ "California",
+    index == "preciv357" ~ "Florida",
+    index == "preciv359" ~ "California",
+    index == "preciv360" ~ "California",
+    index == "preciv361" ~ "California",
+    index == "preciv362" ~ "California",
+    index == "preciv363" ~ "California",
+    index == "preciv364" ~ "California",
+    index == "preciv366" ~ "California",
+    index == "preciv367" ~ "California",
+    index == "preciv368" ~ "California",
+    index == "preciv369" ~ "California",
+    index == "preciv370" ~ "California",
+    index == "preciv371" ~ "Kentucky",
+    index == "preciv373" ~ "Maryland",
+    index == "preciv375" ~ "Kentucky",
+    index == "preciv377" ~ "Texas",
+    index == "preciv378" ~ "Virginia",
+    index == "preciv381" ~ "California",
+    index == "preciv382" ~ "California",
+    index == "preciv383" ~ "Tennessee",
+    index == "preciv384" ~ "Mississippi",
+    index == "preciv385" ~ "Arkansas",
+    index == "preciv385" ~ "Illinois",
+    index == "preciv387" ~ "Arkansas",
+    index == "preciv387" ~ "New Jersey",
+    index == "preciv390" ~ "Illinois",
+    index == "preciv391" ~ "Texas",
+    index == "preciv392" ~ "Arkansas",
+    index == "preciv393" ~ "Illinois",
+    index == "preciv394" ~ "Illinois",
+    index == "preciv395" ~ "Arkansas",
+    index == "preciv396" ~ "Illinois",
+    index == "preciv397" ~ "Illinois",
+    index == "preciv398" ~ "Missouri",
+    index == "preciv399" ~ "New York",
+    index == "preciv400" ~ "New York",
+    index == "preciv402" ~ "Louisiana",
+    index == "preciv403" ~ "Florida",
+    index == "preciv404" ~ "Florida",
+    index == "preciv404" ~ "North Carolina",
+    index == "preciv408" ~ "Mississippi",
+    index == "preciv409" ~ "Maryland",
+    index == "preciv410" ~ "Pennsylvania",
+    index == "preciv412" ~ "Texas",
+    index == "preciv415" ~ "Illinois",
+    index == "preciv416" ~ "Illinois",
+    index == "preciv417" ~ "Mississippi",
+    index == "preciv418" ~ "Missouri",
+    index == "preciv419" ~ "Arkansas", 
+    index == "preciv420" ~ "Massachusetts",
+    index == "preciv422" ~ "Alabama", 
+    index == "preciv423" ~ "Missouri", 
+    index == "preciv424" ~ "Missouri", 
+    index == "preciv425" ~ "Mississippi", 
+    index == "preciv426" ~ "Arkansas",   
+    index == "preciv427" ~ "Kentucky",  
+    index == "preciv429" ~ "Mississippi", 
+    index == "preciv430" ~ "Mississippi", 
+    index == "preciv432" ~ "Mississippi",
+    index == "preciv435" ~ "Kentucky", 
+    index == "preciv439" ~ "Louisiana", 
+    index == "preciv440" ~ "Massachusetts", 
+    index == "preciv441" ~ "Alabama", 
+    index == "preciv442" ~ "Kentucky", 
+    index == "preciv443" ~ "Alabama", 
+    index == "preciv446" ~ "Mississippi",
+    TRUE ~ state  # Keep existing state value if index not in list
+  ))
+
+
+
+
+```
+
+
+### Validate and check total
+
+```{r}
+new_total <- precivil_complete |> 
+  count(state) |> 
+  arrange(desc(n))
+#-- jan 5: 26 states, calif 41 reports. 147 reports total
+# jan 6: 36 states, calif 135
+# jan 7: 39 states, calif 151
+```
+
+
+### write precivil_complete_jan_7_update.csv
+```{r}
+
+#write_csv(precivil_complete, "../data/precivil_complete_jan_7_update.csv")
+
+```
+
+
+```{r}
+
+dt_total <- new_total |> 
+  filter(!is.na(state)) |> 
+  rename(State = state, Total = n)
+
+datatable(dt_total,
+          # Use HTML styling directly in the caption string
+          caption = htmltools::tags$caption(
+            style = 'caption-side: top; text-align: center; color: black; font-size: 20pt; font-weight: bold;',
+            'Top locations for pre-Civil War lynchings'
+          ),
+          options = list(
+            pageLength = 50,
+            searching = FALSE, 
+            lengthChange = FALSE
+          ))
+```
+
+
+### Map output
+```{r}
+map <- dt_total
+write_csv(map, "../output/map.csv")
+
+```
+
+#-----------------------------------------------------------------
+
+### Quick view of any entry by row
+```{r}
+wrapped_text <- strwrap(as.character(precivil_complete$spellchecked[426]), width = 60)
+writeLines(wrapped_text, "temp_text.txt")
+file.edit("temp_text.txt")
+```
+
+
+### Print out articles for verification
+```{r}
+new_text_location <- new_location |> 
+  right_join(precivil_complete, by = c("doc_id" = "index")) |> 
+  # For each doc_id, remove locations that are substrings of other locations
+  group_by(doc_id) |>
+  arrange(doc_id, desc(nchar(location_clean))) |>  # Longest first
+  filter(!duplicated(location_clean)) |>  # Remove exact duplicates first
+  mutate(
+    # Check if this location is a substring of any longer location in same doc
+    is_substring = sapply(location_clean, function(loc) {
+      if (is.na(loc)) return(FALSE)
+      others <- location_clean[location_clean != loc & !is.na(location_clean)]
+      any(str_detect(others, fixed(loc)))
+    })
+  ) |>
+  filter(!is_substring) |>  # Remove substrings
+  select(-is_substring) |> 
+  rename(state = state.y) |> 
+  select(-state.x)
+
+# Now create the text file with locations highlighted
+file_conn <- file("verify_states.txt", "w")
+
+for (i in 1:nrow(new_text_location)) {
+  row_data <- new_text_location[i, ]
+  
+  writeLines(paste0("Document ID: ", row_data$doc_id), file_conn)
+  writeLines(paste0("Sentence ID: ", row_data$sentence_id), file_conn)
+  writeLines(paste0("State: ", row_data$state), file_conn)
+  writeLines(paste0("Location: ", row_data$location), file_conn)
+  # writeLines(paste0("Entity Type: ", row_data$entity_types), file_conn)
+  writeLines(paste0("Headline: ", row_data$headline), file_conn)
+  writeLines(paste0("Newspaper: ", row_data$newspaper_name), file_conn)
+  writeLines(paste0("Date: ", row_data$date), file_conn)
+
+  
+  # Wrap the full text
+  wrapped_text <- strwrap(row_data$spellchecked, width = 80)
+  wrapped_text[1] <- paste0("Full Context: ", wrapped_text[1])
+  writeLines(wrapped_text, file_conn)
+  
+  if (i < nrow(new_text_location)) {
+    writeLines("\n==================================================\n", file_conn)
+  }
+}
+
+close(file_conn)
+```

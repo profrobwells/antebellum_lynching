@@ -459,12 +459,20 @@ precivil_complete <-  precivil_complete  %>%
   ))
 ```
 
-
+# Write precivil_complete
+491 entries after deleting irrelevant entries from manual review. used to be 509 entries.
 ```{r}
 
-precivil_complete <-precivil_complete[-508, ]
+#precivil_complete <-precivil_complete[-508, ]
+
+
+precivil_complete <- precivil_complete |> 
+  filter(!index %in% c("preciv14", "preciv17", "preciv201", "preciv211", 
+                        "preciv25", "preciv251", "preciv260", "preciv290", 
+                        "preciv291", "preciv328", "preciv332", "preciv434", 
+                        "preciv49", "preciv50", "preciv58", "preciv59", "preciv6"))
   
-write_csv(precivil_complete, "../data/precivil_complete_jan_3.csv")
+write_csv(precivil_complete, "../data/precivil_complete_jan_7.csv")
 ```
 
 

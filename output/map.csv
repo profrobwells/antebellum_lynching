@@ -1,23 +1,39 @@
-state,n
-California,21
-Kansas,4
-Kentucky,4
-Mississippi,4
-Alabama,3
-Illinois,3
+State,Total
+California,151
+Illinois,23
+Mississippi,22
+Missouri,20
+Arkansas,18
+Kentucky,18
+Texas,18
+Unknown,17
+Kansas,15
+Tennessee,10
+Iowa,9
+Alabama,7
+Georgia,7
+Louisiana,7
+Minnesota,7
+Virginia,7
+New York,6
+South Carolina,6
+Florida,5
+Wisconsin,5
+Colorado,4
+Delaware,4
+Indiana,4
+Maryland,4
+District of Columbia,3
+Massachusetts,3
+Nevada,3
 Oregon,3
-Tennessee,3
-Florida,2
-Georgia,2
-Indiana,2
-Iowa,2
-Louisiana,2
-Missouri,2
+Arizona,2
 Nebraska,2
-Texas,2
-Arkansas,1
-Colorado,1
-District of Columbia,1
-Minnesota,1
-New York,1
-Virginia,1
+New Mexico,2
+Ohio,2
+Michigan,1
+New Hampshire,1
+North,1
+North Carolina,1
+Pennsylvania,1
+West Virginia,1

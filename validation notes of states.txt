@@ -31,6 +31,10 @@ mutate(state = case_when(
     doc_id == "16822" ~ "Kentucky",
     doc_id == "preciv1" ~ "District of Columbia",
     doc_id == "preciv2" ~ "South Carolina",
+    doc_id == "preciv5" ~ "Nevada",
+    doc_id == "preciv7" ~ "Delaware",
+    doc_id == "preciv8" ~ "Delaware",
+    doc_id == "preciv9" ~ "California",
     doc_id == "preciv398" ~ "North Carolina",
     doc_id == "preciv10" ~ "Alabama",
     doc_id == "preciv13" ~ "New York",
@@ -52,8 +56,40 @@ mutate(state = case_when(
     doc_id == "preciv40" ~ "Arkansas",
     doc_id == "preciv41" ~ "Colorado",
     doc_id == "preciv42" ~ "Mississippi",
+    doc_id == "preciv43" ~ "South Carolina",
+    doc_id == "preciv45" ~ "South Carolina",
+    doc_id == "preciv46" ~ "California",
+    doc_id == "preciv47" ~ "California",
+    doc_id == "preciv52" ~ "Virginia",
+    doc_id == "preciv53" ~ "Georgia",
+    doc_id == "preciv54" ~ "Ohio",
+    doc_id == "preciv57" ~ "South Carolina",
     doc_id == "preciv60" ~ "Missouri",
+    doc_id == "preciv63" ~ "Arizona",
+    doc_id == "preciv66" ~ "West Virginia",
+    doc_id == "preciv67" ~ "Kansas",
+    doc_id == "preciv68" ~ "Kansas",
+    doc_id == "preciv70" ~ "Kansas",
+    doc_id == "preciv71" ~ "California",
+    doc_id == "preciv73" ~ "California",
+    doc_id == "preciv75" ~ "Kentucky",
+    doc_id == "preciv76" ~ "Mississippi",
+    doc_id == "preciv78" ~ "Illinois",
     doc_id == "preciv79" ~ "California",
+    doc_id == "preciv82" ~ "Arkansas",
+    doc_id == "preciv84" ~ "Nevada",
+    doc_id == "preciv86" ~ "Arkansas",
+    doc_id == "preciv87" ~ "Illinois",
+    doc_id == "preciv88" ~ "Virginia",
+    doc_id == "preciv89" ~ "Minnesota",
+    doc_id == "preciv90" ~ "Minnesota",
+    doc_id == "preciv91" ~ "Tennessee",
+    doc_id == "preciv92" ~ "California",
+    doc_id == "preciv93" ~ "Kansas",
+    doc_id == "preciv94" ~ "Illinois",
+    doc_id == "preciv95" ~ "Colorado",
+    doc_id == "preciv97" ~ "Texas",
+    doc_id == "preciv99" ~ "Minnesota",
     doc_id == "preciv100" ~ "California",
     doc_id == "preciv101" ~ "California",
     doc_id == "preciv102" ~ "Kentucky",
@@ -258,6 +294,17 @@ mutate(state = case_when(
     doc_id == "preciv425" ~ "Mississippi", 
     doc_id == "preciv426" ~ "Arkansas",   
     doc_id == "preciv427" ~ "Kentucky",  
+    doc_id == "preciv429" ~ "Mississippi", 
+    doc_id == "preciv430" ~ "Mississippi", 
+    doc_id == "preciv432" ~ "Mississippi",
+    doc_id == "preciv435" ~ "Kentucky", 
+    doc_id == "preciv439" ~ "Louisiana", 
+    doc_id == "preciv440" ~ "Massachusetts", 
+    doc_id == "preciv441" ~ "Alabama", 
+    doc_id == "preciv442" ~ "Kentucky", 
+    doc_id == "preciv443" ~ "Alabama", 
+    doc_id == "preciv446" ~ "Mississippi",
+
 
 
 
@@ -266,11 +313,11 @@ mutate(state = case_when(
   ))
 
 
-Stopped line 18815
+Stopped line 19431
 
 
 
-Wrong
+Wrong: 11 of 251 tagged incorrectly
 preciv255 - was not lynched
 preciv330 - san antonio was probably texas
 preciv40 - should be Arkansas, not Washington
@@ -296,10 +343,16 @@ preciv290 - irrelevant
 preciv291 - irrelevant
 preciv328 - irrelevant
 preciv332 - irrelevant
+preciv434 - irrelevant
+preciv49 - irrelevant
+preciv50 - irrelevant
+preciv58 - duplicate
+preciv59 - duplicate
+preciv6 - duplicate
 
 Notes
 
-Lynching of abolitionists: 8-26-1851, Alabama preciv347; 4-9-1851, Richmond, Kentucky, preciv371
+Lynching of abolitionists: 8-26-1851, Alabama preciv347; 4-9-1851, Richmond, Kentucky, preciv371; 10-8-1835 Kentucky, preciv442
 
 
 cluster entries within a week and same state and see if they are the same event
@@ -310,6 +363,15 @@ cluster entries within a week and same state and see if they are the same event
 
 
 seems like the racialized and abolitionist violence is in mississippi, louisiana, missouri and the frontier justice is in california and kansas
+
+The Litchfield Enquirer, in a October 8, 1835 report, described the lynching of an abolitionist in Kentucky: "More Lynch Law.--We learn that
+letters are received in town stating that Mr. Thom, formerly a member of Lane
+Seminary at Cincinnati ... has been seized by a mob, in his place of residence
+in Kentucky, and dreadfully whipped-having received thirty-nine lashes on his
+bare back, heavily laid that they nearly cost him his life. ... Mr. Thom was one of the speakers at the abolition anniversary in this
+city in May last, and also held forth in various other places at the north and
+east."
+
 
 The Arkansas Intelligencer, on September 1, 1849, editorialized against lynching saying it was bad for the state's reputation: "The murder of Mr. A. was one of the most atrocious and cold-blooded deeds that
 we have ever been called on to record, and it demanded, in the strongest terms,
