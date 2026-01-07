@@ -1,118 +1,274 @@
 reviewing second_verify_states.txt
 
-left at line 
+left at line 8695
 
 Fix
 
-1015 - Iowa
-1016 - Mississippi
-1512 - California
-1513 - Illinois
-7522 - California
-16747 - Mississippi
-16748 - Mississippi
-16751 - South Carolina
-16756 - Mississippi
-16774 - Maryland
-16791 - Arkansas
-16792 - Illinois
-16792 - Illinois
-16794 - Illinois
-16794 - Illinois
-16795 - Kentucky
-16804 - Ohio
-16808 - Texas
-16812 - Tennessee
-16822 - Kentucky
-preciv1 - District of Columbia
-preciv2 - South Carolina
-preciv10 - Alabama
-preciv13 - New York
-preciv18 - Arkansas
-preciv19 - South Carolina
-preciv20 - New Mexico
-preciv21 - Oregon
-preciv22 - Colorado
-preciv60 - Missouri
-preciv79 - California
-preciv100 - California
-preciv101 - California
-preciv102 - Kentucky
-preciv103 - California
-preciv105 - Minnesota
-preciv107 - Virginia
-preciv109 - Minnesota
-preciv110 - California
-preciv110 - Arkansas
-preciv112 - Kentucky
-preciv115 - Delaware
-preciv118 - California
-preciv119 - Kentucky
-preciv120 - California
-preciv121 - California
-preciv122 - Missouri
-preciv124 - California
-preciv126 - Maryland
-preciv126 - Missouri
-preciv132 - California
-preciv133 - California
-preciv134 - Illinois
-preciv136 - California
-preciv137 - Delaware
-preciv143 - California
-preciv146 - California
-preciv147 - California
-preciv151 - California
-preciv152 - California
-preciv155 - Kansas
-preciv157 - California
-preciv158 - California
-preciv159 - California
-preciv160 - Iowa
-preciv162 - Wisconsin
-preciv164 - Louisiana
-preciv166 - Kansas
-preciv167 - Texas
-preciv170 - Kansas
-preciv173 - Nebraska
-preciv174 - Mississippi
-preciv175 - Kentucky
+
 #preciv176 - California
 #preciv176 - Iowa
-preciv177 - California
-preciv179 - Kansas
-preciv180 - California
-preciv181 - Virginia
-preciv184 - Nebraska
-preciv185 - Kansas
-preciv187 - California
-preciv189 - California
-preciv192 - California
-preciv193 - Alabama
-preciv195 - Illinois
-preciv196 - District of Columbia
-preciv198 - California
-preciv199 - California
-preciv202 - California
-preciv203 - California
-preciv205 - Texas
-preciv206 - California
-preciv207 - Arkansas
-preciv208 - Virginia
-preciv209 - California
-preciv210 - California
-preciv213 - California
-preciv215 - California
-preciv216 - California
-preciv217 - California
-preciv218 - California
-preciv219 - California
-preciv239 - Massachusetts
-preciv240 - Missouri
-preciv246 - California
-preciv426 - Arkansas
 
-3134
+
+
+mutate(state = case_when(
+    doc_id == "1015" ~ "Iowa",
+    doc_id == "1016" ~ "Mississippi",
+    doc_id == "1512" ~ "California",
+    doc_id == "1513" ~ "Illinois",
+    doc_id == "7522" ~ "California",
+    doc_id == "16747" ~ "Mississippi",
+    doc_id == "16748" ~ "Mississippi",
+    doc_id == "16751" ~ "South Carolina",
+    doc_id == "16756" ~ "Mississippi",
+    doc_id == "16774" ~ "Maryland",
+    doc_id == "16791" ~ "Arkansas",
+    doc_id == "16792" ~ "Illinois",
+    doc_id == "16794" ~ "Illinois",
+    doc_id == "16795" ~ "Kentucky",
+    doc_id == "16804" ~ "Ohio",
+    doc_id == "16808" ~ "Texas",
+    doc_id == "16812" ~ "Tennessee",
+    doc_id == "16822" ~ "Kentucky",
+    doc_id == "preciv1" ~ "District of Columbia",
+    doc_id == "preciv2" ~ "South Carolina",
+    doc_id == "preciv398" ~ "North Carolina",
+    doc_id == "preciv10" ~ "Alabama",
+    doc_id == "preciv13" ~ "New York",
+    doc_id == "preciv18" ~ "Arkansas",
+    doc_id == "preciv19" ~ "South Carolina",
+    doc_id == "preciv20" ~ "New Mexico",
+    doc_id == "preciv21" ~ "Oregon",
+    doc_id == "preciv22" ~ "Colorado",
+    doc_id == "preciv24" ~ "Mississippi",
+    doc_id == "preciv27" ~ "Georgia",
+    doc_id == "preciv29" ~ "Kansas",
+    doc_id == "preciv31" ~ "Arizona",
+    doc_id == "preciv32" ~ "Arkansas",
+    doc_id == "preciv34" ~ "Michigan",
+    doc_id == "preciv36" ~ "Tennessee",
+    doc_id == "preciv37" ~ "California",
+    doc_id == "preciv38" ~ "Texas",
+    doc_id == "preciv39" ~ "Nevada",
+    doc_id == "preciv40" ~ "Arkansas",
+    doc_id == "preciv41" ~ "Colorado",
+    doc_id == "preciv42" ~ "Mississippi",
+    doc_id == "preciv60" ~ "Missouri",
+    doc_id == "preciv79" ~ "California",
+    doc_id == "preciv100" ~ "California",
+    doc_id == "preciv101" ~ "California",
+    doc_id == "preciv102" ~ "Kentucky",
+    doc_id == "preciv103" ~ "California",
+    doc_id == "preciv105" ~ "Minnesota",
+    doc_id == "preciv107" ~ "Virginia",
+    doc_id == "preciv109" ~ "Minnesota",
+    doc_id == "preciv110" ~ "California",
+    doc_id == "preciv112" ~ "Kentucky",
+    doc_id == "preciv115" ~ "Delaware",
+    doc_id == "preciv118" ~ "California",
+    doc_id == "preciv119" ~ "Kentucky",
+    doc_id == "preciv120" ~ "California",
+    doc_id == "preciv121" ~ "California",
+    doc_id == "preciv122" ~ "Missouri",
+    doc_id == "preciv124" ~ "California",
+    doc_id == "preciv126" ~ "Maryland",
+    doc_id == "preciv132" ~ "California",
+    doc_id == "preciv133" ~ "California",
+    doc_id == "preciv134" ~ "Illinois",
+    doc_id == "preciv136" ~ "California",
+    doc_id == "preciv137" ~ "Delaware",
+    doc_id == "preciv143" ~ "California",
+    doc_id == "preciv146" ~ "California",
+    doc_id == "preciv147" ~ "California",
+    doc_id == "preciv151" ~ "California",
+    doc_id == "preciv152" ~ "California",
+    doc_id == "preciv155" ~ "Kansas",
+    doc_id == "preciv157" ~ "California",
+    doc_id == "preciv158" ~ "California",
+    doc_id == "preciv159" ~ "California",
+    doc_id == "preciv160" ~ "Iowa",
+    doc_id == "preciv162" ~ "Wisconsin",
+    doc_id == "preciv164" ~ "Louisiana",
+    doc_id == "preciv166" ~ "Kansas",
+    doc_id == "preciv167" ~ "Texas",
+    doc_id == "preciv170" ~ "Kansas",
+    doc_id == "preciv173" ~ "Nebraska",
+    doc_id == "preciv174" ~ "Mississippi",
+    doc_id == "preciv175" ~ "Kentucky",
+    doc_id == "preciv177" ~ "California",
+    doc_id == "preciv179" ~ "Kansas",
+    doc_id == "preciv180" ~ "California",
+    doc_id == "preciv181" ~ "Virginia",
+    doc_id == "preciv184" ~ "Nebraska",
+    doc_id == "preciv185" ~ "Kansas",
+    doc_id == "preciv187" ~ "California",
+    doc_id == "preciv189" ~ "California",
+    doc_id == "preciv192" ~ "California",
+    doc_id == "preciv193" ~ "Alabama",
+    doc_id == "preciv195" ~ "Illinois",
+    doc_id == "preciv196" ~ "District of Columbia",
+    doc_id == "preciv198" ~ "California",
+    doc_id == "preciv199" ~ "California",
+    doc_id == "preciv202" ~ "California",
+    doc_id == "preciv203" ~ "California",
+    doc_id == "preciv205" ~ "Texas",
+    doc_id == "preciv206" ~ "California",
+    doc_id == "preciv207" ~ "Arkansas",
+    doc_id == "preciv208" ~ "Virginia",
+    doc_id == "preciv209" ~ "California",
+    doc_id == "preciv210" ~ "California",
+    doc_id == "preciv213" ~ "California",
+    doc_id == "preciv215" ~ "California",
+    doc_id == "preciv216" ~ "California",
+    doc_id == "preciv217" ~ "California",
+    doc_id == "preciv218" ~ "California",
+    doc_id == "preciv219" ~ "California",
+    doc_id == "preciv221" ~ "California",
+    doc_id == "preciv223" ~ "California",
+    doc_id == "preciv224" ~ "California",
+    doc_id == "preciv226" ~ "Arkansas",
+    doc_id == "preciv228" ~ "California",
+    doc_id == "preciv229" ~ "Arkansas",
+    doc_id == "preciv230" ~ "California",
+    doc_id == "preciv231" ~ "California",
+    doc_id == "preciv233" ~ "Kansas",
+    doc_id == "preciv235" ~ "California",
+    doc_id == "preciv237" ~ "California",
+    doc_id == "preciv238" ~ "Texas",
+    doc_id == "preciv239" ~ "Massachusetts",
+    doc_id == "preciv240" ~ "Missouri",
+    doc_id == "preciv243" ~ "California",
+    doc_id == "preciv246" ~ "California",
+    doc_id == "preciv247" ~ "Indiana",
+    doc_id == "preciv248" ~ "Missouri",
+    doc_id == "preciv250" ~ "Missouri",
+    doc_id == "preciv253" ~ "California",
+    doc_id == "preciv255" ~ "Missouri",
+    doc_id == "preciv256" ~ "Missouri",
+    doc_id == "preciv264" ~ "California",
+    doc_id == "preciv266" ~ "California",
+    doc_id == "preciv267" ~ "California",
+    doc_id == "preciv268" ~ "California",
+    doc_id == "preciv269" ~ "California",
+    doc_id == "preciv270" ~ "California",
+    doc_id == "preciv271" ~ "California",
+    doc_id == "preciv273" ~ "California",
+    doc_id == "preciv274" ~ "California",
+    doc_id == "preciv276" ~ "Arkansas",
+    doc_id == "preciv277" ~ "California",
+    doc_id == "preciv279" ~ "Missouri",
+    doc_id == "preciv280" ~ "California",
+    doc_id == "preciv282" ~ "Missouri",
+    doc_id == "preciv283" ~ "California",
+    doc_id == "preciv284" ~ "Illinois",
+    doc_id == "preciv287" ~ "Texas",
+    doc_id == "preciv288" ~ "Illinois",
+    doc_id == "preciv289" ~ "Tennessee",
+    doc_id == "preciv292" ~ "Iowa",
+    doc_id == "preciv293" ~ "California",
+    doc_id == "preciv294" ~ "California",
+    doc_id == "preciv297" ~ "California",
+    doc_id == "preciv298" ~ "Louisiana",
+    doc_id == "preciv300" ~ "California",
+    doc_id == "preciv301" ~ "Louisiana",
+    doc_id == "preciv302" ~ "California",
+    doc_id == "preciv303" ~ "California",
+    doc_id == "preciv304" ~ "New Mexico",
+    doc_id == "preciv306" ~ "California",
+    doc_id == "preciv308" ~ "California",
+    doc_id == "preciv309" ~ "California",
+    doc_id == "preciv310" ~ "Missouri",
+    doc_id == "preciv312" ~ "California",
+    doc_id == "preciv314" ~ "California",
+    doc_id == "preciv317" ~ "California",
+    doc_id == "preciv319" ~ "California",
+    doc_id == "preciv321" ~ "California",
+    doc_id == "preciv322" ~ "California",
+    doc_id == "preciv323" ~ "California",
+    doc_id == "preciv324" ~ "California",
+    doc_id == "preciv325" ~ "California",
+    doc_id == "preciv326" ~ "California",
+    doc_id == "preciv327" ~ "California",
+    doc_id == "preciv331" ~ "California",
+    doc_id == "preciv333" ~ "Florida",
+    doc_id == "preciv334" ~ "California",
+    doc_id == "preciv337" ~ "California",
+    doc_id == "preciv338" ~ "California",
+    doc_id == "preciv339" ~ "Virginia",
+    doc_id == "preciv342" ~ "California",
+    doc_id == "preciv344" ~ "Texas",
+    doc_id == "preciv349" ~ "California",
+    doc_id == "preciv350" ~ "California",
+    doc_id == "preciv351" ~ "California",
+    doc_id == "preciv352" ~ "California",
+    doc_id == "preciv353" ~ "District of Columbia",
+    doc_id == "preciv354" ~ "California",
+    doc_id == "preciv357" ~ "Florida",
+    doc_id == "preciv359" ~ "California",
+    doc_id == "preciv360" ~ "California",
+    doc_id == "preciv361" ~ "California",
+    doc_id == "preciv362" ~ "California",
+    doc_id == "preciv363" ~ "California",
+    doc_id == "preciv364" ~ "California",
+    doc_id == "preciv366" ~ "California",
+    doc_id == "preciv367" ~ "California",
+    doc_id == "preciv368" ~ "California",
+    doc_id == "preciv369" ~ "California",
+    doc_id == "preciv370" ~ "California",
+    doc_id == "preciv371" ~ "Kentucky",
+    doc_id == "preciv373" ~ "Maryland",
+    doc_id == "preciv375" ~ "Kentucky",
+    doc_id == "preciv377" ~ "Texas",
+    doc_id == "preciv378" ~ "Virginia",
+    doc_id == "preciv381" ~ "California",
+    doc_id == "preciv382" ~ "California",
+    doc_id == "preciv383" ~ "Tennessee",
+    doc_id == "preciv384" ~ "Mississippi",
+    doc_id == "preciv385" ~ "Arkansas",
+    doc_id == "preciv385" ~ "Illinois",
+    doc_id == "preciv387" ~ "Arkansas",
+    doc_id == "preciv387" ~ "New Jersey",
+    doc_id == "preciv390" ~ "Illinois",
+    doc_id == "preciv391" ~ "Texas",
+    doc_id == "preciv392" ~ "Arkansas",
+    doc_id == "preciv393" ~ "Illinois",
+    doc_id == "preciv394" ~ "Illinois",
+    doc_id == "preciv395" ~ "Arkansas",
+    doc_id == "preciv396" ~ "Illinois",
+    doc_id == "preciv397" ~ "Illinois",
+    doc_id == "preciv398" ~ "Missouri",
+    doc_id == "preciv399" ~ "New York",
+    doc_id == "preciv400" ~ "New York",
+    doc_id == "preciv402" ~ "Louisiana",
+    doc_id == "preciv403" ~ "Florida",
+    doc_id == "preciv404" ~ "Florida",
+    doc_id == "preciv404" ~ "North Carolina",
+    doc_id == "preciv408" ~ "Mississippi",
+    doc_id == "preciv409" ~ "Maryland",
+    doc_id == "preciv410" ~ "Pennsylvania",
+    doc_id == "preciv412" ~ "Texas",
+    doc_id == "preciv415" ~ "Illinois",
+    doc_id == "preciv416" ~ "Illinois",
+    doc_id == "preciv417" ~ "Mississippi",
+    doc_id == "preciv418" ~ "Missouri",
+    doc_id == "preciv419" ~ "Arkansas", 
+    doc_id == "preciv420" ~ "Massachusetts",
+    doc_id == "preciv422" ~ "Alabama", 
+    doc_id == "preciv423" ~ "Missouri", 
+    doc_id == "preciv424" ~ "Missouri", 
+    doc_id == "preciv425" ~ "Mississippi", 
+    doc_id == "preciv426" ~ "Arkansas",   
+    doc_id == "preciv427" ~ "Kentucky",  
+
+
+
+
+     TRUE ~ state  # Keep existing state value if doc_id not in list
+  ))
+
+
+Stopped line 18815
+
+
 
 Wrong
 preciv255 - was not lynched
@@ -123,15 +279,98 @@ preciv108 - Minnesota (not Kentucky)
 preciv116 - Texas (not California)
 preciv154 - Mississippi (not Florida)
 preciv168 - Iowa (not Illinois)
+preciv246 - California (not New York)
+preciv248 - Missouri, not Kansas
+preciv354 - California (not Tennessee)
 
 
 delete
 preciv14 - France
 preciv17 - irrelevant
 preciv201 - Chinese lynching
-preciv211 - irrelevnt
+preciv211 - irrelevent
+preciv25 - irrelevant
+preciv251 - irrelevant
+preciv260 - irrelevant
+preciv290 - irrelevant
+preciv291 - irrelevant
+preciv328 - irrelevant
+preciv332 - irrelevant
 
 Notes
+
+Lynching of abolitionists: 8-26-1851, Alabama preciv347; 4-9-1851, Richmond, Kentucky, preciv371
+
+
+cluster entries within a week and same state and see if they are the same event
+
+
+"chained to a tree" usually means a burning
+"faggots" would be the fuel - a bundle of sticks
+
+
+seems like the racialized and abolitionist violence is in mississippi, louisiana, missouri and the frontier justice is in california and kansas
+
+The Arkansas Intelligencer, on September 1, 1849, editorialized against lynching saying it was bad for the state's reputation: "The murder of Mr. A. was one of the most atrocious and cold-blooded deeds that
+we have ever been called on to record, and it demanded, in the strongest terms,
+the severest penalty of the offended law. But did the enormity of his crime
+justify a departure from the due course of law and a resort to Lynch law? We
+think not; and we are sorry to see such manifestations of the popular will, in
+any case, especially where the laws of our country have provided an adequate
+and proper punishment. The presses of other states have always taken peculiar
+delight in harping upon the morals of our people, and we fear that the recent
+occurrence at Bentonville will be caught up as another instance of the laxity
+of morals in Arkansas."
+
+
+
+The Washington Telegraph reported on April 9, 1851 about an abolitiionist being lynched in Kentucky. "Rev. Edward Mathews, traveling agent of the American Baptist
+Emancipation Society of New York, while on a pilgrimage to the residence of
+Cassius M. Clay of Kentucky, stopped at Richmond, Kentucky, and made use of
+some certain unwholesome expressions relative to the subject of slavery, which
+induced the citizens to order him to leave the town. He left but returned in a
+day or two afterwards, whereupon some citizens seized him, and after ducking
+him nine times in a horse pond, ordered him to leave the State."
+
+
+The Sierra Citizen on January 18, 1855m, expressed support for lynching in California: 
+" Lynch Law continues to prevail in every part
+of California, and with excellent reasons to sustain it."
+
+From the Kansas Herald of Freedom, June 30, 1855 on the destruction of the Parkville, Industrial Luminary newspaper in Missouri: " was the offense for which his office was mobbed and his press thrown into the
+river, in which he said his press had occupied conservative, national ground,...The press was taken and put upon a wagon, and covered with a
+white cap, on which was written 'Boston Aid' and carried off and deposited, as
+they said, 'in the tomb of all the Capulets,' to wit: the Missouri river. Had
+it not been for the devotion of his wife, the speaker himself would probably
+have been killed. After destroying the press, they passed certain resolutions
+declaring that the paper was a nuisance, which had been endured too long; that
+they would come there again in three weeks, and if they found the editors there
+then, or at any subsequent time, they would throw them too into the Missouri
+river" (In the decade before the Civil War, Parkville was home to both antislavery and pro-slavery sentiment. On Friday, April 13, 1855, a pro-slavery mob raided the town of Parkville and threw a printing press belonging to the Parkville Industrial Luminary, which had expressed anti-slavery ideas, into the Missouri River.https://theclio.com/entry/158216 )
+
+From the Nevada Democrat, January 5, 1861: "A travelling correspondent says that, on his way
+through Southern Mississippi by coach, he saw the dead bodies of two men
+suspended by the neck from trees by the roadside. In answer to the inquiry,
+'For what were these men hung?' he was told, 'Because they were Abolitionists.'
+He also relates the escape of Prof. Mitchell, the well-known astronomer of
+Cincinnati. He was on the cars going South, and when near Jackson, Mississippi,
+a man somewhat inflamed with liquor, but more with pro-slavery hate, entered
+into conversation with him on political subjects. The Professor was cautious
+and reserved but venturing to say that he thought Lincoln was a conservative
+man and would not do injustice to the South, his pro-slavery friend was greatly
+incensed, and when the train halted at Jackson, jumped to the platform and
+shouted to the crowd about the station 'There's an Abolitionist on the train.
+Lynch him! Lynch him!' Instantly at least fifty men jumped on and commenced
+searching for the offensive specimen of Northern opinion but before the
+Professor could be pointed out, the conductor, seeing the danger, pulled his
+bell-rope and the cars moved off, and with them the Professor, with a whole
+skin.."
+
+
+From the Placer Herald, October 20, 1855: " Two men have returned to Hannibal, Mo, who stated that they found
+the supposed gold region round the Arkansas river, but reported the total
+failure of the expedition, and the lynching of the leader of the company, named
+Poore, by his exasperated companions. "
 
 
 From the Minnesota Weekly Times, August 16, 1856: "When the train of cars left Chatham, Illinois, a crowd of men were
