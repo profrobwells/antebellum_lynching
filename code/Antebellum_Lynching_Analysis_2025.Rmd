@@ -47,7 +47,7 @@ precivil_complete %>%
    # scale_y_continuous(breaks = seq(0, 15, 1)) +
   labs(title = "Precivil War Lynching Coverage By Year, 1835-1861", 
        subtitle = "Count of Lynching Stories Examined",
-       caption = "n=508  articles. Graphic by Rob Wells, 1/3/2026",
+       caption = "n=491  articles. Graphic by Rob Wells, 1/10/2026",
        y="Count of Articles",
        x="Year")
 
@@ -88,6 +88,182 @@ precivil_complete |>
 
 
 ```
+
+
+### Count number of lynch search terms in an article
+then filter articles with one term for close filtering to that sentence
+
+```{r}
+
+
+# 1. Define the patterns (as provided in your guide)
+lynching_patterns <- c(
+# Matches lynch, lynched, lynching, lynchings, lynches
+  "\\blynch(ed|ing|ings|es)?\\b", 
+  
+  # Matches hung, hang, hanged, hanging, hangings
+  "\\b(hung|hanging)\\b.{1,20}\\bmob\\b", 
+  
+  # Matches vigilance, vigilant, vigilante, vigilantes
+  "\\bvigilant(e|es|ance|ism)?\\b",
+  "lynchings?\\W+of\\W+(the\\W+)?(([[:alnum:]]+\\W+){1,2})?colored",
+  "(murderer|fiend|desperado|brute)\\W+(([[:alnum:]]+\\W+){1,2})?lynch(ed|es|ing)?(\\W+|$)",
+  "coloreds?\\W+(([[:alnum:]]+\\W+){1,2})?((was|were)\\W+)?lynch(ed|es|ing)?(\\W+|$)",
+  "lynchings?\\W+of\\W+(the\\W+)?(([[:alnum:]]+\\W+){1,2})?negro",
+  "mob\\W+(([[:alnum:]]+\\W+){1,2})?(hung|hang(ed|ings?|s)|lynch(ed|es|ing)?)",
+  "negro(e?s)?\\W+(([[:alnum:]]+\\W+){1,2})?((was|were)\\W+)?lynch(ed|es|ing)?(\\W+|$)"
+)
+
+combined_pattern <- paste(lynching_patterns, collapse = "|")
+
+# 2. Process the dataframe and count occurrences
+Xprecivil_complete <- precivil_complete %>%
+  # Cleaning steps for better matching
+  mutate(x_article = str_to_lower(spellchecked)) %>%
+  # COUNT the number of times any of the patterns appear
+  mutate(search_count = str_count(x_article, regex(combined_pattern, ignore_case = TRUE)))
+
+
+
+```
+
+
+
+```{r}
+fatboys <- Xprecivil_complete |> 
+  filter(word_count > 311) |> 
+  filter(search_count < 2)
+
+
+```
+
+Validate
+```{r}
+wrapped_text <- strwrap(as.character(fatboys$spellchecked[1]), width = 60)
+writeLines(wrapped_text, "temp_text.txt")
+file.edit("temp_text.txt")
+```
+
+# Extract Lynch Sentences - 
+```{r}
+
+
+# 1. Define the patterns (as provided in your guide)
+lynching_patterns <- c(
+# Matches lynch, lynched, lynching, lynchings, lynches
+  "\\blynch(ed|ing|ings|es)?\\b", 
+  
+  # Matches hung, hang, hanged, hanging, hangings
+  "\\b(hung|hanging)\\b.{1,20}\\bmob\\b", 
+  
+  # Matches vigilance, vigilant, vigilante, vigilantes
+  "\\bvigilant(e|es|ance|ism)?\\b",
+  "lynchings?\\W+of\\W+(the\\W+)?(([[:alnum:]]+\\W+){1,2})?colored",
+  "(murderer|fiend|desperado|brute)\\W+(([[:alnum:]]+\\W+){1,2})?lynch(ed|es|ing)?(\\W+|$)",
+  "coloreds?\\W+(([[:alnum:]]+\\W+){1,2})?((was|were)\\W+)?lynch(ed|es|ing)?(\\W+|$)",
+  "lynchings?\\W+of\\W+(the\\W+)?(([[:alnum:]]+\\W+){1,2})?negro",
+  "mob\\W+(([[:alnum:]]+\\W+){1,2})?(hung|hang(ed|ings?|s)|lynch(ed|es|ing)?)",
+  "negro(e?s)?\\W+(([[:alnum:]]+\\W+){1,2})?((was|were)\\W+)?lynch(ed|es|ing)?(\\W+|$)"
+)
+
+combined_pattern <- paste(lynching_patterns, collapse = "|")
+
+# Tokenize into sentences
+sentences_df <- precivil_complete %>%
+  unnest_tokens(sentence, spellchecked, token = "sentences") %>%
+  group_by(index) %>% # Assuming you have a unique ID per article
+  mutate(sentence_id = row_number())
+
+# Identify sentences containing your terms
+matches <- sentences_df %>%
+  filter(str_detect(sentence, regex(combined_pattern, ignore_case = TRUE))) %>%
+  select(index, sentence_id)
+
+# 2. Create the window boundaries
+windows <- matches %>%
+  mutate(start = sentence_id - 2,
+         end = sentence_id + 3) %>%
+  group_by(index) %>%
+  # This magic step merges overlapping windows in the same article
+  arrange(start) %>%
+  mutate(group = cumsum(start > lag(end, default = first(end)))) 
+# 3. Extract the merged blocks
+final_reports <- windows %>%
+  group_by(index, group) %>%
+  summarize(start_window = min(start),
+            end_window = max(end), .groups = "drop") %>%
+  inner_join(sentences_df, by = "index") %>%
+  filter(sentence_id >= start_window & sentence_id <= end_window) %>%
+  group_by(index, group) %>%
+  summarize(report_text = paste(sentence, collapse = " "), .groups = "drop")
+
+
+write_csv(final_reports, "../output/validate_lynching_jan_10.csv")
+```
+
+### Validate
+
+examine this spreadsheet
+https://docs.google.com/spreadsheets/d/11m5UJKkkJ5TynC-TKTFZk3km4lZLHe_o-QUlkN2PmXs/edit?gid=0#gid=0
+### Examine specific articles
+```{r}
+
+
+# Filter the dataframe for that index and grab the text
+report_content <- precivil_complete %>%
+  filter(index == "preciv120") %>%
+  pull(spellchecked)
+
+wrapped_text <- strwrap(as.character(report_content, width = 60))
+writeLines(wrapped_text, "temp_text.txt")
+file.edit("temp_text.txt")
+```
+
+### Print out articles for verification
+```{r}
+# Now create the text file with locations highlighted
+file_conn <- file("verify_excerpts.txt", "w")
+
+for (i in 1:nrow(final_reports)) {
+  row_data <- final_reports[i, ]
+  
+  writeLines(paste0("Document ID: ", row_data$index), file_conn)
+  # Wrap the full text
+  wrapped_text <- strwrap(row_data$report_text, width = 80)
+  wrapped_text[1] <- paste0("Full Context: ", wrapped_text[1])
+  writeLines(wrapped_text, file_conn)
+  
+  if (i < nrow(final_reports)) {
+    writeLines("\n==================================================\n", file_conn)
+  }
+}
+
+close(file_conn)
+```
+
+
+### single df examination
+```{r}
+wrapped_text <- strwrap(as.character(context_extracted$context_block[2]), width = 60)
+writeLines(wrapped_text, "temp_text.txt")
+file.edit("temp_text.txt")
+```
+
+
+
+
+
+attempts
+```{r}
+death | punished | attempted
+
+attempted to lynch 
+they would probably have been lynched
+tar - feather
+ lashes given them on the bare back
+```
+
+
 
 ### States
 ```{r}
