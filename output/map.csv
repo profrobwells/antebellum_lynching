@@ -1,39 +1,24 @@
-State,Total
-California,151
-Illinois,23
-Mississippi,22
-Missouri,20
-Arkansas,18
-Kentucky,18
-Texas,18
-Unknown,17
-Kansas,15
-Tennessee,10
-Iowa,9
-Alabama,7
-Georgia,7
-Louisiana,7
-Minnesota,7
-Virginia,7
-New York,6
-South Carolina,6
-Florida,5
-Wisconsin,5
-Colorado,4
-Delaware,4
-Indiana,4
-Maryland,4
-District of Columbia,3
-Massachusetts,3
-Nevada,3
-Oregon,3
-Arizona,2
-Nebraska,2
-New Mexico,2
-Ohio,2
-Michigan,1
-New Hampshire,1
-North,1
-North Carolina,1
-Pennsylvania,1
-West Virginia,1
+State,Death_Total,Percent
+California,88,43%
+Texas,15,7%
+Illinois,13,6%
+Arkansas,12,6%
+Kansas,9,4%
+Kentucky,9,4%
+Missouri,9,4%
+Mississippi,6,3%
+Unknown,6,3%
+Florida,5,2%
+Iowa,5,2%
+Tennessee,5,2%
+Louisiana,4,2%
+Colorado,3,1%
+Minnesota,3,1%
+Alabama,2,1%
+New Mexico,2,1%
+Oregon,2,1%
+South Carolina,2,1%
+Wisconsin,2,1%
+Delaware,1,0%
+Nebraska,1,0%
+Virginia,1,0%

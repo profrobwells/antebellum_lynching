@@ -8,11 +8,27 @@ output: html_document
 This notebook takes the precivil_complete and tags geometery using spacyr. 
 It then processes results of a manual review of all 508 entries and retags 292 entries with the correct states.
 
+```{r}
+library(tidyverse)
+library(spacyr)
+library(googlesheets4)
+library(janitor)
+library(DT)
+```
+
+
+
 
 #Import 491 cleaned articles
 ```{r}
-precivil_complete <- read_csv("../data/precivil_complete_jan_7.csv") 
+#precivil_complete <- read_csv("../data/precivil_complete_jan_7.csv") 
+precivil_complete <- read_csv("../data/precivil_complete_jan_7_update.csv")
 ```
+
+
+
+
+
 
 ## Spacy parsing
 ```{r}
@@ -609,6 +625,36 @@ new_total <- precivil_complete |>
 ```
 
 
+### Deaths
+```{r}
+deaths <- precivil_complete |> 
+  filter(entry_type == "Primary") |> 
+  filter(category=="death") |>
+  filter(!is.na(state)) |> 
+  group_by(state) |> 
+  count(category) |> 
+  ungroup() |> 
+  mutate(Percent = as.character(formattable::percent(n/sum(n),0))) |> 
+  arrange(desc(n)) |> 
+  rename(Death_Total = n, State = state) |> 
+  select(State, Death_Total, Percent)
+
+datatable(deaths,
+          # Use HTML styling directly in the caption string
+          caption = htmltools::tags$caption(
+            style = 'caption-side: top; text-align: center; color: black; font-size: 20pt; font-weight: bold;',
+            'Lynching Deaths in Newspaper Reports, 1835-1865'
+          ),
+          options = list(
+            pageLength = 50,
+            searching = FALSE, 
+            lengthChange = FALSE
+          ))
+```
+
+
+### All Cases
+
 ```{r}
 
 dt_total <- new_total |> 
@@ -631,10 +677,118 @@ datatable(dt_total,
 
 ### Map output
 ```{r}
-map <- dt_total
+map <- deaths
 write_csv(map, "../output/map.csv")
 
 ```
+
+
+# Tag lynching by death, attempt, punish, other or delete
+
+
+```{r}
+
+  
+gs4_deauth()
+lynchtag <- read_sheet("https://docs.google.com/spreadsheets/d/11m5UJKkkJ5TynC-TKTFZk3km4lZLHe_o-QUlkN2PmXs/edit?usp=sharing", col_types="c") |>
+     clean_names() |> 
+  rename(category = death_punish_attempt_delete_unclear_other)
+
+```
+### summary stats
+```{r}
+lynchtag |> 
+  count(category) |> 
+  filter(!is.na(category)) |> 
+  mutate(pct = n/sum(n))
+
+#486 categorized
+#"death_punish_attempt_delete_unclear_other"
+# category
+# <chr>
+# n
+# <int>
+# pct
+# <dbl>
+# attempt	50	10%		
+# death	260	  53%		
+# delete	16	03%		
+# other	15	  03%		
+# punish	112	23%		
+# unclear	33	7%	
+```
+
+### Delete files list
+### 444 enntries now
+```{r}
+
+delete <- lynchtag |> 
+  filter(category=="delete") |> 
+  select(index) |> 
+  as.character()
+
+precivil_complete <- precivil_complete |> 
+  # rename(category = category.x) |> 
+  # subset(select = -c(category.y))
+  #marked delete after reviewing category
+ # filter(!(index %in% c(16771, 16804, 6880, 6887, "preciv11", "preciv143", "preciv145", "preciv190", "preciv191", "preciv209", "preciv228", "preciv232", "preciv292", "preciv360", "preciv361", "preciv379")))
+  #delete after checking duplicates
+ # filter(!(index %in% c(3071, 3070, 4689, 1015, 1514, "preciv424", "preciv243", "preciv244", "preciv224", "preciv348", "preciv349", "preciv353", "preciv271", "preciv197", "preciv89", "preciv85", "preciv348", "preciv349")))
+#found more duplicates of newspapers
+ # filter(!(index %in% c(7523, 7524, 3073, 4688, 1512, 1511, 1016, 6885, 6889, 5974, "preciv345", "preciv310", "preciv307", "preciv229")))
+ filter(!(index %in% c("preciv169")))
+
+
+
+```
+
+
+### join tags to precivil
+```{r}
+lynchtag_skinny <- lynchtag |> 
+   filter(!is.na(category)) |> 
+  filter(!(category %in% c(delete))) |> 
+  select(index, category) |> 
+  distinct(index, .keep_all = TRUE)
+
+precivil_complete <- precivil_complete |> 
+  left_join(lynchtag_skinny, by="index")
+
+
+
+
+#write_csv(precivil_complete, "../data/precivil_complete_jan12.csv")
+```
+
+```{r}
+precivil_complete |> 
+    count(category.x, category.y) 
+  
+precivil_complete |> 
+    count(category, state) |> 
+  mutate(pct = n/sum(n))
+
+
+
+date_count <- precivil_complete |> 
+    count(date) |> 
+  arrange(desc(n))
+```
+
+### Examine specific articles
+```{r}
+
+
+# Filter the dataframe for that index and grab the text
+report_content <- precivil_complete %>%
+  filter(index == "1514") %>%
+  pull(spellchecked)
+
+wrapped_text <- strwrap(as.character(report_content, width = 60))
+writeLines(wrapped_text, "temp_text.txt")
+file.edit("temp_text.txt")
+```
+
 
 #-----------------------------------------------------------------
 
@@ -644,6 +798,127 @@ wrapped_text <- strwrap(as.character(precivil_complete$spellchecked[426]), width
 writeLines(wrapped_text, "temp_text.txt")
 file.edit("temp_text.txt")
 ```
+
+
+
+```{r}
+#newspaper dupes
+# new_text_location <- precivil_complete |> 
+#   group_by(newspaper_name, date, category) |> 
+#   filter(n() > 1) |> 
+#   arrange(date)
+
+new_text_location <- precivil_complete |>
+  group_by(date, category) |>
+  filter(n() > 1) |>
+  arrange(date)
+
+```
+
+
+```{r}
+
+# Now create the text file with locations highlighted
+file_conn <- file("check_duplicates.txt", "w")
+
+for (i in 1:nrow(new_text_location)) {
+  row_data <- new_text_location[i, ]
+  
+  writeLines(paste0("Document ID: ", row_data$index), file_conn)
+  writeLines(paste0("Newspaper: ", row_data$newspaper_name), file_conn)
+  writeLines(paste0("State: ", row_data$state), file_conn)
+  writeLines(paste0("Date: ", row_data$date), file_conn)
+  writeLines(paste0("Category: ", row_data$category), file_conn)
+  # Wrap the full text
+  wrapped_text <- strwrap(row_data$spellchecked, width = 80)
+  wrapped_text[1] <- paste0("Full Context: ", wrapped_text[1])
+  writeLines(wrapped_text, file_conn)
+  
+  if (i < nrow(new_text_location)) {
+    writeLines("\n==================================================\n", file_conn)
+  }
+}
+
+close(file_conn)
+```
+
+
+# Delete duplicates
+
+```{r}
+
+ filter(!(index %in% c(XXXX, "preciv169", "precivXXX")))
+
+```
+
+Ok multiple lynchings on this date
+1851-07-26  
+1854-01-07
+1855-01-13
+1855-01-27
+1855-02-10
+1855-02-24
+1855-08-11
+1855-10-27 - 2 ok
+1857-08-12
+1857-10-14
+1858-12-11
+1859-12-24
+
+
+
+same case on this date
+1851-09-23
+1854-07-21
+1855-07-07 - 3 entries
+1855-10-27 
+1855-12-15
+1859-01-01
+
+### Mark Duplicates 
+```{r}
+
+duplicate_dates <- as.Date(c("1851-09-23", "1854-07-21", "1855-07-07", 
+                             "1855-10-27", "1855-12-15", "1859-01-01"))
+
+precivil_complete <- precivil_complete |> 
+  group_by(date) |> 
+  mutate(entry_type = if_else(date %in% duplicate_dates & row_number() > 1, 
+                              "Supplemental", "Primary")) |> 
+  ungroup()
+
+write_csv(precivil_complete, "../data/precivil_complete_jan12.csv")
+
+```
+
+### Totals
+
+```{r}
+totals <- precivil_complete |> 
+  filter(entry_type == "Primary") |> 
+  count(category) |> 
+  mutate(pct = as.character(formattable::percent(n/sum(n),0))) |> 
+  arrange(desc(n)) |> 
+  rename(Cases = n, Percent = pct, Category = category) |> 
+  mutate(Category = str_to_sentence(Category))
+
+#remove search box and boost headline
+datatable(totals,
+          # Use HTML styling directly in the caption string
+          caption = htmltools::tags$caption(
+            style = 'caption-side: top; text-align: center; color: black; font-size: 20pt; font-weight: bold;',
+            'Types of Lynching Cases, 1835-1865'
+          ),
+          options = list(
+            pageLength = 10,
+            searching = FALSE,
+            lengthChange = FALSE
+          ))
+
+
+```
+
+
 
 
 ### Print out articles for verification
@@ -695,3 +970,5 @@ for (i in 1:nrow(new_text_location)) {
 
 close(file_conn)
 ```
+
+
