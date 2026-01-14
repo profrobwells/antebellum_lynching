@@ -24,9 +24,9 @@ library(stringr)
 
 ```
 
-#Import 491 cleaned articles
+#Import 444 cleaned articles
 ```{r}
-precivil_complete <- read_csv("../data/precivil_complete_jan_7_update.csv") 
+precivil_complete <- read_csv("../data/precivil_complete_jan12.csv") 
 
 
 
@@ -619,11 +619,137 @@ datatable(spacy_adj_noun_counts,
 ```
 
 
-# Narrative analysis by state
+# Deaths
+```{r}
+deaths <- precivil_complete |> 
+  filter(entry_type == "Primary") |> 
+  filter(category=="death") |>
+  filter(!is.na(state)) |> 
+  group_by(state) |> 
+  count(category) |> 
+  ungroup() |> 
+  mutate(Percent = as.character(formattable::percent(n/sum(n),0))) |> 
+  arrange(desc(n)) |> 
+  rename(Death_Total = n, State = state) |> 
+  select(State, Death_Total, Percent)
+
+datatable(deaths,
+          # Use HTML styling directly in the caption string
+          caption = htmltools::tags$caption(
+            style = 'caption-side: top; text-align: center; color: black; font-size: 20pt; font-weight: bold;',
+            'Lynching Deaths in Newspaper Reports, 1835-1865'
+          ),
+          options = list(
+            pageLength = 50,
+            searching = FALSE, 
+            lengthChange = FALSE
+          ))
+```
+
+
+### All Cases
+
+```{r}
+
+dt_total <- new_total |> 
+  filter(!is.na(state)) |> 
+  rename(State = state, Total = n)
+
+datatable(dt_total,
+          # Use HTML styling directly in the caption string
+          caption = htmltools::tags$caption(
+            style = 'caption-side: top; text-align: center; color: black; font-size: 20pt; font-weight: bold;',
+            'Top locations for pre-Civil War lynchings'
+          ),
+          options = list(
+            pageLength = 50,
+            searching = FALSE, 
+            lengthChange = FALSE
+          ))
+```
+
+
+### Map output
+```{r}
+map <- deaths
+write_csv(map, "../output/map.csv")
+
+```
+
+# Lynching Analysis Over Time
 
 ```{r}
 
 precivil_complete |> 
+    filter(entry_type == "Primary") |> 
+  group_by(year, category) |> 
+  count()
 
+```
+
+# Time series graphic
+
+```{r}
+precivil_complete |> 
+    filter(entry_type == "Primary") |> 
+    filter(!is.na(category)) |> 
+  filter(!category %in% c("other", "unclear")) |> 
+  group_by(year, category) |> 
+  count() |> 
+  mutate(category = factor(category, levels = c("attempt", "punish", "death"))) |>
+ ggplot(aes(x = year, y = n, fill = category)) +
+  geom_col() +
+  scale_x_continuous(breaks = seq(1835, 1865, by = 5)) +
+  labs(
+    title = "Types of Lynchings, 1835-1865",
+    x = "Year",
+    y = "Count of Entries",
+    caption = "Source: newspaper articles, Library of Congress, Graphic by Rob Wells, 1-13-2026"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+
+```{r}
+state_list <- precivil_complete |> 
+  filter(!is.na(state)) |> 
+  distinct(state) |> 
+  arrange(state) |> 
+  pull(state)
+
+precivil_complete |> 
+  filter(entry_type == "Primary") |> 
+  filter(!is.na(state), !is.na(category)) |>
+  filter(!category %in% c("other", "unclear")) |> 
+  group_by(state, category) |> 
+  count() |> 
+  # Reordering so "death" is at the bottom of the Y-axis
+  mutate(category = factor(category, levels = c("death", "punish", "attempt"))) |> 
+  ggplot(aes(x = category, y = state, fill = n)) +
+  geom_tile(color = "white") +
+  scale_y_discrete(limits = rev(state_list)) +# White border makes the "tiles" pop
+ scale_fill_gradient(low = "#4169E1", high = "#FF0000") + 
+  labs(
+    title = "Intensity of Mentions by Category (1835-1865)",
+    x = NULL,      # Drops X-axis label
+    y = NULL,      # Drops Y-axis label
+    caption = "Data source: Library of Congress, Graphic by Rob Wells, 1-13-2026"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none", # Drops the legend
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)
+  )
+```
+
+```{r}
+counts <- precivil_complete |> 
+  filter(entry_type == "Primary") |> 
+  filter(!is.na(state), !is.na(category)) |>
+  filter(!category %in% c("other", "unclear")) |> 
+  group_by(state, category) |> 
+  count() 
 ```
 
