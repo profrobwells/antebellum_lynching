@@ -1,0 +1,878 @@
+---
+title: "Antebellum Lynching Analysis 2025"
+author: "Rob Wells"
+date: "2026-03-16"
+output: html_document
+---
+
+```{r}
+#install.packages("udpipe")
+#install.packages('DT')
+#install.packages("arrow")
+#install.packages("spacyr")
+#install.packages("chattr")
+library(arrow)
+library(jsonlite)
+library(janitor)
+library(lubridate)
+library(quanteda)
+library(tidytext)
+library(tidyverse)
+library(udpipe)
+library(DT)
+library(spacyr)
+library(stringr)
+
+```
+
+# Set up AI - chattr
+```{r}
+# Install pak if needed
+install.packages("pak")
+
+# Install latest chattr from GitHub (fixes this glue issue)
+pak::pak("mlverse/chattr")
+```
+
+```{r}
+library(chattr)
+library(ellmer)
+
+# Create the ellmer Anthropic chat object
+my_chat <- ellmer::chat_anthropic(model = "claude-sonnet-4-6")
+
+# Pass the object directly — don't use the string shortcut
+chattr_use(my_chat)
+# chattr::chattr_use("claude-haiku-4-5")
+```
+
+# Launch chattr app
+```{r}
+# cntl + shift + c 
+# chattr_app()
+```
+
+
+
+#Import 444 cleaned articles
+```{r}
+precivil_complete <- read_csv("../data/precivil_complete_jan12.csv") 
+
+
+
+```
+
+
+#Chart - Results by year
+```{r}
+#Here is a chart, Figure 1, that describes lynching search results by year
+precivil_complete %>% 
+   group_by(year) %>% 
+  count(year) %>% 
+#Sandwich it onto a simple ggplot
+  ggplot(aes(x = year, y = n, fill = n)) +
+  geom_col(position = "dodge") + 
+  theme(legend.position = "none") +
+  scale_x_continuous(labels = c(seq(1825, 1865, 5)), breaks = seq(1825, 1865, 5)) +
+   # scale_y_continuous(breaks = seq(0, 15, 1)) +
+  labs(title = "Precivil War Lynching Coverage By Year, 1835-1861", 
+       subtitle = "Count of Lynching Stories Examined",
+       caption = "n=491  articles. Graphic by Rob Wells, 1/10/2026",
+       y="Count of Articles",
+       x="Year")
+
+ggsave("../output/precivil_coverage_year_1_3_2026.png", device = "png",width=9,height=6, dpi=800)
+```
+
+
+year total descending
+```{r}
+precivil_complete  %>% 
+count(year) %>% 
+  mutate(pct = formattable::percent(n/sum(n,1))) |> 
+  arrange(desc(pct))
+
+
+```
+
+newspapers total descending
+```{r}
+newspapers <- precivil_complete  %>% 
+count(newspaper_name_clean) %>% 
+  arrange(desc(n))
+newspapers
+
+```
+
+
+# Word count metrics
+```{r}
+#average story length is 433 words, but some articles ran up to 1,618 words
+
+precivil_complete |> 
+  summarize(avg = mean(word_count, na.rm=TRUE),
+            median = median(word_count, na.rm=TRUE),
+            min = min(word_count, na.rm=TRUE),
+            max = max(word_count, na.rm=TRUE),
+            sd = sd(word_count, na.rm=TRUE))
+
+
+```
+
+
+### Count number of lynch search terms in an article
+then filter articles with one term for close filtering to that sentence
+
+```{r}
+
+
+# 1. Define the patterns (as provided in your guide)
+lynching_patterns <- c(
+# Matches lynch, lynched, lynching, lynchings, lynches
+  "\\blynch(ed|ing|ings|es)?\\b", 
+  
+  # Matches hung, hang, hanged, hanging, hangings
+  "\\b(hung|hanging)\\b.{1,20}\\bmob\\b", 
+  
+  # Matches vigilance, vigilant, vigilante, vigilantes
+  "\\bvigilant(e|es|ance|ism)?\\b",
+  "lynchings?\\W+of\\W+(the\\W+)?(([[:alnum:]]+\\W+){1,2})?colored",
+  "(murderer|fiend|desperado|brute)\\W+(([[:alnum:]]+\\W+){1,2})?lynch(ed|es|ing)?(\\W+|$)",
+  "coloreds?\\W+(([[:alnum:]]+\\W+){1,2})?((was|were)\\W+)?lynch(ed|es|ing)?(\\W+|$)",
+  "lynchings?\\W+of\\W+(the\\W+)?(([[:alnum:]]+\\W+){1,2})?negro",
+  "mob\\W+(([[:alnum:]]+\\W+){1,2})?(hung|hang(ed|ings?|s)|lynch(ed|es|ing)?)",
+  "negro(e?s)?\\W+(([[:alnum:]]+\\W+){1,2})?((was|were)\\W+)?lynch(ed|es|ing)?(\\W+|$)"
+)
+
+combined_pattern <- paste(lynching_patterns, collapse = "|")
+
+# 2. Process the dataframe and count occurrences
+Xprecivil_complete <- precivil_complete %>%
+  # Cleaning steps for better matching
+  mutate(x_article = str_to_lower(spellchecked)) %>%
+  # COUNT the number of times any of the patterns appear
+  mutate(search_count = str_count(x_article, regex(combined_pattern, ignore_case = TRUE)))
+
+
+
+```
+
+
+
+```{r}
+fatboys <- Xprecivil_complete |> 
+  filter(word_count > 311) |> 
+  filter(search_count < 2)
+
+
+```
+
+Validate
+```{r}
+wrapped_text <- strwrap(as.character(fatboys$spellchecked[1]), width = 60)
+writeLines(wrapped_text, "temp_text.txt")
+file.edit("temp_text.txt")
+```
+
+# Extract Lynch Sentences - 
+```{r}
+
+
+# 1. Define the patterns (as provided in your guide)
+lynching_patterns <- c(
+# Matches lynch, lynched, lynching, lynchings, lynches
+  "\\blynch(ed|ing|ings|es)?\\b", 
+  
+  # Matches hung, hang, hanged, hanging, hangings
+  "\\b(hung|hanging)\\b.{1,20}\\bmob\\b", 
+  
+  # Matches vigilance, vigilant, vigilante, vigilantes
+  "\\bvigilant(e|es|ance|ism)?\\b",
+  "lynchings?\\W+of\\W+(the\\W+)?(([[:alnum:]]+\\W+){1,2})?colored",
+  "(murderer|fiend|desperado|brute)\\W+(([[:alnum:]]+\\W+){1,2})?lynch(ed|es|ing)?(\\W+|$)",
+  "coloreds?\\W+(([[:alnum:]]+\\W+){1,2})?((was|were)\\W+)?lynch(ed|es|ing)?(\\W+|$)",
+  "lynchings?\\W+of\\W+(the\\W+)?(([[:alnum:]]+\\W+){1,2})?negro",
+  "mob\\W+(([[:alnum:]]+\\W+){1,2})?(hung|hang(ed|ings?|s)|lynch(ed|es|ing)?)",
+  "negro(e?s)?\\W+(([[:alnum:]]+\\W+){1,2})?((was|were)\\W+)?lynch(ed|es|ing)?(\\W+|$)"
+)
+
+combined_pattern <- paste(lynching_patterns, collapse = "|")
+
+# Tokenize into sentences
+sentences_df <- precivil_complete %>%
+  unnest_tokens(sentence, spellchecked, token = "sentences") %>%
+  group_by(index) %>% # Assuming you have a unique ID per article
+  mutate(sentence_id = row_number())
+
+# Identify sentences containing your terms
+matches <- sentences_df %>%
+  filter(str_detect(sentence, regex(combined_pattern, ignore_case = TRUE))) %>%
+  select(index, sentence_id)
+
+# 2. Create the window boundaries
+windows <- matches %>%
+  mutate(start = sentence_id - 2,
+         end = sentence_id + 3) %>%
+  group_by(index) %>%
+  # This magic step merges overlapping windows in the same article
+  arrange(start) %>%
+  mutate(group = cumsum(start > lag(end, default = first(end)))) 
+# 3. Extract the merged blocks
+final_reports <- windows %>%
+  group_by(index, group) %>%
+  summarize(start_window = min(start),
+            end_window = max(end), .groups = "drop") %>%
+  inner_join(sentences_df, by = "index") %>%
+  filter(sentence_id >= start_window & sentence_id <= end_window) %>%
+  group_by(index, group) %>%
+  summarize(report_text = paste(sentence, collapse = " "), .groups = "drop")
+
+
+# write_csv(final_reports, "../output/validate_lynching_jan_10.csv")
+```
+
+### Validate
+
+examine this spreadsheet
+https://docs.google.com/spreadsheets/d/11m5UJKkkJ5TynC-TKTFZk3km4lZLHe_o-QUlkN2PmXs/edit?gid=0#gid=0
+### Examine specific articles
+```{r}
+
+
+# Filter the dataframe for that index and grab the text
+report_content <- precivil_complete %>%
+  filter(index == "preciv120") %>%
+  pull(spellchecked)
+
+wrapped_text <- strwrap(as.character(report_content, width = 60))
+writeLines(wrapped_text, "temp_text.txt")
+file.edit("temp_text.txt")
+```
+
+### Print out articles for verification
+```{r}
+# Now create the text file with locations highlighted
+file_conn <- file("verify_excerpts.txt", "w")
+
+for (i in 1:nrow(final_reports)) {
+  row_data <- final_reports[i, ]
+  
+  writeLines(paste0("Document ID: ", row_data$index), file_conn)
+  # Wrap the full text
+  wrapped_text <- strwrap(row_data$report_text, width = 80)
+  wrapped_text[1] <- paste0("Full Context: ", wrapped_text[1])
+  writeLines(wrapped_text, file_conn)
+  
+  if (i < nrow(final_reports)) {
+    writeLines("\n==================================================\n", file_conn)
+  }
+}
+
+close(file_conn)
+```
+
+
+### single df examination
+```{r}
+# wrapped_text <- strwrap(as.character(context_extracted$context_block[2]), width = 60)
+# writeLines(wrapped_text, "temp_text.txt")
+# file.edit("temp_text.txt")
+```
+
+
+
+
+# attempts
+```{r}
+# death | punished | attempted
+# 
+# attempted to lynch 
+# they would probably have been lynched
+# tar - feather
+#  lashes given them on the bare back
+ 
+attempted_lynching_patterns <- c(
+  
+  # Direct attempt language — "attempted to lynch", "attempting to lynch"
+  "\\battempt(ed|ing|s)?\\b.{1,30}\\blynch(ed|ing|es)?\\b",
+  "\\blynch(ed|ing|es)?\\b.{1,30}\\battempt(ed|ing|s)?\\b",
+  
+  # Conditional / hypothetical — "would have been lynched", "might have been hanged"
+  "\\b(would|might|could)\\b.{1,50}\\b(have\\W+been|been)\\W+(lynch(ed)?|hang(ed)?)",
+  
+  # Near miss — "nearly lynched", "almost lynched"
+  "\\b(near(ly)?|almost|narrowly)\\b.{1,20}\\blynch(ed|ing)?\\b",
+  
+  # Escaped or prevented — "escaped lynching", "saved from being lynched"
+  "\\b(escap(ed|ing)?|sav(ed|ing)?|prevent(ed|ing)?)\\b.{1,40}\\b(lynch(ed|ing)?|hang(ed|ing)?)",
+  
+  # Threatened — "threatened to lynch", "threatened with hanging"
+  "\\bthreat(en(ed|ing)?s?)?\\b.{1,30}\\b(lynch(ed|ing)?|hang(ed|ing)?)",
+  
+  # Tar and feather — "tarred and feathered", "tar and feather"
+  "\\btar(red)?\\b.{1,15}\\bfeather(ed|ing|s)?\\b",
+  
+  # Lashes / whipping — "lashes on the bare back", "40 lashes"
+  "\\blash(es|ed|ing)?\\b.{1,40}\\b(bare\\W+)?back\\b",
+  "\\b[0-9]+\\W+lash(es)?\\b",
+  
+  # Mob punishment — "mob punished", "punished by the mob"
+  "\\bmob\\b.{1,30}\\bpunish(ed|ment|ing)?\\b",
+  "\\bpunish(ed|ment|ing)?\\b.{1,30}\\bmob\\b"
+  
+)
+
+test_phrases <- c(
+  "attempted to lynch the man",
+  "they would probably have been lynched",
+  "tarred and feathered",
+  "given 40 lashes on the bare back",
+  "narrowly escaped lynching",
+  "threatened to lynch the negro"
+)
+
+lapply(attempted_lynching_patterns, function(p) {
+  grep(p, test_phrases, value = TRUE, ignore.case = TRUE)
+})
+
+```
+
+
+
+### States
+```{r}
+precivil_complete  %>% 
+count(newspaper_state) %>% 
+ mutate(pct = formattable::percent(n/sum(n,1))) |> 
+  arrange(desc(pct))
+
+```
+
+
+#KWIC
+
+```{r}
+
+# Create a corpus using the 'article_spellchecked' column as the text field
+my_corpus <- corpus(precivil_complete, text_field = "spellchecked", docid_field = "index") # build a new 
+# Tokenize the corpus
+my_tokens <- tokens(my_corpus)
+
+#15 tokens on both sides of the search term
+quanteda_df_llm <- kwic(my_tokens, phrase(c("lynch")), window = 15, valuetype = "regex") %>% as.data.frame() |> 
+  distinct(docname,  .keep_all = TRUE)
+
+quanteda_df_llm <- kwic(my_tokens, phrase(c("lynch|hung|hang(ed|ing)?|executed?|execution|mob\\s+law|vigilance\\s+committee")), window = 20, valuetype = "regex") %>% as.data.frame() |> 
+  distinct(docname,  .keep_all = TRUE)
+
+df_llm <- precivil_complete |> 
+  inner_join(quanteda_df_llm, by=c("index"="docname")) |> 
+  mutate(kwic_text = paste0(pre," ", keyword," ",post)) |> 
+   select(-c(from, to,pre,post, keyword, pattern)) |> 
+  mutate(word_count_select = str_count(select_text, "\\w+"))
+#447 processed articles!
+#write_csv(df_llm, "../data/precivil_df_llm_dec_26.csv")
+
+```
+
+### Bigrams
+Tokenize
+
+```{r}
+
+stories <- str_replace_all(df_llm$kwic_text, "- ", "")
+stories_df <- tibble(stories,)
+
+# unnest includes lower, punct removal
+
+stories_tokenized <- stories_df %>%
+  unnest_tokens(word,stories)
+
+stories_tokenized
+```
+ Remove stopwords
+
+
+```{r}
+
+data(stop_words)
+
+stories_tokenized <- stories_tokenized %>%
+  anti_join(stop_words, by = c("word" = "word")) %>%
+  filter(word != "temp_file") %>%
+  filter(word != "stories_corpus") %>%
+  filter(!grepl('[0-9]', word))
+
+# Word Count
+
+story_word_ct <- stories_tokenized %>%
+  count(word, sort=TRUE)
+
+```
+
+### Create Bigrams
+
+```{r}
+bigrams <- stories_df %>%
+  unnest_tokens(bigram, stories, token="ngrams", n=2)
+
+
+#Filter out stop words.
+
+
+bigrams1 <- bigrams %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams2 <- bigrams1 %>%
+  filter(!word1 %in% stop_words$word) %>%
+  filter(!word2 %in% stop_words$word)
+
+bigrams <- bigrams2 %>%
+  count(word1, word2, sort = TRUE)
+
+
+```
+
+# Speech Parsing 
+It uses the [udpipe](https://cran.r-project.org/web/packages/udpipe/index.html) package in R:
+
+Tokenization, Parts of Speech Tagging, Lemmatization and Dependency Parsing with the 'UDPipe' 'NLP' Toolkit.
+This natural language processing toolkit provides language-agnostic 'tokenization', 'parts of speech tagging', 'lemmatization' and 'dependency parsing' of raw text.
+
+This code loads an English language model to permit tagging of parts of speech.
+This version only deals with adjectives.
+It then counts all adjectives across all articles and then counts adjectives by article. Credit to Claude.ai for providing the basis of this code.
+
+
+### Load English language model
+
+```{r}
+udmodel <- udpipe_download_model(language = "english")
+udmodel <- udpipe_load_model(udmodel$file_model)
+```
+
+### Annotate parts of speech on articles
+
+```{r}
+# Then run your annotation
+annotated_text <- udpipe_annotate(udmodel, 
+                                 x = precivil_complete$spellchecked, 
+                                 doc_id = precivil_complete$index,
+                                   parser = "default",
+                                   tagger = "default")
+annotated_df <- as.data.frame(annotated_text)
+```
+
+
+
+
+The annotated_df columns follow a "CoNLL-U" format for annotated linguistic data in Universal Dependencies.
+It permits analysis of grammatical and syntactic structure of text.
+
+Breaking down the details in an annotated dataframe from UDPipe:
+
+-   doc_id: Identifier for the document - this matches harris_articles_df\$filename.
+
+-   paragraph_id: Identifier for paragraphs within each document.
+
+-   sentence_id: Identifier for sentences within each document.
+
+-   sentence: The full text of the sentence.
+
+-   token_id: Identifier for each token (word, punctuation) within a sentence.
+
+-   token: The actual word or punctuation mark.
+
+-   lemma: The base or dictionary form of the token (e.g., "running" → "run").
+    \
+    upos: Universal Part of Speech tag - a standardized grammatical category (e.g., NOUN, VERB, ADJ).
+
+-   xpos: Language-specific part of speech tag - more detailed than upos, varies by language.
+    feats: Morphological features - additional grammatical information like Number=Sing, Tense=Past.
+
+-   head_token_id: The ID of the token that the current token depends on in the dependency parse.
+
+-   dep_rel: Dependency relation - describes the syntactic relationship between a token and its head (e.g., "nsubj" for nominal subject).
+
+-   deps: Enhanced dependency graph in the format of head-relation pairs.
+
+-   misc: Miscellaneous information that doesn't fit elsewhere, often contains spans of tokens or other metadata.
+
+Learn more about [Universal Dependencies format](https://universaldependencies.org/format.html)
+
+
+
+A nerdy paper about this process [Tokenizing, POS Tagging, Lemmatizing and Parsing UD 2.0 with UDPipe](https://ufal.mff.cuni.cz/~straka/papers/2017-conll_udpipe.pdf)
+
+
+## Count adjectives
+```{r}
+# Filter for adjectives (upos = "ADJ") and count frequencies
+adjective_counts <- annotated_df %>%
+  filter(upos == "ADJ") %>%
+  group_by(token) %>%
+  summarise(
+    frequency = n(),
+    articles = n_distinct(doc_id)
+  ) %>%
+  arrange(desc(frequency))
+
+# View the top 20 most frequent adjectives
+head(adjective_counts, 20)
+
+datatable(adjective_counts,
+          caption = "Top adjectives in Precivil War Lynching coverage",
+          options = list(pageLength = 50)) 
+
+```
+
+Interesting results:
+--large is #8, appears 165 times in 114 articles. Large mob? Large gathering?
+--good, #9, 154 times in 106 articles. Good result from the lynching?
+--dead, #14, 117 times iun 84 articles. the lynching involved death at some level. did "dead" -- like murder -- preciptate the lynching?
+--white, #24, 78 times in 47 articles. white men? racialized marker
+--Indian, #28, 62 times in 45 articles. suggesting indians were lynched or involved?
+--respectable #30, 58 times in 47 articles. respectable citizens who carried out lynching?
+--Mexican, #46, 42 times in 29 articles. Were they being lynched?
+--guilty, #59, 38 times in 32 articles 
+--notorious, #77, 31 times in 29 articles
+--black, #87, 28 times iun 26 articles
+--Southern, #93, 27 tuimes in 16 articles
+--slave, #157, 17 times in 14 articles
+
+
+
+## Count adjectives by article
+```{r}
+adjectives_by_article <- annotated_df %>%
+  filter(upos == "ADJ") %>%
+  group_by(doc_id, token) %>%
+  summarise(
+    frequency = n()
+  ) %>%
+  arrange(doc_id, desc(frequency))
+
+datatable(adjectives_by_article,
+          caption = "Adjectives by article in antebellow lynching coverage",
+          options = list(pageLength = 50)) 
+
+```
+
+# Extract adjective-noun pairs
+
+This section extracts adjective-noun pairs where the adjective directly modifies the noun. It then tabulates the pairs by frequency and by article.
+
+```{r}
+adj_noun_pairs <- annotated_df %>%
+  inner_join(
+    annotated_df %>% select(doc_id, sentence_id, token, token_id, upos),
+    by = c("doc_id", "sentence_id", "head_token_id" = "token_id")
+  ) %>%
+  # Filter for adjectives modifying nouns
+  filter(
+    dep_rel == "amod" &    # amod = adjectival modifier
+    upos.x == "ADJ" &      # first token is adjective
+    upos.y == "NOUN"       # head word is noun
+  ) %>%
+  # Select and rename relevant columns
+  select(
+    article_id = doc_id,
+    sentence_id,
+    adjective = token.x,
+    noun = token.y
+  )
+
+# Count frequencies of adjective-noun pairs
+adj_noun_counts <- adj_noun_pairs %>%
+  group_by(adjective, noun) %>%
+  summarise(
+    frequency = n(),
+    articles = n_distinct(article_id)
+  ) %>%
+  arrange(desc(frequency))
+
+datatable(adj_noun_counts,
+          caption = "Top adjectives-noun pairs in Antebellum Lynching coverage",
+          options = list(pageLength = 50)) 
+
+```
+
+Interesting results
+
+--white man, #9, 24 times in 17 articles
+--white men, #15, 17 times in 16 articles
+--Lynch law #10, 21 times in 16 articles
+--armed men, #11, 21 times in 18 articles
+--respectable citizens, #13, 20 times in 18 articles
+--good citizens, #67, 7 times in 7 articles
+--fair trial, #16, 16 times in 16 articles
+--cold blood, #26, 12 times in 10 articles
+--grand jury, #30, 11 times in 11 articles
+--Northern man, #36, 10 times in 3 articles
+
+
+### Adjective - noun pairs by article
+```{r}
+pairs_by_article <- adj_noun_pairs %>%
+  group_by(article_id, adjective, noun) %>%
+  summarise(
+    frequency = n()
+  ) %>%
+  arrange(article_id, desc(frequency))
+
+datatable(pairs_by_article,
+          caption = "Adjectives-noun pairs by article in lynching coverage",
+          options = list(pageLength = 50)) 
+```
+
+
+## Spacy parsing
+```{r}
+
+# Initialize spacy (one-time setup required: spacy_install())
+spacy_initialize(model = "en_core_web_sm")
+```
+
+```{r}
+text <- data.frame(
+  doc_id = df_llm$index,
+  text = df_llm$kwic_text,
+  stringsAsFactors = FALSE
+)
+
+# Parse with spacyr
+parsed <- spacy_parse(text, entity = TRUE, 
+                               lemma = TRUE,
+                               pos = TRUE,
+                               tag= TRUE,  
+                              dependency = TRUE  )
+
+
+```
+
+
+### Spacy Adjective-noun pairs
+using a much narrower corpus of the kwic text that is fitered to 30 tokens
+```{r}
+
+# Create adjective-noun pairs using spaCy output
+spacy_adj_noun_pairs <- parsed %>%
+  inner_join(
+    parsed %>% select(doc_id, sentence_id, token, token_id, pos),
+    by = c("doc_id", "sentence_id", "head_token_id" = "token_id"),
+    suffix = c("_adj", "_noun")
+  ) %>%
+  # Filter for adjectives modifying nouns
+  filter(
+    dep_rel == "amod" &           # amod = adjectival modifier
+    pos_adj == "ADJ" &            # first token is adjective
+    pos_noun == "NOUN"            # head word is noun
+  ) %>%
+  # Select and rename relevant columns
+  select(
+    article_id = doc_id,
+    sentence_id,
+    adjective = token_adj,
+    noun = token_noun
+  )
+
+# Count frequencies of adjective-noun pairs
+spacy_adj_noun_counts <- spacy_adj_noun_pairs %>%
+  group_by(adjective, noun) %>%
+  summarise(
+    frequency = n(),
+    articles = n_distinct(article_id),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(frequency))
+
+# Display results
+datatable(spacy_adj_noun_counts,
+          caption = "Spacy Top adjective-noun pairs in Antebellum Lynching coverage",
+          options = list(pageLength = 50))
+```
+
+
+# Deaths
+```{r}
+deaths <- precivil_complete |> 
+  filter(entry_type == "Primary") |> 
+  filter(category=="death") |>
+  filter(!is.na(state)) |> 
+  group_by(state) |> 
+  count(category) |> 
+  ungroup() |> 
+  mutate(Percent = as.character(formattable::percent(n/sum(n),0))) |> 
+  arrange(desc(n)) |> 
+  rename(Death_Total = n, State = state) |> 
+  select(State, Death_Total, Percent)
+
+datatable(deaths,
+          # Use HTML styling directly in the caption string
+          caption = htmltools::tags$caption(
+            style = 'caption-side: top; text-align: center; color: black; font-size: 20pt; font-weight: bold;',
+            'Lynching Deaths in Newspaper Reports, 1835-1865'
+          ),
+          options = list(
+            pageLength = 50,
+            searching = FALSE, 
+            lengthChange = FALSE
+          ))
+```
+
+
+### All Cases
+
+```{r}
+
+dt_total <- new_total |> 
+  filter(!is.na(state)) |> 
+  rename(State = state, Total = n)
+
+datatable(dt_total,
+          # Use HTML styling directly in the caption string
+          caption = htmltools::tags$caption(
+            style = 'caption-side: top; text-align: center; color: black; font-size: 20pt; font-weight: bold;',
+            'Top locations for pre-Civil War lynchings'
+          ),
+          options = list(
+            pageLength = 50,
+            searching = FALSE, 
+            lengthChange = FALSE
+          ))
+```
+
+
+### Map output
+```{r}
+map <- deaths
+write_csv(map, "../output/map.csv")
+
+```
+
+# Lynching Analysis Over Time
+
+# deaths vs punishments and other
+```{r}
+
+trends <- precivil_complete |> 
+    filter(entry_type == "Primary") |> 
+  group_by(year, category) |> 
+  count() |> 
+  group_by(year) |>
+  summarize(
+    pct_death = sum(n[category == "death"]) / sum(n),
+    pct_other = sum(n[category %in% c("punish", "attempt")]) / sum(n),
+    .groups = "drop"
+  )
+
+
+trends |> 
+  summarize(avg_death = mean(pct_death, na.rm=TRUE),
+            avg_other = mean(pct_other, na.rm=TRUE),
+            sd_death = sd(pct_death, na.rm=TRUE),
+            sd_other = sd(pct_other, na.rm=TRUE))
+            
+```
+
+# Time series graphic
+
+```{r}
+
+
+precivil_complete |> 
+    filter(entry_type == "Primary") |> 
+  group_by(year, category) |> 
+  count() |> 
+  group_by(year) |>
+  summarize(
+    pct_death = sum(n[category == "death"]) / sum(n),
+    pct_other = sum(n[category %in% c("punish", "attempt")]) / sum(n),
+    .groups = "drop"
+  ) |>
+  pivot_longer(cols = c(pct_death, pct_other), names_to = "category", values_to = "n") |>
+ ggplot(aes(x = year, y = n, fill = category)) +
+  geom_col() +
+  scale_x_continuous(breaks = seq(1835, 1865, by = 5)) +
+   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+   scale_fill_manual(values = c("pct_death" = "#FF0000", "pct_other" = "#4169E1"),
+                     labels = c("Death", "Other")) +
+  labs(
+    title = "Trends in Lynching Deaths, 1835-1865",
+    x = "Year",
+    y = "Percentage of Coverage",
+    caption = "Source: newspaper articles, Library of Congress, Graphic by Rob Wells, 3-16-2026"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+ggsave("../output/lynching_deaths_3_16_2026.png", device = "png",width=9,height=6, dpi=800)
+```
+
+
+
+
+```{r}
+precivil_complete |> 
+    filter(entry_type == "Primary") |> 
+    filter(!is.na(category)) |> 
+  filter(!category %in% c("other", "unclear")) |> 
+  group_by(year, category) |> 
+  count() |> 
+  mutate(category = factor(category, levels = c("attempt", "punish", "death"))) |>
+ ggplot(aes(x = year, y = n, fill = category)) +
+  geom_col() +
+  scale_x_continuous(breaks = seq(1835, 1865, by = 5)) +
+  labs(
+    title = "Types of Lynchings, 1835-1865",
+    x = "Year",
+    y = "Count of Entries",
+    caption = "Source: newspaper articles, Library of Congress, Graphic by Rob Wells, 1-13-2026"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+
+```{r}
+state_list <- precivil_complete |> 
+  filter(!is.na(state)) |> 
+  distinct(state) |> 
+  arrange(state) |> 
+  pull(state)
+
+precivil_complete |> 
+  filter(entry_type == "Primary") |> 
+  filter(!is.na(state), !is.na(category)) |>
+  filter(!category %in% c("other", "unclear")) |> 
+  group_by(state, category) |> 
+  count() |> 
+  # Reordering so "death" is at the bottom of the Y-axis
+  mutate(category = factor(category, levels = c("death", "punish", "attempt"))) |> 
+  ggplot(aes(x = category, y = state, fill = n)) +
+  geom_tile(color = "white") +
+  scale_y_discrete(limits = rev(state_list)) +# White border makes the "tiles" pop
+ scale_fill_gradient(low = "#4169E1", high = "#FF0000") + 
+  labs(
+    title = "Intensity of Mentions by Category (1835-1865)",
+    x = NULL,      # Drops X-axis label
+    y = NULL,      # Drops Y-axis label
+    caption = "Data source: Library of Congress, Graphic by Rob Wells, 1-13-2026"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none", # Drops the legend
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)
+  )
+```
+
+```{r}
+counts <- precivil_complete |> 
+  filter(entry_type == "Primary") |> 
+  filter(!is.na(state), !is.na(category)) |>
+  filter(!category %in% c("other", "unclear")) |> 
+  group_by(state, category) |> 
+  count() 
+```
+
