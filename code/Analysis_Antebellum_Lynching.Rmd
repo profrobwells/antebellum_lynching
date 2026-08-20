@@ -648,6 +648,16 @@ datatable(deaths,
 
 
 ### All Cases
+```{r}
+new_total <- precivil_complete |> 
+  count(state) |> 
+  arrange(desc(n))
+#-- jan 5: 26 states, calif 41 reports. 147 reports total
+# jan 6: 36 states, calif 135
+# jan 7: 39 states, calif 151
+
+write_csv(new_total, "../output/new_total.csv")
+```
 
 ```{r}
 
